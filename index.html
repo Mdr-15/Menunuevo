@@ -808,6 +808,31 @@
             display: none !important; /* Libera el espacio horizontal en reposo celular */
         }
     }
+
+         /* 2. Reducción drástica de etiquetas (Cliente, Teléfono, etc.) */
+    label, 
+    .campo-grupo label {
+        font-size: 0.65rem !important;
+        margin-bottom: 1px !important;
+        margin-top: 2px !important;
+        font-weight: bold;
+    }
+
+    /* 3. Inputs súper delgados y estilizados */
+    input[type="text"], 
+    input[type="tel"], 
+    .campo-grupo input {
+        padding: 4px 6px !important; 
+        font-size: 0.75rem !important;
+        height: 26px !important; /* Altura fija ultra delgada */
+        margin-bottom: 4px !important;
+        border-radius: 4px !important;
+    }
+
+    /* 4. Opcional: Si tus campos usan contenedores individuales, quita espacio entre ellos */
+    .campo-grupo {
+        margin-bottom: 3px !important;
+    }
     </style>
 </head>
 
