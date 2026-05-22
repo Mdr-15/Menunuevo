@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Wings - Menú Digital</title>
+        
+    <style>
+     /* --- ESTILOS BASE SPACE WINGS (Tema Claro Elegante Premium) --- */
+        body { 
+            background-color: #f8fafc; /* Fondo pizarra claro, ultra limpio y moderno */
+            color: #334155; 
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            margin: 0; 
+            display: flex; 
+            min-height: 100vh; 
+        }
+        #pantalla-tienda {
+            display: flex;
+            width: 100%;
+        }
+        main { 
+            flex: 1; 
+            padding: 40px; 
+            box-sizing: border-box; 
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1.logo { 
+            color: #c27d38; /* Tono café canela cálido y distinguido */
+            font-size: 2.6rem; 
+            text-transform: uppercase; 
+            text-align: center; 
+            margin-bottom: 35px; 
+            font-weight: 900; 
+            letter-spacing: 2px;
+        }
+        h2.seccion-titulo { 
+            color: #c27d38; 
+            border-bottom: 2px solid #e2e8f0; 
+            padding-bottom: 10px; 
+            margin-top: 40px; 
+            text-transform: uppercase; 
+            font-size: 1.3rem; 
+            letter-spacing: 1px;
+            position: relative;
+        }
+        h2.seccion-titulo::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: #c27d38;
+        }
+        .grid-productos { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 24px; 
+            margin-top: 20px; 
+        }
+        
+        /* --- TARJETAS DE PRODUCTOS --- */
+        .tarjeta-producto { 
+            background-color: #ffffff; 
+            border: 1px solid rgba(226, 232, 240, 0.8); 
+            border-radius: 16px; /* Bordes más suaves y curvos */
+            padding: 24px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01); 
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .tarjeta-producto:hover {
+            transform: translateY(-5px); /* Efecto de elevación interactiva */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            border-color: rgba(194, 125, 56, 0.3);
+        }
+        .tag-categoria { 
+            background-color: #fdf4eb; /* Fondo suave canela pálido */
+            color: #c27d38; 
+            padding: 4px 10px; 
+            border-radius: 20px; /* Estilo píldora moderno */
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            margin-bottom: 12px; 
+            display: inline-block;
+            align-self: flex-start;
+        }
+        .tarjeta-producto strong {
+            font-size: 1.2rem;
+            color: #1e293b;
+            font-weight: 700;
+        }
+        .precio { 
+            font-size: 1.3rem; 
+            color: #c27d38; 
+            font-weight: 800; 
+            margin: 12px 0; 
+        }
+
+        /* --- CONFIGURADOR DE COMBOS --- */
+        .tarjeta-combo-full {
+            background-color: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 24px;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            transition: box-shadow 0.25s ease;
+        }
+        .tarjeta-combo-full:hover {
+            box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.04);
+        }
+        .header-combo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .header-combo h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: #1e293b;
+            font-weight: 700;
+        }
+        .header-combo .precio-combo {
+            color: #c27d38;
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+        .config-box {
+            background-color: #f8fafc; 
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            
+            /* --- CONFIGURACIÓN VERTICAL CONGELADA --- */
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px; /* Espaciado uniforme entre cada renglón */
+        }      
+        .campo-grupo {
+            margin-bottom: 0;
+        }
+        .campo-grupo label {
+            display: block;
+            color: #64748b; 
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+        select { 
+            width: 100%; 
+            background-color: #ffffff; 
+            color: #334155; 
+            border: 1px solid #cbd5e1; 
+            padding: 10px; 
+            border-radius: 8px; 
+            font-size: 0.85rem;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        select:focus {
+            outline: none;
+            border-color: #c27d38;
+        }
+        
+        /* --- BOTONES MODERNOS --- */
+         .btn-agregar-combo {
+            background-color: #475569; /* Gris oscuro original */
+            color: #ffffff; 
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: background-color 0.2s, transform 0.1s;
+            
+            /* --- ALINEACIÓN SEGURA DENTRO DE LA TARJETA --- */
+            float: right !important; /* Mantiene la posición a la derecha */
+            margin-top: 5px !important;
+            margin-bottom: 15px !important; /* Espacio extra abajo para que respire la tarjeta */
+        }
+        .btn-agregar-combo:hover {
+            background-color: #a8682a;
+        }
+        .btn-agregar-combo:active {
+            transform: scale(0.98);
+        }
+        .btn-agregar-individual {
+            background-color: #475569;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .btn-agregar-individual:hover {
+            background-color: #334155;
+        }
+        .btn-agregar-individual:active {
+            transform: scale(0.98);
+        }
+
+        /* --- INTERFAZ LATERAL FIJA DEL PEDIDO --- */
+        aside.panel-pedido { 
+            width: 360px; 
+            background-color: #ffffff; 
+            border-left: 1px solid #e2e8f0; 
+            padding: 24px; 
+            position: sticky; 
+            top: 0; 
+            height: 100vh; 
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            box-shadow: -10px 0 15px -3px rgba(0, 0, 0, 0.02);
+        }
+        .cabecera-pedido { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 2px solid #f1f5f9; 
+            padding-bottom: 16px; 
+            margin-bottom: 20px;
+        }
+        .cabecera-pedido h2 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+        .contador-badge { 
+            background-color: #c27d38; 
+            color: #ffffff; 
+            border-radius: 50%; 
+            width: 26px; 
+            height: 26px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: bold; 
+            font-size: 0.85rem;
+        }
+        .label-cliente {
+            display: block; 
+            color: #64748b; 
+            margin-bottom: 6px; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .input-nombre { 
+            width: 100%; 
+            padding: 12px; 
+            border-radius: 8px; 
+            border: 1px solid #cbd5e1; 
+            background-color: #f8fafc; 
+            color: #334155; 
+            box-sizing: border-box; 
+            font-size: 0.9rem; 
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        .input-nombre:focus {
+            outline: none;
+            border-color: #c27d38;
+            background-color: #ffffff;
+        }
+        .Carrito-elementos { 
+            flex: 1; 
+            overflow-y: auto; 
+            margin-top: 16px; 
+        }
+        .item-carrito-fila { 
+            background-color: #f8fafc; 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin-bottom: 10px; 
+            border: 1px solid #e2e8f0; 
+        }
+        .item-encabezado-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .item-titulo-carrito {
+            margin: 0;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+        .item-salsa-carrito {
+            margin: 4px 0 0 0;
+            color: #c27d38;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+        .item-desc-carrito {
+            margin: 4px 0 0 0;
+            color: #64748b;
+            font-size: 0.75rem;
+            line-height: 1.3;
+        }
+        .item-precio-carrito {
+            font-weight: 700;
+            color: #c27d38;
+            font-size: 0.9rem;
+            margin: 4px 0 0 0;
+        }
+        /* --- CONTROLES DE CANTIDAD Y CANCELACIÓN EN EL CARRITO --- */
+        .controles-contenedor {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .item-botones-qty { 
+            display: flex; 
+            align-items: center; 
+            background-color: #f1f5f9; /* Gris sutil moderno */
+            border-radius: 8px; /* Redondeado consistente */
+            padding: 3px;
+            border: 1px solid #e2e8f0;
+        }
+        .item-botones-qty button { 
+            background: #ffffff;
+            color: #334155; 
+            border: 1px solid #e2e8f0; 
+            width: 24px; 
+            height: 24px; 
+            border-radius: 6px;
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: all 0.15s ease;
+        }
+        .item-botones-qty button:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e1;
+            color: #c27d38; /* Cambio al color de tu marca */
+        }
+        .item-botones-qty button:active {
+            transform: scale(0.92);
+        }
+        .item-botones-qty span {
+            color: #1e293b;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 0 10px;
+            min-width: 14px;
+            text-align: center;
+        }
+        .btn-cancelar {
+            background: #fef2f2; /* Fondo rojo ultra suave */
+            border: 1px solid #fee2e2;
+            color: #ef4444; 
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+        .btn-cancelar:hover {
+            background: #fee2e2;
+            color: #dc2626;
+            transform: translateY(-1px);
+        }
+        .btn-cancelar:active {
+            transform: translateY(0);
+        }
+
+            /* --- DISEÑO RESPONSIVO: CARRITO FLOTANTE MINIMIZABLE EN CELULAR --- */
+        @media (max-width: 990px) { 
+            body { 
+                flex-direction: column !important; 
+            } 
+            #pantalla-tienda { 
+                flex-direction: column !important; 
+            }
+            main {
+                padding: 15px !important;
+                padding-top: 30px !important; /* Ajustado para balancear el espacio superior */
+                padding-bottom: 90px !important; /* Espacio inferior seguro para la barra flotante */
+            }
+            
+            /* El panel lateral se convierte en una barra colapsable adaptada a tu paleta clara */
+            aside.panel-pedido { 
+                width: 100% !important; 
+                height: auto !important;
+                max-height: 65px; /* Altura compacta por defecto */
+                position: fixed !important; 
+                bottom: 0 !important; 
+                left: 0 !important;
+                right: 0 !important;
+                border-left: none !important; 
+                border-top: 3px solid #c27d38; /* Color café canela de tu marca */
+                background-color: #ffffff !important; /* Mantiene la estética premium clara */
+                padding: 12px 20px !important;
+                box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08) !important; 
+                border-radius: 20px 20px 0 0 !important; 
+                overflow: hidden !important;
+                transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important; /* Animación más fluida */
+                z-index: 9999 !important;
+            } 
+            
+            /* Clase dinámica que activa el JavaScript al hacer clic */
+            aside.panel-pedido.expandido {
+                max-height: 80vh !important; 
+                overflow-y: auto !important;
+            }
+
+            /* Forzamos que la cabecera del pedido actúe como un gran botón táctil alineado */
+            .cabecera-pedido {
+                cursor: pointer !important;
+                padding-bottom: 5px !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                width: 100% !important;
+            }
+
+            .Carrito-elementos {
+                max-height: 350px !important; 
+                margin-top: 15px !important;
+            }
+            
+            /* Ocultamos los bloques internos si el carrito está cerrado */
+            aside.panel-pedido:not(.expandido) .label-cliente,
+            aside.panel-pedido:not(.expandido) .input-nombre,
+            aside.panel-pedido:not(.expandido) .Carrito-elementos,
+            aside.panel-pedido:not(.expandido) .Boton-enviar,
+            aside.panel-pedido:not(.expandido) .item-carrito-fila {
+                display: none !important;
+            }
+            
+            /* Corrección del Total: Se alinea limpio a la derecha de la cabecera cuando está cerrado */
+            aside.panel-pedido:not(.expandido) .precio-total,
+            aside.panel-pedido:not(.expandido) [id*="total"] {
+                font-size: 1.1rem !important;
+                font-weight: 800 !important;
+                color: #c27d38 !important;
+            }
+            
+            /* Indicadores visuales interactivos usando tu color de acento */
+            .cabecera-pedido::after {
+                content: '🔼 Ver pedido';
+                color: #c27d38;
+                font-size: 0.85rem;
+                font-weight: bold;
+                background-color: #fdf4eb;
+                padding: 6px 12px;
+                border-radius: 20px;
+                transition: all 0.2s;
+            }
+            aside.panel-pedido.expandido .cabecera-pedido::after {
+                content: '🔽 Ocultar';
+                background-color: #f1f5f9;
+                color: #64748b;
+            }
+        }
+
+    
+            /* --- DISEÑO DE ALTA GAMA PARA EL BOTÓN IMPRIMIR --- */
+        aside.panel-pedido button:not(.item-botones-qty button):not(.btn-cancelar) {
+            background-color: #475569 !important; /* Gris oscuro elegante */
+            color: #ffffff !important;
+            border: none !important;
+            padding: 14px 20px !important;
+            border-radius: 10px !important;
+            font-size: 0.95rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer !important;
+            width: 100% !important;
+            margin-top: 20px !important;
+            box-shadow: 0 4px 6px -1px rgba(71, 85, 105, 0.2) !important;
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s !important;
+            display: block !important;
+        }
+
+        aside.panel-pedido button:not(.item-botones-qty button):not(.btn-cancelar):hover {
+            background-color: #334155 !important; /* Más oscuro al pasar el mouse */
+            box-shadow: 0 10px 15px -3px rgba(71, 85, 105, 0.3) !important;
+        }
+
+        aside.panel-pedido button:not(.item-botones-qty button):not(.btn-cancelar):active {
+            transform: scale(0.98) !important; /* Efecto físico al presionarlo */
+        }
+
+        /* Estilo complementario para limpiar el texto del Total */
+        aside.panel-pedido div:has(> button), 
+        aside.panel-pedido p:has(button),
+        aside.panel-pedido .Total {
+            font-size: 1.1rem !important;
+            font-weight: 800 !important;
+            color: #1e293b !important;
+            margin-top: 15px !important;
+        }
+
+    
+    </style>
+  
+</head>
+<body>
+
+    <!-- CONTENEDOR PRINCIPAL DE LA TIENDA -->
+    <div id="pantalla-tienda">
+        <main>
+            <h1 class="logo">Space Wings</h1>
+            <h2 class="seccion-titulo">Nuestras Especialidades</h2>
+            <div id="contenedor-individuales" class="grid-productos"></div>
+            <h2 class="seccion-titulo">Combos Space Wings</h2>
+            <div id="contenedor-combos"></div>
+        </main>
+
+        <aside class="panel-pedido">
+            <div class="cabecera-pedido"><h2>🛒 Pedido</h2><div class="contador-badge" id="badge-contador">0</div></div>
+            <div style="margin-top: 5px;"><label class="label-cliente">Cliente *</label><input type="text" id="nombre-cliente" class="input-nombre" placeholder="Ingresa tu nombre"></div>
+            <div class="Carrito-elementos" id="carrito-lista"><p id="carrito-vacio-texto" style="color: #718096; text-align: center; margin-top: 15px; font-size: 0.75rem;">Carrito vacío.</p></div>
+            <div class="Total"><span>Total:</span><span id="carrito-total">$0.00</span></div>
+            <button class="Boton-enviar" id="btn-whatsapp">Enviar Pedido</button>
+        </aside>
+    </div>
+
+    <!-- SECCIÓN INTERACTIVA DE AGRADECIMIENTO -->
+    <div id="pantalla-agradecimiento" style="display: none; text-align: center; padding: 40px 20px; background-color: #161a1f; border-radius: 12px; max-width: 450px; margin: 40px auto; border: 1px solid #232931; box-sizing: border-box;">
+        <span style="font-size: 3.5rem;">🚀</span>
+        <h2 style="color: #ff9f00; text-transform: uppercase; margin-top: 10px; font-size: 1.4rem;">¡Pedido Confirmado!</h2>
+        <p style="font-size: 1rem; color: #ffffff; margin-bottom: 5px;">Muchas gracias por tu compra, <strong id="agradecimiento-cliente" style="color: #ff9f00;"></strong>.</p>
+        <p style="color: #a0aec0; font-size: 0.85rem; margin-top: 0;">Tu orden está siendo procesada en la estación de control.</p>
+        <div style="background-color: #0d0f12; padding: 12px; border-radius: 8px; margin: 15px 0; border: 1px solid #232931;">
+            <span style="color: #a0aec0; font-size: 0.75rem; font-weight: bold; text-transform: uppercase;">Total a pagar:</span>
+            <div id="agradecimiento-total" style="font-size: 1.6rem; color: #ff9f00; font-weight: bold; margin-top: 3px;">$0.00</div>
+        </div>
+        <button onclick="volverAlMenu()" style="background-color: #ff9f00; color: #0d0f12; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; width: 100%;">Volver al Menú</button>
+    </div>
+
+    <script>
+        
+
+        //***** OBTENER LOS DATOS DEL ARCHIVO DE GOOGLE SHEETS
+        
+const servidorGoogle = "https://docs.google.com/spreadsheets/d/";
+const idDocumento = "18DrAD8PX7jpvMoW9N8sKTlqXY4SiprjdmDMBKnfi8gQ";
+const endpointApi = "/gviz/tq?tqx=out:csv&sheet=Hoja1";
+
+const urlGoogleSheets = servidorGoogle + idDocumento + endpointApi;
+
+let baseDatosProductos = { individuales: [], combos: [] };
+let carrito = [];
+
+async function cargarMenuCompleto() {
+    try {
+        // Rompemos la caché de Google agregando la hora actual exacta
+        const urlFinal = urlGoogleSheets + "&t=" + new Date().getTime();
+
+        const respuesta = await fetch(urlFinal, { 
+            cache: "no-store",
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache'
+            }
+        });
+
+        const textoCSV = await respuesta.text();
+        baseDatosProductos = parsearEstructuraMenu(textoCSV);
+        
+        renderizarArticulosIndividuales(baseDatosProductos.individuales);
+        renderizarCombosDinamicos(baseDatosProductos.combos);
+        actualizarInterfazCarrito();
+        console.log("⚡ Menú en vivo actualizado con éxito.");
+    } catch (error) {
+        console.error("Fallo al inicializar base de datos:", error);
+    }
+}
+
+        function limpiarTextoSheets(celda) {
+            if (!celda) return '';
+            return celda.trim().replace(/^"|"$/g, '').trim();
+}
+        
+        // === MOTOR DE PARSEO CORREGIDO CON INDEXACIÓN ESTRICTA ===
+        function parsearEstructuraMenu(texto) {
+            const lineas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            const individuales = [];
+            const combosAgrupados = {};
+            let leyendoCombos = false;
+
+            // Índices basados rigurosamente en tu captura de imagen real de Google Sheets
+            const idxId = 0;   // Columna A (Id_platillo)
+            const idxCat = 1;  // Columna B (Categoria)
+            const idxNom = 2;  // Columna C (Producto)
+            const idxPre = 3;  // Columna D (Precio)
+            const idxDisp = 4; // Columna E (Disponible)
+            const idxComboPaso = 5; // Columna F (Categoria de paso de combo)
+            const idxComboProd = 6; // Columna G (Producto interno de combo)
+
+            for (let i = 0; i < lineas.length; i++) {
+                const linea = lineas[i];
+                const columnas = linea.split(',').map(limpiarTextoSheets);
+
+                if (!columnas || columnas[idxId] === 'Id_platillo' || columnas[idxId] === 'CONF') {
+                    if (i > 1 && columnas[idxId] === 'Id_platillo') {
+                        leyendoCombos = true;
+                    }
+                    continue;
+                }
+
+                const disponible = columnas[idxDisp] ? columnas[idxDisp].toLowerCase() === 'si' : false;
+                if (!disponible) continue;
+
+                // CORRECCIÓN CRÍTICA: Se evalúa el índice [0] del arreglo para evitar congelar el script
+                if (columnas[idxId].startsWith('P') && !leyendoCombos) {
+                    const producto = {
+                        id: columnas[idxId],
+                        categoria: columnas[idxCat],
+                        nombre: columnas[idxNom],
+                        precio: parseFloat(columnas[idxPre]) || 0,
+                        salsas: []
+                    };
+                    
+                    // Extraer salsas horizontales de la primera tabla
+                    for (let s = 5; s < columnas.length; s++) {
+                        if (columnas[s]) {
+                            producto.salsas.push(columnas[s]);
+                        }
+                    }
+                    individuales.push(producto);
+                } 
+                
+                // CORRECCIÓN CRÍTICA: Se evalúa el índice [0] para agrupar los combos multi-opción
+                if (columnas[idxId].startsWith('C')) {
+                    const comboId = columnas[idxId];
+                    const nombreCombo = columnas[idxNom]; 
+                    const precioCombo = parseFloat(columnas[idxPre]) || 0; 
+                    
+                    const componenteCategoria = columnas[idxComboPaso]; 
+                    const componenteProducto = columnas[idxComboProd];  
+                    
+                    const salsasComponente = [];
+                    // Las salsas de los combos inician en la columna H (índice 7) en adelante
+                    for (let s = 7; s < columnas.length; s++) {
+                        if (columnas[s]) salsasComponente.push(columnas[s]);
+                    }
+
+                    if (!combosAgrupados[comboId]) {
+                        combosAgrupados[comboId] = { id: comboId, nombre: nombreCombo, precio: precioCombo, secciones: {} };
+                    }
+                    if (!combosAgrupados[comboId].secciones[componenteCategoria]) {
+                        combosAgrupados[comboId].secciones[componenteCategoria] = [];
+                    }
+                    combosAgrupados[comboId].secciones[componenteCategoria].push({ nombre: componenteProducto, salsas: salsasComponente });
+                }
+            }
+            return { individuales, combos: Object.values(combosAgrupados) };
+        }
+
+        function renderizarArticulosIndividuales(productos) {
+            const contenedor = document.getElementById('contenedor-individuales');
+            if (!contenedor) return;
+            contenedor.innerHTML = '';
+
+            productos.forEach(prod => {
+                let selectSalsas = '';
+                if (prod.salsas.length > 0) {
+                    selectSalsas = `
+                        <select id="salsa-${prod.id}" style="margin-top:6px; padding: 4px; font-size:0.8rem;">
+                            <option value="">-- Selecciona Salsa --</option>
+                            ${prod.salsas.map(s => `<option value="${s}">${s}</option>`).join('')}
+                        </select>`;
+                }
+
+                contenedor.innerHTML += `
+                    <div class="tarjeta-producto">
+                        <div>
+                            <span class="tag-categoria">${prod.categoria}</span>
+                            <h3 style="margin:4px 0; font-size:1rem;">${prod.nombre}</h3>
+                            <p class="precio">$${prod.precio.toFixed(2)}</p>
+                            ${selectSalsas}
+                        </div>
+                        <button class="btn-agregar-individual" onclick="agregarIndividualAlCarrito('${prod.id}')">Agregar +</button>
+                    </div>`;
+            });
+        }
+
+        function renderizarCombosDinamicos(combos) {
+            const contenedor = document.getElementById('contenedor-combos');
+            if (!contenedor) return;
+            contenedor.innerHTML = '';
+
+            combos.forEach(combo => {
+                let htmlCampos = '';
+                let indexPaso = 0;
+                let referenciasAInicializar = [];
+
+                for (const [nombreSeccion, opciones] of Object.entries(combo.secciones)) {
+                    const idSelectProducto = `combo-${combo.id}-prod-${indexPaso}`;
+                    const idSelectSalsa = `combo-${combo.id}-salsa-${indexPaso}`;        
+                    
+                    const esPlatilloPrincipal = nombreSeccion.toLowerCase().includes("platillo principal");
+                    const esFijo = opciones.length === 1;
+
+                    let htmlOpciones = opciones.map(opc => `<option value="${opc.nombre}">${opc.nombre}</option>`).join('');
+                    let etiquetaLabel = `${nombreSeccion.toUpperCase()}:`;
+                    if (esFijo && nombreSeccion.toLowerCase().includes("snack")) {
+                        etiquetaLabel = `SNACK INCLUIDO (FIJO):`;
+                    }
+
+                    let bloqueSalsa = '';
+                    if (esPlatilloPrincipal) {
+                        const numeroSalsa = nombreSeccion.replace(/\D/g, ""); 
+                        bloqueSalsa = `
+                            <div class="campo-grupo" style="margin-top:6px;">
+                                <label>SALSA ${numeroSalsa || 1}:</label>
+                                <select id="${idSelectSalsa}" style="padding: 4px; font-size:0.8rem;">
+                                    <option value="">-- Selecciona tu Salsa --</option>
+                                </select>
+                            </div>`;
+                        
+                        referenciasAInicializar.push({ idCombo: combo.id, nombreSeccion: nombreSeccion, idProd: idSelectProducto, idSalsa: idSelectSalsa });
+                    }
+
+                    htmlCampos += `
+                        <div class="campo-grupo">
+                            <label>${etiquetaLabel}</label>
+                            <select id="${idSelectProducto}" onchange="actualizarSalsasEstructuraNueva('${combo.id}', '${nombreSeccion}', ${indexPaso})" style="padding: 4px; font-size:0.8rem;">
+                                ${htmlOpciones}
+                            </select>
+                            ${bloqueSalsa}
+                        </div>`;
+                    
+                    indexPaso++;
+                }
+
+                contenedor.innerHTML += `
+                    <div class="tarjeta-combo-full">
+                        <div class="header-combo">
+                            <h3>${combo.nombre}</h3>
+                            <span class="precio-combo">$${combo.precio.toFixed(2)}</span>
+                        </div>
+                        <div class="config-box">
+                            <div style="color: #ff9f00; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; margin-bottom: 12px;">⚙️ Configura tu ${combo.nombre.toLowerCase()}:</div>
+                            ${htmlCampos}
+                        </div>
+                        <div style="overflow:hidden;">
+                            <button class="btn-agregar-combo" onclick="agregarComboEstructuraNueva('${combo.id}')">Agregar +</button>
+                        </div>
+                    </div>`;
+
+                setTimeout(() => {
+                    referenciasAInicializar.forEach(ref => {
+                        const pSel = document.getElementById(ref.idProd);
+                        const sSel = document.getElementById(ref.idSalsa);
+                        if (pSel && sSel) {
+                            const productoSeleccionado = pSel.value;
+                            const datosOpcion = combo.secciones[ref.nombreSeccion].find(o => o.nombre === productoSeleccionado);
+                            if (datosOpcion && datosOpcion.salsas.length > 0) {
+                                sSel.innerHTML = `<option value="">-- Selecciona tu Salsa --</option>` + 
+                                    datosOpcion.salsas.map(s => `<option value="${s}">${s}</option>`).join('');
+                            }
+                        }
+                    });
+                }, 60);
+            });
+        }
+
+        function actualizarSalsasEstructuraNueva(comboId, nombreSeccion, indexPaso) {
+            const combo = baseDatosProductos.combos.find(c => c.id === comboId);
+            const prodSelect = document.getElementById(`combo-${comboId}-prod-${indexPaso}`);
+            const salsaSelect = document.getElementById(`combo-${comboId}-salsa-${indexPaso}`);
+            if (!combo || !prodSelect || !salsaSelect) return;
+
+            const productoSeleccionado = prodSelect.value;
+            const datosOpcion = combo.secciones[nombreSeccion].find(o => o.nombre === productoSeleccionado);
+
+            if (datosOpcion && datosOpcion.salsas.length > 0) {
+                salsaSelect.innerHTML = `<option value="">-- Selecciona tu Salsa --</option>` + 
+                    datosOpcion.salsas.map(s => `<option value="${s}">${s}</option>`).join('');
+                salsaSelect.disabled = false;
+            } else {
+                salsaSelect.innerHTML = `<option value="">No requiere salsa</option>`;
+                salsaSelect.disabled = true;
+            }
+        }
+
+          function agregarIndividualAlCarrito(id) {
+    const producto = baseDatosProductos.individuales.find(p => p.id === id);
+    if (!producto) return;
+
+    const selectSalsa = document.getElementById(`salsa-${id}`);
+    const salsaSeleccionada = selectSalsa ? selectSalsa.value : '';
+
+    if (producto.salsas.length > 0 && !salsaSeleccionada) {
+        alert("Por favor selecciona una salsa para tus alitas o snacks.");
+        return;
+    }
+
+    // ❌ SE ELIMINÓ: La validación 'itemExistente' que sumaba la cantidad.
+    //  AHORA: Inserta siempre una línea nueva e independiente.
+    carrito.push({ 
+        uid: Date.now() + Math.random(), 
+        id: producto.id, 
+        nombre: producto.nombre, 
+        precio: producto.precio, 
+        salsa: salsaSeleccionada, 
+        cantidad: 1, 
+        nota: "" 
+    });
+
+    if (selectSalsa) selectSalsa.value = '';
+    actualizarInterfazCarrito();
+}
+
+function agregarComboEstructuraNueva(comboId) {
+    const combo = baseDatosProductos.combos.find(c => c.id === comboId);
+    if (!combo) return;
+
+    let configuracionFinal = [];
+    let validacionCorrecta = true;
+
+    let index = 0;
+    for (const [nombreSeccion, opciones] of Object.entries(combo.secciones)) {
+        const prodSelect = document.getElementById(`combo-${comboId}-prod-${index}`);
+        const salsaSelect = document.getElementById(`combo-${comboId}-salsa-${index}`);
+
+        const nombreArticulo = prodSelect ? prodSelect.value : '';
+        const salsaArticulo = (salsaSelect && !salsaSelect.disabled) ? salsaSelect.value : '';
+
+        if (!nombreArticulo) { validacionCorrecta = false; break; }
+
+        if (salsaSelect && !salsaSelect.disabled && !salsaArticulo) {
+            alert(`Por favor elige la salsa para tu ${nombreSeccion.toLowerCase()}: ${nombreArticulo}`);
+            validacionCorrecta = false;
+            break;
+        }
+
+        configuracionFinal.push(`${nombreArticulo}${salsaArticulo ? ` (🌶️ ${salsaArticulo})` : ''}`);
+        index++;
+    }
+
+    if (!validacionCorrecta) return;
+
+    const descripcionCombo = `[${configuracionFinal.join(' + ')}]`;
+
+    // ❌ SE ELIMINÓ: La validación 'itemExistente' que agrupaba los combos idénticos.
+    //  AHORA: Cada combo configurado va en su propio renglón.
+    carrito.push({ 
+        uid: Date.now() + Math.random(), 
+        id: combo.id, 
+        nombre: combo.nombre, 
+        descripcion: descripcionCombo, 
+        precio: combo.precio, 
+        cantidad: 1, 
+        nota: "" 
+    });
+
+    actualizarInterfazCarrito();
+}
+
+       function cambiarCantidad(uid, cambio) {
+    const item = carrito.find(i => i.uid === uid);
+    if (!item) return;
+
+    // Si cambio es mayor que 0 (botón +), suma 0.5. Si es menor (botón -), resta 0.5.
+    const ajusteDecimal = cambio > 0 ? 0.5 : -0.5;
+    item.cantidad += ajusteDecimal;
+
+    if (item.cantidad <= 0) {
+        eliminarDelCarrito(uid);
+    } else {
+        actualizarInterfazCarrito();
+    }
+}
+
+function eliminarDelCarrito(uid) {
+    carrito = carrito.filter(item => item.uid !== uid);
+    actualizarInterfazCarrito();
+}
+
+function actualizarNotaItem(uid, textoNota) {
+    const item = carrito.find(i => i.uid === uid);
+    if (item) item.nota = textoNota;
+}
+
+function actualizarInterfazCarrito() {
+    const contenedorLista = document.getElementById('carrito-lista');
+    const badgeContador = document.getElementById('badge-contador');
+    const totalTexto = document.getElementById('carrito-total');
+
+    let montoTotal = 0;
+    let piezasTotales = 0;
+
+    contenedorLista.innerHTML = '<p id="carrito-vacio-texto" style="color: #718096; text-align: center; margin-top: 20px; font-size: 0.75rem;">Carrito vacío.</p>';
+    const txtRef = document.getElementById('carrito-vacio-texto');
+
+    if (carrito.length > 0) {
+        if (txtRef) txtRef.style.display = 'none';
+        
+        carrito.forEach((item) => {
+            const subtotal = item.precio * item.cantidad;
+            montoTotal += subtotal;
+            piezasTotales += item.cantidad;
+
+            const fila = document.createElement('div');
+            fila.classList.add('item-carrito-fila');
+            fila.innerHTML = `
+                <div class="item-encabezado-flex">
+                    <div>
+                        <p class="item-titulo-carrito">${item.nombre}</p>
+                        ${item.salsa ? `<p class="item-salsa-carrito">${item.salsa}</p>` : ''}
+                        ${item.descripcion ? `<p class="item-desc-carrito">${item.descripcion}</p>` : ''}
+                        <p class="item-precio-carrito">$${subtotal.toFixed(2)}</p>
+                    </div>
+                    <div class="controles-contenedor">
+                        <div class="item-botones-qty">
+                            <button onclick="cambiarCantidad(${item.uid}, -1)">-</button>
+                            <span>${item.cantidad}</span>
+                            <button onclick="cambiarCantidad(${item.uid}, 1)">+</button>
+                        </div>
+                        <button class="btn-cancelar" onclick="eliminarDelCarrito(${item.uid})">×</button>
+                    </div>
+                </div>
+                <input type="text" class="input-nota-carrito" placeholder="Notas (salsa, aderezo...)" value="${item.nota}" oninput="actualizarNotaItem(${item.uid}, this.value)">
+            `;
+            contenedorLista.appendChild(fila);
+        });
+    }
+
+    if (badgeContador) badgeContador.innerText = piezasTotales;
+    if (totalTexto) totalTexto.innerText = `$${montoTotal.toFixed(2)}`;
+}
+        // === FUNCIÓN CORREGIDA: ENVÍA POR WHATSAPP Y LUEGO MUESTRA EL AGRADECIMIENTO ===
+function despacharPedidoAWhatsApp() {
+    const cliente = document.getElementById('nombre-cliente').value.trim();
+    if (!cliente) { alert("Por favor escribe tu nombre."); return; }
+    if (carrito.length === 0) { alert("Tu carrito está vacío."); return; }
+
+    // =========================================================================
+    // COLOCA AQUÍ TU TELÉFONO REAL DE ATENCIÓN (CON CLAVE DE PAÍS, SIN ESPACIOS NI SIGNOS +)
+    // Ej: "521XXXXXXXXXX" (Si es México, pon 521 seguido de tus 10 dígitos)
+    // =========================================================================
+    //const miTelefonoSpaceWings = "521234567890"; 
+
+    // Estructurar el texto que llegará a tu celular
+    let msg = `🚀 *NUEVO PEDIDO - SPACE WINGS* 🚀\n\n`;
+    msg += `👤 *Cliente:* ${cliente}\n`;
+    msg += `-------------------------------------------\n`;
+
+    let totalPedido = 0;
+    carrito.forEach(item => {
+        const sub = item.precio * item.cantidad;
+        totalPedido += sub;
+        msg += `📦 *${item.cantidad}x* ${item.nombre}\n`;
+        if (item.salsa) msg += `   └ Salsa: ${item.salsa}\n`;
+        if (item.descripcion) msg += `   └ ${item.descripcion}\n`;
+        if (item.nota) msg += `   └ Nota: _${item.nota}_\n`;
+        msg += `   └ Subtotal: $${sub.toFixed(2)}\n\n`;
+    });
+
+    msg += `-------------------------------------------\n`;
+    msg += `💰 *TOTAL A PAGAR:* $${totalPedido.toFixed(2)}`;
+
+    // 1. ABRIR EL CHAT DE WHATSAPP OFICIAL CON EL PEDIDO LISTO
+   const urlApi = "https://wa.me/523411398581?text=" + encodeURIComponent(msg);
+    window.open(urlApi, '_blank');
+
+    // 2. INYECTAR DATOS EN LA INTERFAZ DE TU PÁGINA WEB
+    document.getElementById('agradecimiento-cliente').innerText = cliente;
+    document.getElementById('agradecimiento-total').innerText = `$${totalPedido.toFixed(2)}`;
+
+    // 3. CAMBIAR DE PANTALLA EN TU SITIO WEB TRAS EL ENVÍO
+    document.getElementById('pantalla-tienda').style.display = 'none';
+    document.getElementById('pantalla-agradecimiento').style.display = 'block';
+
+    // Limpiar carrito de compras local
+    carrito = [];
+    actualizarInterfazCarrito();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+        function volverAlMenu() {
+            document.getElementById('pantalla-agradecimiento').style.display = 'none';
+            document.getElementById('pantalla-tienda').style.display = 'flex';
+            document.getElementById('nombre-cliente').value = '';
+        }
+
+       document.addEventListener('DOMContentLoaded', () => {
+    cargarMenuCompleto();
+    
+    const btnWhatsapp = document.getElementById('btn-whatsapp');
+    if (btnWhatsapp) {
+        btnWhatsapp.addEventListener('click', despacharPedidoAWhatsApp);
+    }
+
+    // LÓGICA MÓVIL: Abre/cierra el carrito al tocar la barra superior en celular
+    const panelPedido = document.querySelector('aside.panel-pedido');
+    const cabeceraPedido = document.querySelector('.cabecera-pedido') || document.querySelector('aside.panel-pedido h2');
+    
+    if (cabeceraPedido && panelPedido) {
+        cabeceraPedido.addEventListener('click', () => {
+            if (window.innerWidth <= 990) {
+                panelPedido.classList.toggle('expandido');
+            }
+        });
+    }
+});
+
+// Interceptores para abrir el carrito hacia arriba de forma automática al presionar "AGREGAR +"
+const originalAgregarIndividual = agregarIndividualAlCarrito;
+agregarIndividualAlCarrito = function(id) {
+    originalAgregarIndividual(id);
+    forzarAperturaCarritoMovil();
+};
+
+const originalAgregarCombo = agregarComboEstructuraNueva;
+if (typeof agregarComboEstructuraNueva !== 'undefined') {
+    agregarComboEstructuraNueva = function(comboId) {
+        originalAgregarCombo(comboId);
+        forzarAperturaCarritoMovil();
+    };
+}
+
+function forzarAperturaCarritoMovil() {
+    if (window.innerWidth <= 990) {
+        const panel = document.querySelector('aside.panel-pedido');
+        if (panel) panel.classList.add('expandido');
+    }
+}
+
+    </script>
+</body>
+</html>
