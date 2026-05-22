@@ -3,45 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Wings - Menú Digital</title>
+    <title>Space Wings - Menú Digital Premium</title>
     
-    <!-- Fuentes tipográficas modernas y elegantes -->
+    <!-- Fuentes premium de alta legibilidad -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
     <style>
-    /* --- VARIABLES GLOBALES DE DISEÑO PREMIUM --- */
+    /* --- VARIABLES DE DISEÑO ULTRA-PREMIUM --- */
     :root {
-        --bg-main: #f8fafc;        /* Fondo general ultra limpio */
-        --bg-card: #ffffff;        /* Fondo de tarjetas y paneles */
-        --brand-primary: #c27d38;   /* Café canela insignia de la marca */
-        --brand-light: #fdf4eb;     /* Variación suave para fondos de acento */
-        --brand-hover: #a8682a;     /* Café canela oscuro para interacciones */
-        --text-dark: #0f172a;       /* Texto principal (Slate 900) */
-        --text-muted: #64748b;      /* Texto secundario/notas (Slate 500) */
-        --border-color: #e2e8f0;    /* Líneas de división sutiles (Slate 200) */
-        --success: #10b981;         /* Verde para confirmaciones */
-        --error: #ef4444;           /* Rojo para cancelaciones y alertas */
-        --error-light: #fef2f2;     /* Fondo suave para botones de eliminar */
-        --radius-lg: 20px;          /* Esquinas muy suaves para tarjetas */
-        --radius-md: 12px;          /* Esquinas para elementos internos */
-        --radius-sm: 8px;           /* Esquinas para botones pequeños y selectores */
-        --shadow-sm: 0 4px 6px -1px rgba(15, 23, 42, 0.03), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
-        --shadow-md: 0 12px 25px -5px rgba(15, 23, 42, 0.06), 0 4px 12px -4px rgba(15, 23, 42, 0.04);
-        --shadow-lg: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
-        --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        --bg-main: #fcfdfd;          /* Fondo extremadamente limpio y sofisticado */
+        --bg-card: #ffffff;          /* Blanco puro para tarjetas */
+        --brand-primary: #b36b28;     /* Canela de autor, ligeramente más profundo */
+        --brand-light: #fef6ee;       /* Tono pálido sutil para superficies secundarias */
+        --brand-hover: #91541d;       /* Tono de interacción profunda */
+        --text-dark: #090d16;         /* Negro tinta profundo de alta gama */
+        --text-muted: #5e6b7e;        /* Gris neutro pulido para descripciones */
+        --border-color: #e9eff5;      /* Línea divisoria suave estilo Apple */
+        --border-hover: #d2dee9;      /* Línea divisoria en estado enfocado */
+        --success: #0eb87f;           /* Esmeralda limpio */
+        --error: #f04444;             /* Coral vibrante */
+        --error-light: #fff5f5;       /* Fondo suave de error */
+        
+        /* Sistema de esquinas (Border Radius) */
+        --radius-lg: 24px;            /* Bordes extra suaves */
+        --radius-md: 16px;
+        --radius-sm: 10px;
+        
+        /* Sombras cinemáticas (Multi-layered Smooth Shadows) */
+        --shadow-sm: 0 2px 8px -1px rgba(9, 13, 22, 0.02), 0 4px 16px -2px rgba(9, 13, 22, 0.02);
+        --shadow-md: 0 16px 32px -6px rgba(9, 13, 22, 0.04), 0 4px 16px -4px rgba(9, 13, 22, 0.02);
+        --shadow-lg: 0 32px 64px -12px rgba(9, 13, 22, 0.06), 0 16px 24px -8px rgba(9, 13, 22, 0.02);
+        
+        /* Animaciones */
+        --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* --- ESTILOS BASE --- */
     body {
         background-color: var(--bg-main);
         color: var(--text-dark);
-        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
         margin: 0;
         display: flex;
         min-height: 100vh;
         -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     #pantalla-tienda {
@@ -51,31 +59,34 @@
 
     main {
         flex: 1;
-        padding: 50px 40px;
+        padding: 60px 50px;
         box-sizing: border-box;
-        max-width: 1200px;
+        max-width: 1240px;
         margin: 0 auto;
     }
 
-    /* --- LOGOTIPO Y ENCABEZADOS --- */
+    /* --- ENCABEZADOS Y BRANDING --- */
     h1.logo {
         font-family: 'Space Grotesk', sans-serif;
         color: var(--brand-primary);
-        font-size: 3rem;
+        font-size: 3.5rem;
         text-transform: uppercase;
         text-align: center;
-        margin-bottom: 45px;
+        margin-bottom: 50px;
         font-weight: 700;
-        letter-spacing: -1px;
+        letter-spacing: -1.5px;
+        background: linear-gradient(135deg, var(--brand-primary), #d98e43);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
     h2.seccion-titulo {
         font-family: 'Space Grotesk', sans-serif;
         color: var(--text-dark);
-        padding-bottom: 12px;
-        margin-top: 50px;
+        padding-bottom: 14px;
+        margin-top: 60px;
         text-transform: uppercase;
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         font-weight: 700;
         letter-spacing: 0.5px;
         position: relative;
@@ -86,45 +97,64 @@
         position: absolute;
         bottom: 0;
         left: 0;
-        width: 50px;
-        height: 3px;
+        width: 40px;
+        height: 4px;
         background-color: var(--brand-primary);
-        border-radius: 2px;
+        border-radius: 50px;
     }
-    /* --- CONTENEDORES Y CUADRÍCULAS --- */
+            /* --- ESTRUCTURAS DE RETÍCULA MODERNA --- */
     .grid-productos {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-        gap: 28px;
-        margin-top: 25px;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 32px;
+        margin-top: 30px;
     }
 
     #contenedor-combos {
         display: flex;
         flex-direction: column;
-        gap: 30px;
-        margin-top: 25px;
+        gap: 35px;
+        margin-top: 30px;
     }
 
-    /* --- TARJETAS DE PRODUCTOS INDIVIDUALES --- */
+    /* --- TARJETAS PREMIUM INDIVIDUALES --- */
     .tarjeta-producto {
         background-color: var(--bg-card);
         border: 1px solid var(--border-color);
         border-radius: var(--radius-lg);
-        padding: 28px;
+        padding: 32px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         box-shadow: var(--shadow-sm);
         transition: var(--transition);
         position: relative;
-        overflow: hidden;
     }
 
     .tarjeta-producto:hover {
-        transform: translateY(-6px);
-        box-shadow: var(--shadow-md);
-        border-color: rgba(194, 125, 56, 0.3);
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--border-hover);
+    }
+
+    /* Pequeño destello interno decorativo al pasar el mouse */
+    .tarjeta-producto::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: var(--radius-lg);
+        padding: 1px;
+        background: linear-gradient(to bottom, rgba(179, 107, 40, 0.1), transparent);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+        opacity: 0;
+        transition: var(--transition);
+    }
+
+    .tarjeta-producto:hover::before {
+        opacity: 1;
     }
 
     .tag-categoria {
@@ -132,57 +162,61 @@
         color: var(--brand-primary);
         padding: 6px 14px;
         border-radius: 50px;
-        font-size: 0.75rem;
+        font-size: 0.72rem;
         font-weight: 700;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
         display: inline-block;
         align-self: flex-start;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.8px;
     }
 
     .tarjeta-producto h3 {
         color: var(--text-dark);
+        font-size: 1.25rem;
         font-weight: 700;
-        margin: 8px 0;
+        margin: 0 0 10px 0;
+        line-height: 1.3;
     }
 
     .precio {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         color: var(--brand-primary);
-        font-weight: 800;
-        margin: 14px 0;
+        font-weight: 700;
+        margin: 16px 0;
         font-family: 'Space Grotesk', sans-serif;
     }
 
-    /* --- CONFIGURADOR DE COMBOS ADVANCED --- */
+    /* --- TARJETA DE COMBOS ESTRUCTURA DE ALTA GAMA --- */
     .tarjeta-combo-full {
         background-color: var(--bg-card);
         border: 1px solid var(--border-color);
         border-radius: var(--radius-lg);
-        padding: 32px;
+        padding: 40px;
         width: 100%;
         box-sizing: border-box;
         box-shadow: var(--shadow-sm);
         transition: var(--transition);
+        position: relative;
     }
 
     .tarjeta-combo-full:hover {
-        box-shadow: var(--shadow-md);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--border-hover);
     }
 
     .header-combo {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 24px;
+        margin-bottom: 28px;
         border-bottom: 1px dashed var(--border-color);
-        padding-bottom: 16px;
+        padding-bottom: 20px;
     }
 
     .header-combo h3 {
         margin: 0;
-        font-size: 1.5rem;
+        font-size: 1.65rem;
         color: var(--text-dark);
         font-weight: 700;
         font-family: 'Space Grotesk', sans-serif;
@@ -190,20 +224,20 @@
 
     .header-combo .precio-combo {
         color: var(--brand-primary);
-        font-size: 1.6rem;
-        font-weight: 800;
+        font-size: 1.75rem;
+        font-weight: 700;
         font-family: 'Space Grotesk', sans-serif;
     }
 
     .config-box {
-        background-color: var(--bg-main);
-        border: 1px solid var(--border-color);
+        background-color: var(--brand-light);
+        border: 1px solid rgba(179, 107, 40, 0.08);
         border-radius: var(--radius-md);
-        padding: 24px;
-        margin-bottom: 20px;
+        padding: 28px;
+        margin-bottom: 24px;
         display: flex !important;
         flex-direction: column !important;
-        gap: 18px;
+        gap: 20px;
     }
 
     .campo-grupo {
@@ -213,51 +247,54 @@
     .campo-grupo label {
         display: block;
         color: var(--text-muted);
-        font-size: 0.75rem;
+        font-size: 0.72rem;
         font-weight: 700;
         text-transform: uppercase;
-        margin-bottom: 8px;
-        letter-spacing: 0.8px;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
     }
 
-    /* --- FORMULARIOS Y SELECTORES MODERNOS --- */
+    /* --- CONTROL SELECT TOTALMENTE REDISEÑADO --- */
     select {
         width: 100%;
         background-color: var(--bg-card);
         color: var(--text-dark);
         border: 1px solid var(--border-color);
-        padding: 12px 16px;
+        padding: 14px 18px;
         border-radius: var(--radius-sm);
         font-size: 0.9rem;
         font-family: inherit;
-        font-weight: 500;
+        font-weight: 600;
         box-sizing: border-box;
         cursor: pointer;
         transition: var(--transition);
         appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+        /* Icono SVG de flecha minimalista pulida */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 20 20' fill='%235e6b7e'%3E%3Cpath fill-rule='evenodd' d='M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06z' clip-rule='evenodd' /%3E%3C/svg%3E");
         background-repeat: no-repeat;
-        background-position: right 16px center;
-        background-size: 16px;
-        padding-right: 40px;
+        background-position: right 18px center;
+        background-size: 20px;
+        padding-right: 48px;
+        box-shadow: 0 1px 2px rgba(9, 13, 22, 0.01);
     }
 
     select:focus {
         outline: none;
         border-color: var(--brand-primary);
-        box-shadow: 0 0 0 3px rgba(194, 125, 56, 0.15);
+        box-shadow: 0 0 0 4px rgba(179, 107, 40, 0.12);
+        background-color: var(--bg-card);
     }
-    /* --- BOTONES MODERNOS --- */
+    /* --- MICRO-INTERACCIONES EN BOTONES --- */
     .btn-agregar-combo {
         background-color: var(--text-dark);
         color: #ffffff;
         border: none;
-        padding: 14px 28px;
+        padding: 16px 32px;
         border-radius: var(--radius-sm);
         font-weight: 700;
         font-size: 0.85rem;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.8px;
         cursor: pointer;
         transition: var(--transition);
         float: right !important;
@@ -268,45 +305,47 @@
 
     .btn-agregar-combo:hover {
         background-color: var(--brand-primary);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(194, 125, 56, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(179, 107, 40, 0.25);
     }
 
     .btn-agregar-combo:active {
-        transform: scale(0.98);
+        transform: translateY(-1px) scale(0.98);
     }
 
     .btn-agregar-individual {
         background-color: var(--text-dark);
         color: #ffffff;
         border: none;
-        padding: 14px;
+        padding: 16px;
         border-radius: var(--radius-sm);
         font-weight: 700;
         cursor: pointer;
         width: 100%;
-        margin-top: 15px;
+        margin-top: 20px;
         text-transform: uppercase;
         font-size: 0.8rem;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.8px;
         transition: var(--transition);
+        box-shadow: var(--shadow-sm);
     }
 
     .btn-agregar-individual:hover {
         background-color: var(--brand-primary);
-        box-shadow: 0 4px 12px rgba(194, 125, 56, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(179, 107, 40, 0.25);
     }
 
     .btn-agregar-individual:active {
-        transform: scale(0.98);
+        transform: translateY(-1px) scale(0.98);
     }
 
-    /* --- INTERFAZ LATERAL FIJA DEL PEDIDO --- */
+    /* --- PANEL DE COMPRAS LATERAL AVANZADO --- */
     aside.panel-pedido {
-        width: 380px;
+        width: 400px;
         background-color: var(--bg-card);
         border-left: 1px solid var(--border-color);
-        padding: 32px 24px;
+        padding: 40px 28px;
         position: sticky;
         top: 0;
         height: 100vh;
@@ -314,7 +353,7 @@
         display: flex;
         flex-direction: column;
         z-index: 100;
-        box-shadow: -10px 0 30px rgba(15, 23, 42, 0.02);
+        box-shadow: -15px 0 45px rgba(9, 13, 22, 0.015);
     }
 
     .cabecera-pedido {
@@ -322,13 +361,13 @@
         justify-content: space-between;
         align-items: center;
         border-bottom: 2px solid var(--bg-main);
-        padding-bottom: 20px;
-        margin-bottom: 24px;
+        padding-bottom: 24px;
+        margin-bottom: 28px;
     }
 
     .cabecera-pedido h2 {
         margin: 0;
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         font-weight: 700;
         color: var(--text-dark);
         font-family: 'Space Grotesk', sans-serif;
@@ -338,25 +377,26 @@
         background-color: var(--brand-primary);
         color: #ffffff;
         border-radius: 50px;
-        padding: 4px 12px;
+        padding: 4px 14px;
         font-weight: 700;
         font-size: 0.85rem;
         font-family: 'Space Grotesk', sans-serif;
+        box-shadow: 0 4px 10px rgba(179, 107, 40, 0.2);
     }
 
     .label-cliente {
         display: block;
         color: var(--text-muted);
-        margin-bottom: 8px;
-        font-size: 0.75rem;
+        margin-bottom: 10px;
+        font-size: 0.72rem;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.8px;
+        letter-spacing: 1px;
     }
 
     .input-nombre {
         width: 100%;
-        padding: 14px 16px;
+        padding: 16px 18px;
         border-radius: var(--radius-sm);
         border: 1px solid var(--border-color);
         background-color: var(--bg-main);
@@ -364,7 +404,7 @@
         box-sizing: border-box;
         font-size: 0.95rem;
         font-family: inherit;
-        font-weight: 500;
+        font-weight: 600;
         transition: var(--transition);
     }
 
@@ -372,39 +412,46 @@
         outline: none;
         border-color: var(--brand-primary);
         background-color: var(--bg-card);
-        box-shadow: 0 0 0 3px rgba(194, 125, 56, 0.15);
+        box-shadow: 0 0 0 4px rgba(179, 107, 40, 0.12);
     }
 
     .Carrito-elementos {
         flex: 1;
         overflow-y: auto;
-        margin-top: 20px;
-        padding-right: 4px;
+        margin-top: 24px;
+        padding-right: 6px;
     }
 
-    /* Estilización sutil de la barra de desplazamiento interna */
+    /* Barra de desplazamiento estética estilo iOS / MacOS */
     .Carrito-elementos::-webkit-scrollbar {
-        width: 6px;
+        width: 5px;
     }
     .Carrito-elementos::-webkit-scrollbar-thumb {
-        background-color: var(--border-color);
+        background-color: var(--border-hover);
         border-radius: 10px;
     }
 
-    /* --- FILAS DEL CARRITO --- */
+    /* --- ELEMENTOS AGREGADOS AL CARRITO --- */
     .item-carrito-fila {
         background-color: var(--bg-main);
-        padding: 16px;
+        padding: 20px;
         border-radius: var(--radius-md);
-        margin-bottom: 14px;
+        margin-bottom: 16px;
         border: 1px solid var(--border-color);
         box-sizing: border-box;
+        transition: var(--transition);
+    }
+
+    .item-carrito-fila:hover {
+        border-color: var(--border-hover);
+        background-color: var(--brand-light);
     }
 
     .item-encabezado-flex {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
+        gap: 12px;
     }
 
     .item-titulo-carrito {
@@ -412,38 +459,39 @@
         font-weight: 700;
         font-size: 0.95rem;
         color: var(--text-dark);
+        line-height: 1.4;
     }
 
     .item-salsa-carrito {
-        margin: 4px 0 0 0;
+        margin: 6px 0 0 0;
         color: var(--brand-primary);
         font-size: 0.8rem;
-        font-weight: 600;
+        font-weight: 700;
     }
 
     .item-desc-carrito {
-        margin: 6px 0 0 0;
+        margin: 8px 0 0 0;
         color: var(--text-muted);
-        font-size: 0.75rem;
+        font-size: 0.78rem;
         line-height: 1.4;
     }
 
     .item-precio-carrito {
         font-weight: 700;
         color: var(--brand-primary);
-        font-size: 0.95rem;
-        margin: 8px 0 0 0;
+        font-size: 1rem;
+        margin: 10px 0 0 0;
         font-family: 'Space Grotesk', sans-serif;
     }
 
     .input-nota-carrito {
         width: 100%;
-        margin-top: 12px;
-        padding: 8px 12px;
+        margin-top: 14px;
+        padding: 10px 14px;
         border: 1px solid var(--border-color);
         background-color: var(--bg-card);
         border-radius: var(--radius-sm);
-        font-size: 0.75rem;
+        font-size: 0.78rem;
         box-sizing: border-box;
         color: var(--text-dark);
         font-family: inherit;
@@ -453,13 +501,14 @@
     .input-nota-carrito:focus {
         outline: none;
         border-color: var(--brand-primary);
+        box-shadow: 0 0 0 3px rgba(179, 107, 40, 0.08);
     }
-    /* --- CONTRELES DE CANTIDAD Y ACCIÓN --- */
+    /* --- CONTROLES DE CANTIDAD PREMIUM --- */
     .controles-contenedor {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin-top: 10px;
+        gap: 12px;
+        margin-top: 14px;
     }
 
     .item-botones-qty {
@@ -467,20 +516,21 @@
         align-items: center;
         background-color: var(--bg-card);
         border-radius: var(--radius-sm);
-        padding: 4px;
+        padding: 5px;
         border: 1px solid var(--border-color);
+        box-shadow: 0 1px 2px rgba(9, 13, 22, 0.02);
     }
 
     .item-botones-qty button {
         background: var(--bg-main);
         color: var(--text-dark);
         border: 1px solid var(--border-color);
-        width: 26px;
-        height: 26px;
+        width: 28px;
+        height: 28px;
         border-radius: 6px;
         cursor: pointer;
         font-weight: 700;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -499,21 +549,22 @@
 
     .item-botones-qty span {
         color: var(--text-dark);
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         font-weight: 700;
-        padding: 0 12px;
-        min-width: 16px;
+        padding: 0 14px;
+        min-width: 18px;
         text-align: center;
+        font-family: 'Space Grotesk', sans-serif;
     }
 
     .btn-cancelar {
         background: var(--error-light);
-        border: 1px solid rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(240, 68, 68, 0.12);
         color: var(--error);
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         font-weight: 700;
         cursor: pointer;
-        padding: 4px 10px;
+        padding: 4px 12px;
         border-radius: var(--radius-sm);
         display: flex;
         align-items: center;
@@ -525,17 +576,18 @@
         background: var(--error);
         color: #ffffff;
         border-color: var(--error);
+        box-shadow: 0 4px 12px rgba(240, 68, 68, 0.2);
     }
 
-    /* --- PANEL DE TOTALES Y BOTÓN WHATSAPP --- */
+    /* --- PANEL DE COMPRA TOTAL Y BOTÓN DE WHATSAPP --- */
     aside.panel-pedido .Total {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.3rem !important;
+        font-size: 1.4rem !important;
         font-weight: 700 !important;
         color: var(--text-dark) !important;
-        margin-top: 24px !important;
+        margin-top: 30px !important;
         border-top: 2px solid var(--bg-main);
-        padding-top: 18px;
+        padding-top: 22px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -543,38 +595,39 @@
 
     aside.panel-pedido #carrito-total {
         color: var(--brand-primary);
-        font-weight: 800;
+        font-weight: 700;
+        font-size: 1.6rem;
     }
 
     aside.panel-pedido button.Boton-enviar {
-        background-color: var(--brand-primary) !important;
+        background: linear-gradient(135deg, var(--brand-primary), #d98e43) !important;
         color: #ffffff !important;
         border: none !important;
-        padding: 16px 24px !important;
+        padding: 18px 28px !important;
         border-radius: var(--radius-md) !important;
         font-size: 1rem !important;
         font-weight: 700 !important;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.8px;
         cursor: pointer !important;
         width: 100% !important;
-        margin-top: 20px !important;
-        box-shadow: 0 4px 14px rgba(194, 125, 56, 0.3) !important;
+        margin-top: 24px !important;
+        box-shadow: 0 6px 20px rgba(179, 107, 40, 0.3) !important;
         transition: var(--transition) !important;
         display: block !important;
     }
 
     aside.panel-pedido button.Boton-enviar:hover {
-        background-color: var(--brand-hover) !important;
-        box-shadow: 0 6px 20px rgba(194, 125, 56, 0.4) !important;
-        transform: translateY(-1px);
+        background: linear-gradient(135deg, var(--brand-hover), var(--brand-primary)) !important;
+        box-shadow: 0 10px 28px rgba(179, 107, 40, 0.4) !important;
+        transform: translateY(-2px);
     }
 
     aside.panel-pedido button.Boton-enviar:active {
-        transform: scale(0.99) !important;
+        transform: translateY(-1px) scale(0.99) !important;
     }
 
-    /* --- DISEÑO RESPONSIVO MÓVIL (CARRITO FLOTANTE COLAPSABLE) --- */
+    /* --- ADAPTACIÓN RESPONSIVE ULTRA-FLUIDA MÓVIL --- */
     @media (max-width: 990px) {
         body {
             flex-direction: column !important;
@@ -585,19 +638,19 @@
         }
 
         main {
-            padding: 30px 20px !important;
-            padding-bottom: 100px !important;
+            padding: 40px 24px !important;
+            padding-bottom: 120px !important;
         }
 
         h1.logo {
-            font-size: 2.4rem;
-            margin-bottom: 30px;
+            font-size: 2.8rem;
+            margin-bottom: 35px;
         }
 
         aside.panel-pedido {
             width: 100% !important;
             height: auto !important;
-            max-height: 70px;
+            max-height: 75px;
             position: fixed !important;
             bottom: 0 !important;
             left: 0 !important;
@@ -605,11 +658,11 @@
             border-left: none !important;
             border-top: 2px solid var(--brand-primary);
             background-color: var(--bg-card) !important;
-            padding: 16px 24px !important;
-            box-shadow: 0 -10px 40px rgba(15, 23, 42, 0.1) !important;
+            padding: 18px 28px !important;
+            box-shadow: 0 -12px 50px rgba(9, 13, 22, 0.12) !important;
             border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
             overflow: hidden !important;
-            transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
             z-index: 9999 !important;
         }
 
@@ -628,13 +681,13 @@
 
         aside.panel-pedido.expandido .cabecera-pedido {
             border-bottom: 2px solid var(--bg-main) !important;
-            padding-bottom: 16px !important;
-            margin-bottom: 20px !important;
+            padding-bottom: 20px !important;
+            margin-bottom: 24px !important;
         }
 
         .Carrito-elementos {
-            max-height: 320px !important;
-            margin-top: 20px !important;
+            max-height: 340px !important;
+            margin-top: 24px !important;
         }
 
         aside.panel-pedido:not(.expandido) .label-cliente,
@@ -650,19 +703,21 @@
             border-top: none !important;
             padding-top: 0 !important;
             margin-top: 0 !important;
-            font-size: 1.1rem !important;
+            font-size: 1.15rem !important;
         }
 
-        /* Indicadores interactivos del estado del carrito en móvil */
+        /* Botón dinámico interactivo en móviles */
         .cabecera-pedido::after {
             content: '🔼 Ver pedido';
             color: var(--brand-primary);
             font-size: 0.8rem;
             font-weight: 700;
             background-color: var(--brand-light);
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 50px;
             transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         aside.panel-pedido.expandido .cabecera-pedido::after {
@@ -673,7 +728,7 @@
     }
     </style>
 
-  
+
 </head>
 <body>
 
