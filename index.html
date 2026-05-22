@@ -2,54 +2,61 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Wings - Menú Digital Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Space Wings — Experiencia Menú Digital</title>
     
-    <!-- Fuentes premium de alta legibilidad -->
+    <!-- Tipografías de Vanguardia -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 
     <style>
-    /* --- VARIABLES DE DISEÑO ULTRA-PREMIUM --- */
+    /* --- VARIABLES DE ALTA COSTURA DIGITAL --- */
     :root {
-        --bg-main: #fcfdfd;          /* Fondo extremadamente limpio y sofisticado */
-        --bg-card: #ffffff;          /* Blanco puro para tarjetas */
-        --brand-primary: #b36b28;     /* Canela de autor, ligeramente más profundo */
-        --brand-light: #fef6ee;       /* Tono pálido sutil para superficies secundarias */
-        --brand-hover: #91541d;       /* Tono de interacción profunda */
-        --text-dark: #090d16;         /* Negro tinta profundo de alta gama */
-        --text-muted: #5e6b7e;        /* Gris neutro pulido para descripciones */
-        --border-color: #e9eff5;      /* Línea divisoria suave estilo Apple */
-        --border-hover: #d2dee9;      /* Línea divisoria en estado enfocado */
-        --success: #0eb87f;           /* Esmeralda limpio */
-        --error: #f04444;             /* Coral vibrante */
-        --error-light: #fff5f5;       /* Fondo suave de error */
+        --bg-cosmico: #07090e;      /* Fondo de contraste absoluto para resaltar el producto */
+        --bg-surface: #101524;      /* Superficie base de paneles de control */
+        --glass-bg: rgba(255, 255, 255, 0.03); /* Cristal líquido ultra-translúcido */
+        --glass-border: rgba(255, 255, 255, 0.07); /* Borde de refracción de luz */
+        --glass-border-glow: rgba(212, 137, 58, 0.4); /* Reflejo del color insignia */
         
-        /* Sistema de esquinas (Border Radius) */
-        --radius-lg: 24px;            /* Bordes extra suaves */
-        --radius-md: 16px;
-        --radius-sm: 10px;
+        /* Paleta Cromática "Fuego & Especias" */
+        --brand-accent: #d4893a;     /* Oro canela tostado hiper-saturado */
+        --brand-glow: rgba(212, 137, 58, 0.15);
+        --text-gold: #f5e4d3;       /* Crema de alta legibilidad sobre fondos oscuros */
+        --text-white: #ffffff;
+        --text-muted: #8fa0b5;      /* Gris acero suave para subtítulos */
         
-        /* Sombras cinemáticas (Multi-layered Smooth Shadows) */
-        --shadow-sm: 0 2px 8px -1px rgba(9, 13, 22, 0.02), 0 4px 16px -2px rgba(9, 13, 22, 0.02);
-        --shadow-md: 0 16px 32px -6px rgba(9, 13, 22, 0.04), 0 4px 16px -4px rgba(9, 13, 22, 0.02);
-        --shadow-lg: 0 32px 64px -12px rgba(9, 13, 22, 0.06), 0 16px 24px -8px rgba(9, 13, 22, 0.02);
+        /* Estado del Sistema */
+        --success: #10b981;
+        --error-vibrant: #ff4a4a;
+        --error-dim: rgba(255, 74, 74, 0.1);
         
-        /* Animaciones */
-        --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Radios Orgánicos (Squircle Shapes) */
+        --radius-card: 24px;
+        --radius-interactive: 14px;
+        --radius-pill: 100px;
+        
+        /* Ingeniería de Sombras y Transiciones */
+        --shadow-nebula: 0 20px 50px -12px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 137, 58, 0.03);
+        --shadow-glow: 0 0 30px rgba(212, 137, 58, 0.25);
+        --transition-fluid: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* --- ESTILOS BASE --- */
+    /* --- LIENZO DEL SISTEMA --- */
     body {
-        background-color: var(--bg-main);
-        color: var(--text-dark);
-        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        background-color: var(--bg-cosmico);
+        color: var(--text-white);
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
         margin: 0;
         display: flex;
         min-height: 100vh;
         -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+        /* Efecto de luz ambiental difusa de fondo */
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(212, 137, 58, 0.05) 0%, transparent 40%),
+            radial-gradient(circle at 90% 80%, rgba(212, 137, 58, 0.03) 0%, transparent 50%);
+        background-attachment: fixed;
     }
 
     #pantalla-tienda {
@@ -59,36 +66,36 @@
 
     main {
         flex: 1;
-        padding: 60px 50px;
+        padding: 70px 60px;
         box-sizing: border-box;
-        max-width: 1240px;
+        max-width: 1280px;
         margin: 0 auto;
     }
 
-    /* --- ENCABEZADOS Y BRANDING --- */
+    /* --- MARCA E IDENTIDAD VISUAL --- */
     h1.logo {
         font-family: 'Space Grotesk', sans-serif;
-        color: var(--brand-primary);
-        font-size: 3.5rem;
+        font-size: 4rem;
         text-transform: uppercase;
         text-align: center;
-        margin-bottom: 50px;
+        margin-bottom: 60px;
         font-weight: 700;
-        letter-spacing: -1.5px;
-        background: linear-gradient(135deg, var(--brand-primary), #d98e43);
+        letter-spacing: -2px;
+        background: linear-gradient(135deg, #ffffff 30%, var(--brand-accent) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5));
     }
 
     h2.seccion-titulo {
         font-family: 'Space Grotesk', sans-serif;
-        color: var(--text-dark);
-        padding-bottom: 14px;
-        margin-top: 60px;
+        color: var(--text-gold);
+        padding-bottom: 18px;
+        margin-top: 70px;
         text-transform: uppercase;
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         font-weight: 700;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
         position: relative;
     }
 
@@ -97,151 +104,160 @@
         position: absolute;
         bottom: 0;
         left: 0;
-        width: 40px;
-        height: 4px;
-        background-color: var(--brand-primary);
-        border-radius: 50px;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--brand-accent), transparent);
+        border-radius: var(--radius-pill);
     }
-            /* --- ESTRUCTURAS DE RETÍCULA MODERNA --- */
+            /* --- RETÍCULAS DE EXHIBICIÓN EN TRES DIMENSIONES --- */
     .grid-productos {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 32px;
-        margin-top: 30px;
+        grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+        gap: 35px;
+        margin-top: 35px;
     }
 
     #contenedor-combos {
         display: flex;
         flex-direction: column;
-        gap: 35px;
-        margin-top: 30px;
+        gap: 40px;
+        margin-top: 35px;
     }
 
-    /* --- TARJETAS PREMIUM INDIVIDUALES --- */
+    /* --- TARJETAS CRISTALINAS INDIVIDUALES (CYBER-GLASS) --- */
     .tarjeta-producto {
-        background-color: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-lg);
-        padding: 32px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-card);
+        padding: 35px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        box-shadow: var(--shadow-sm);
-        transition: var(--transition);
+        box-shadow: var(--shadow-nebula);
+        transition: var(--transition-fluid);
         position: relative;
+        overflow: hidden;
     }
 
-    .tarjeta-producto:hover {
-        transform: translateY(-8px);
-        box-shadow: var(--shadow-lg);
-        border-color: var(--border-hover);
-    }
-
-    /* Pequeño destello interno decorativo al pasar el mouse */
+    /* Efecto de iluminación interactiva perimetral */
     .tarjeta-producto::before {
         content: '';
         position: absolute;
         inset: 0;
-        border-radius: var(--radius-lg);
+        border-radius: var(--radius-card);
         padding: 1px;
-        background: linear-gradient(to bottom, rgba(179, 107, 40, 0.1), transparent);
+        background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent 60%, rgba(212, 137, 58, 0.05));
         -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
         mask-composite: exclude;
         pointer-events: none;
-        opacity: 0;
-        transition: var(--transition);
+        transition: var(--transition-fluid);
+    }
+
+    .tarjeta-producto:hover {
+        transform: translateY(-10px) scale(1.02);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(212, 137, 58, 0.3);
+        box-shadow: var(--shadow-nebula), 0 10px 40px rgba(212, 137, 58, 0.1);
     }
 
     .tarjeta-producto:hover::before {
-        opacity: 1;
+        background: linear-gradient(135deg, rgba(212, 137, 58, 0.5), transparent 40%, rgba(255,255,255,0.1));
     }
 
+    /* Insignia Holográfica de Categorías */
     .tag-categoria {
-        background-color: var(--brand-light);
-        color: var(--brand-primary);
-        padding: 6px 14px;
-        border-radius: 50px;
+        background: rgba(212, 137, 58, 0.12);
+        color: #ffb86c;
+        border: 1px solid rgba(212, 137, 58, 0.2);
+        padding: 6px 16px;
+        border-radius: var(--radius-pill);
         font-size: 0.72rem;
         font-weight: 700;
-        margin-bottom: 20px;
+        margin-bottom: 24px;
         display: inline-block;
         align-self: flex-start;
         text-transform: uppercase;
-        letter-spacing: 0.8px;
+        letter-spacing: 1.2px;
+        text-shadow: 0 0 10px rgba(212, 137, 58, 0.3);
     }
 
     .tarjeta-producto h3 {
-        color: var(--text-dark);
-        font-size: 1.25rem;
+        color: var(--text-white);
+        font-size: 1.35rem;
         font-weight: 700;
-        margin: 0 0 10px 0;
+        margin: 0 0 12px 0;
         line-height: 1.3;
+        letter-spacing: -0.3px;
     }
 
     .precio {
-        font-size: 1.5rem;
-        color: var(--brand-primary);
+        font-size: 1.7rem;
+        color: var(--brand-accent);
         font-weight: 700;
-        margin: 16px 0;
+        margin: 20px 0;
         font-family: 'Space Grotesk', sans-serif;
+        text-shadow: var(--shadow-glow);
     }
 
-    /* --- TARJETA DE COMBOS ESTRUCTURA DE ALTA GAMA --- */
+    /* --- CONFIGURADOR DE COMBOS MONOLÍTICO --- */
     .tarjeta-combo-full {
-        background-color: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-lg);
-        padding: 40px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-card);
+        padding: 45px;
         width: 100%;
         box-sizing: border-box;
-        box-shadow: var(--shadow-sm);
-        transition: var(--transition);
+        box-shadow: var(--shadow-nebula);
+        transition: var(--transition-fluid);
         position: relative;
     }
 
     .tarjeta-combo-full:hover {
-        box-shadow: var(--shadow-lg);
-        border-color: var(--border-hover);
+        border-color: rgba(212, 137, 58, 0.25);
+        box-shadow: var(--shadow-nebula), 0 15px 50px rgba(212, 137, 58, 0.05);
     }
 
     .header-combo {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 28px;
-        border-bottom: 1px dashed var(--border-color);
-        padding-bottom: 20px;
+        margin-bottom: 35px;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        padding-bottom: 24px;
     }
 
     .header-combo h3 {
         margin: 0;
-        font-size: 1.65rem;
-        color: var(--text-dark);
+        font-size: 1.85rem;
+        color: var(--text-white);
         font-weight: 700;
         font-family: 'Space Grotesk', sans-serif;
+        letter-spacing: -0.5px;
     }
 
     .header-combo .precio-combo {
-        color: var(--brand-primary);
-        font-size: 1.75rem;
+        color: var(--brand-accent);
+        font-size: 2rem;
         font-weight: 700;
         font-family: 'Space Grotesk', sans-serif;
+        text-shadow: var(--shadow-glow);
     }
 
+    /* Cápsula interna de opciones */
     .config-box {
-        background-color: var(--brand-light);
-        border: 1px solid rgba(179, 107, 40, 0.08);
-        border-radius: var(--radius-md);
-        padding: 28px;
-        margin-bottom: 24px;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        border-radius: var(--radius-interactive);
+        padding: 32px;
+        margin-bottom: 30px;
         display: flex !important;
         flex-direction: column !important;
-        gap: 20px;
-    }
-
-    .campo-grupo {
-        margin-bottom: 0;
+        gap: 24px;
     }
 
     .campo-grupo label {
@@ -250,102 +266,102 @@
         font-size: 0.72rem;
         font-weight: 700;
         text-transform: uppercase;
-        margin-bottom: 10px;
-        letter-spacing: 1px;
+        margin-bottom: 12px;
+        letter-spacing: 1.5px;
     }
 
-    /* --- CONTROL SELECT TOTALMENTE REDISEÑADO --- */
+    /* --- CONTROLES SELECT DE INYECCIÓN LUMINOSA --- */
     select {
         width: 100%;
-        background-color: var(--bg-card);
-        color: var(--text-dark);
-        border: 1px solid var(--border-color);
-        padding: 14px 18px;
-        border-radius: var(--radius-sm);
-        font-size: 0.9rem;
+        background-color: var(--bg-surface);
+        color: var(--text-gold);
+        border: 1px solid var(--glass-border);
+        padding: 16px 20px;
+        border-radius: var(--radius-interactive);
+        font-size: 0.95rem;
         font-family: inherit;
         font-weight: 600;
         box-sizing: border-box;
         cursor: pointer;
-        transition: var(--transition);
+        transition: var(--transition-fluid);
         appearance: none;
-        /* Icono SVG de flecha minimalista pulida */
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 20 20' fill='%235e6b7e'%3E%3Cpath fill-rule='evenodd' d='M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06z' clip-rule='evenodd' /%3E%3C/svg%3E");
+        /* Vector de flecha dorada ultra-limpia */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 20 20' fill='%23d4893a'%3E%3Cpath fill-rule='evenodd' d='M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06z' clip-rule='evenodd' /%3E%3C/svg%3E");
         background-repeat: no-repeat;
-        background-position: right 18px center;
-        background-size: 20px;
-        padding-right: 48px;
-        box-shadow: 0 1px 2px rgba(9, 13, 22, 0.01);
+        background-position: right 20px center;
+        background-size: 22px;
+        padding-right: 54px;
     }
 
     select:focus {
         outline: none;
-        border-color: var(--brand-primary);
-        box-shadow: 0 0 0 4px rgba(179, 107, 40, 0.12);
-        background-color: var(--bg-card);
+        border-color: var(--brand-accent);
+        box-shadow: 0 0 25px rgba(212, 137, 58, 0.2);
+        background-color: #141b2e;
     }
-    /* --- MICRO-INTERACCIONES EN BOTONES --- */
+    /* --- BOTONES CON LUMINISCENCIA TÁCTIL --- */
     .btn-agregar-combo {
-        background-color: var(--text-dark);
-        color: #ffffff;
+        background: linear-gradient(135deg, var(--brand-accent), #f3a953);
+        color: var(--bg-cosmico);
         border: none;
-        padding: 16px 32px;
-        border-radius: var(--radius-sm);
-        font-weight: 700;
+        padding: 18px 36px;
+        border-radius: var(--radius-interactive);
+        font-weight: 800;
         font-size: 0.85rem;
         text-transform: uppercase;
-        letter-spacing: 0.8px;
+        letter-spacing: 1px;
         cursor: pointer;
-        transition: var(--transition);
+        transition: var(--transition-fluid);
         float: right !important;
         margin-top: 5px !important;
         margin-bottom: 10px !important;
-        box-shadow: var(--shadow-sm);
+        box-shadow: 0 4px 15px rgba(212, 137, 58, 0.2);
     }
 
     .btn-agregar-combo:hover {
-        background-color: var(--brand-primary);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(179, 107, 40, 0.25);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(212, 137, 58, 0.4);
+        filter: brightness(1.1);
     }
 
     .btn-agregar-combo:active {
-        transform: translateY(-1px) scale(0.98);
+        transform: translateY(-1px) scale(0.97);
     }
 
     .btn-agregar-individual {
-        background-color: var(--text-dark);
-        color: #ffffff;
-        border: none;
-        padding: 16px;
-        border-radius: var(--radius-sm);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-white);
+        border: 1px solid var(--glass-border);
+        padding: 18px;
+        border-radius: var(--radius-interactive);
         font-weight: 700;
         cursor: pointer;
         width: 100%;
-        margin-top: 20px;
+        margin-top: 22px;
         text-transform: uppercase;
         font-size: 0.8rem;
-        letter-spacing: 0.8px;
-        transition: var(--transition);
-        box-shadow: var(--shadow-sm);
+        letter-spacing: 1px;
+        transition: var(--transition-fluid);
     }
 
     .btn-agregar-individual:hover {
-        background-color: var(--brand-primary);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(179, 107, 40, 0.25);
+        background: linear-gradient(135deg, var(--brand-accent), #f3a953);
+        color: var(--bg-cosmico);
+        border-color: transparent;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(212, 137, 58, 0.3);
     }
 
     .btn-agregar-individual:active {
-        transform: translateY(-1px) scale(0.98);
+        transform: translateY(-1px) scale(0.97);
     }
 
-    /* --- PANEL DE COMPRAS LATERAL AVANZADO --- */
+    /* --- PANEL DE ADQUISICIÓN LATERAL (COMMAND PANEL) --- */
     aside.panel-pedido {
-        width: 400px;
-        background-color: var(--bg-card);
-        border-left: 1px solid var(--border-color);
-        padding: 40px 28px;
+        width: 420px;
+        background-color: var(--bg-surface);
+        border-left: 1px solid var(--glass-border);
+        padding: 45px 32px;
         position: sticky;
         top: 0;
         height: 100vh;
@@ -353,281 +369,300 @@
         display: flex;
         flex-direction: column;
         z-index: 100;
-        box-shadow: -15px 0 45px rgba(9, 13, 22, 0.015);
+        box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
     }
 
     .cabecera-pedido {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 2px solid var(--bg-main);
-        padding-bottom: 24px;
-        margin-bottom: 28px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.04);
+        padding-bottom: 26px;
+        margin-bottom: 32px;
     }
 
     .cabecera-pedido h2 {
         margin: 0;
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         font-weight: 700;
-        color: var(--text-dark);
+        color: var(--text-white);
         font-family: 'Space Grotesk', sans-serif;
+        letter-spacing: -0.5px;
     }
 
     .contador-badge {
-        background-color: var(--brand-primary);
-        color: #ffffff;
+        background-color: rgba(212, 137, 58, 0.15);
+        color: var(--brand-accent);
+        border: 1px solid rgba(212, 137, 58, 0.3);
         border-radius: 50px;
-        padding: 4px 14px;
+        padding: 4px 16px;
         font-weight: 700;
         font-size: 0.85rem;
         font-family: 'Space Grotesk', sans-serif;
-        box-shadow: 0 4px 10px rgba(179, 107, 40, 0.2);
     }
 
     .label-cliente {
         display: block;
         color: var(--text-muted);
-        margin-bottom: 10px;
+        margin-bottom: 12px;
         font-size: 0.72rem;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
     }
 
     .input-nombre {
         width: 100%;
-        padding: 16px 18px;
-        border-radius: var(--radius-sm);
-        border: 1px solid var(--border-color);
-        background-color: var(--bg-main);
-        color: var(--text-dark);
+        padding: 18px 20px;
+        border-radius: var(--radius-interactive);
+        border: 1px solid var(--glass-border);
+        background-color: rgba(0, 0, 0, 0.2);
+        color: var(--text-white);
         box-sizing: border-box;
-        font-size: 0.95rem;
+        font-size: 1rem;
         font-family: inherit;
-        font-weight: 600;
-        transition: var(--transition);
+        font-weight: 500;
+        transition: var(--transition-fluid);
     }
 
     .input-nombre:focus {
         outline: none;
-        border-color: var(--brand-primary);
-        background-color: var(--bg-card);
-        box-shadow: 0 0 0 4px rgba(179, 107, 40, 0.12);
+        border-color: var(--brand-accent);
+        background-color: rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 20px rgba(212, 137, 58, 0.15);
     }
 
     .Carrito-elementos {
         flex: 1;
         overflow-y: auto;
-        margin-top: 24px;
-        padding-right: 6px;
+        margin-top: 28px;
+        padding-right: 8px;
     }
 
-    /* Barra de desplazamiento estética estilo iOS / MacOS */
     .Carrito-elementos::-webkit-scrollbar {
-        width: 5px;
+        width: 4px;
     }
     .Carrito-elementos::-webkit-scrollbar-thumb {
-        background-color: var(--border-hover);
+        background-color: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
     }
 
-    /* --- ELEMENTOS AGREGADOS AL CARRITO --- */
+    /* --- FILAS DE PRODUCTOS EN EL CHECKOUT --- */
     .item-carrito-fila {
-        background-color: var(--bg-main);
-        padding: 20px;
-        border-radius: var(--radius-md);
-        margin-bottom: 16px;
-        border: 1px solid var(--border-color);
+        background: rgba(255, 255, 255, 0.02);
+        padding: 24px;
+        border-radius: var(--radius-interactive);
+        margin-bottom: 20px;
+        border: 1px solid var(--glass-border);
         box-sizing: border-box;
-        transition: var(--transition);
+        transition: var(--transition-fluid);
     }
 
     .item-carrito-fila:hover {
-        border-color: var(--border-hover);
-        background-color: var(--brand-light);
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(212, 137, 58, 0.2);
     }
 
     .item-encabezado-flex {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        gap: 12px;
+        gap: 14px;
     }
 
     .item-titulo-carrito {
         margin: 0;
         font-weight: 700;
-        font-size: 0.95rem;
-        color: var(--text-dark);
+        font-size: 1rem;
+        color: var(--text-white);
         line-height: 1.4;
     }
 
     .item-salsa-carrito {
-        margin: 6px 0 0 0;
-        color: var(--brand-primary);
+        margin: 8px 0 0 0;
+        color: var(--brand-accent);
         font-size: 0.8rem;
         font-weight: 700;
+        letter-spacing: 0.5px;
     }
 
     .item-desc-carrito {
-        margin: 8px 0 0 0;
+        margin: 10px 0 0 0;
         color: var(--text-muted);
-        font-size: 0.78rem;
-        line-height: 1.4;
+        font-size: 0.8rem;
+        line-height: 1.5;
     }
 
     .item-precio-carrito {
         font-weight: 700;
-        color: var(--brand-primary);
-        font-size: 1rem;
-        margin: 10px 0 0 0;
+        color: var(--brand-accent);
+        font-size: 1.1rem;
+        margin: 12px 0 0 0;
         font-family: 'Space Grotesk', sans-serif;
     }
 
     .input-nota-carrito {
         width: 100%;
-        margin-top: 14px;
-        padding: 10px 14px;
-        border: 1px solid var(--border-color);
-        background-color: var(--bg-card);
-        border-radius: var(--radius-sm);
-        font-size: 0.78rem;
+        margin-top: 16px;
+        padding: 12px 16px;
+        border: 1px solid var(--glass-border);
+        background-color: rgba(0, 0, 0, 0.15);
+        border-radius: var(--radius-interactive);
+        font-size: 0.8rem;
         box-sizing: border-box;
-        color: var(--text-dark);
+        color: var(--text-gold);
         font-family: inherit;
-        transition: var(--transition);
+        transition: var(--transition-fluid);
     }
 
     .input-nota-carrito:focus {
         outline: none;
-        border-color: var(--brand-primary);
-        box-shadow: 0 0 0 3px rgba(179, 107, 40, 0.08);
+        border-color: var(--brand-accent);
+        background-color: rgba(0, 0, 0, 0.25);
     }
-    /* --- CONTROLES DE CANTIDAD PREMIUM --- */
+    /* --- CONTROLES DE CANTIDAD MECÁNICOS --- */
     .controles-contenedor {
         display: flex;
         align-items: center;
-        gap: 12px;
-        margin-top: 14px;
+        gap: 14px;
+        margin-top: 18px;
     }
 
     .item-botones-qty {
         display: flex;
         align-items: center;
-        background-color: var(--bg-card);
-        border-radius: var(--radius-sm);
-        padding: 5px;
-        border: 1px solid var(--border-color);
-        box-shadow: 0 1px 2px rgba(9, 13, 22, 0.02);
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: var(--radius-interactive);
+        padding: 6px;
+        border: 1px solid var(--glass-border);
     }
 
     .item-botones-qty button {
-        background: var(--bg-main);
-        color: var(--text-dark);
-        border: 1px solid var(--border-color);
-        width: 28px;
-        height: 28px;
-        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-white);
+        border: 1px solid var(--glass-border);
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
         cursor: pointer;
         font-weight: 700;
-        font-size: 0.95rem;
+        font-size: 1rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: var(--transition);
+        transition: var(--transition-fluid);
     }
 
     .item-botones-qty button:hover {
-        background-color: var(--brand-light);
-        border-color: var(--brand-primary);
-        color: var(--brand-primary);
+        background-color: var(--brand-accent);
+        color: var(--bg-cosmico);
+        border-color: transparent;
+        box-shadow: 0 0 15px var(--brand-glow);
     }
 
     .item-botones-qty button:active {
-        transform: scale(0.9);
+        transform: scale(0.85);
     }
 
     .item-botones-qty span {
-        color: var(--text-dark);
-        font-size: 0.9rem;
+        color: var(--text-white);
+        font-size: 1rem;
         font-weight: 700;
-        padding: 0 14px;
-        min-width: 18px;
+        padding: 0 16px;
+        min-width: 20px;
         text-align: center;
         font-family: 'Space Grotesk', sans-serif;
     }
 
     .btn-cancelar {
-        background: var(--error-light);
-        border: 1px solid rgba(240, 68, 68, 0.12);
-        color: var(--error);
-        font-size: 1.2rem;
+        background: var(--error-dim);
+        border: 1px solid rgba(255, 74, 74, 0.2);
+        color: var(--error-vibrant);
+        font-size: 1.25rem;
         font-weight: 700;
         cursor: pointer;
-        padding: 4px 12px;
-        border-radius: var(--radius-sm);
-        display: flex;
+        padding: 6px 14px;
+        border-radius: var(--radius-interactive);
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        transition: var(--transition);
+        transition: var(--transition-fluid);
     }
 
     .btn-cancelar:hover {
-        background: var(--error);
-        color: #ffffff;
-        border-color: var(--error);
-        box-shadow: 0 4px 12px rgba(240, 68, 68, 0.2);
+        background: var(--error-vibrant);
+        color: var(--text-white);
+        border-color: transparent;
+        box-shadow: 0 0 20px rgba(255, 74, 74, 0.4);
     }
 
-    /* --- PANEL DE COMPRA TOTAL Y BOTÓN DE WHATSAPP --- */
+    /* --- CÁPSULA DE LIQUIDACIÓN Y BOTÓN WHATSAPP --- */
     aside.panel-pedido .Total {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.4rem !important;
+        font-size: 1.5rem !important;
         font-weight: 700 !important;
-        color: var(--text-dark) !important;
-        margin-top: 30px !important;
-        border-top: 2px solid var(--bg-main);
-        padding-top: 22px;
+        color: var(--text-white) !important;
+        margin-top: 35px !important;
+        border-top: 2px solid rgba(255, 255, 255, 0.04);
+        padding-top: 26px;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
     aside.panel-pedido #carrito-total {
-        color: var(--brand-primary);
+        color: var(--brand-accent);
         font-weight: 700;
-        font-size: 1.6rem;
+        font-size: 1.85rem;
+        text-shadow: var(--shadow-glow);
     }
 
     aside.panel-pedido button.Boton-enviar {
-        background: linear-gradient(135deg, var(--brand-primary), #d98e43) !important;
-        color: #ffffff !important;
+        background: linear-gradient(135deg, var(--brand-accent), #f3a953) !important;
+        color: var(--bg-cosmico) !important;
         border: none !important;
-        padding: 18px 28px !important;
-        border-radius: var(--radius-md) !important;
-        font-size: 1rem !important;
-        font-weight: 700 !important;
+        padding: 20px 32px !important;
+        border-radius: var(--radius-interactive) !important;
+        font-size: 1.05rem !important;
+        font-weight: 800 !important;
         text-transform: uppercase;
-        letter-spacing: 0.8px;
+        letter-spacing: 1px;
         cursor: pointer !important;
         width: 100% !important;
-        margin-top: 24px !important;
-        box-shadow: 0 6px 20px rgba(179, 107, 40, 0.3) !important;
-        transition: var(--transition) !important;
+        margin-top: 30px !important;
+        box-shadow: 0 8px 25px rgba(212, 137, 58, 0.4) !important;
+        transition: var(--transition-fluid) !important;
         display: block !important;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Destello de barrido premium intermitente */
+    aside.panel-pedido button.Boton-enviar::after {
+        content: '';
+        position: absolute;
+        top: -50%; right: -50%; bottom: -50%; left: -50%;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+        transform: rotate(45deg);
+        animation: destelloFluido 3.5s infinite linear;
+    }
+
+    @keyframes destelloFluido {
+        0% { transform: translate(-100%, -100%) rotate(45deg); }
+        100% { transform: translate(100%, 100%) rotate(45deg); }
     }
 
     aside.panel-pedido button.Boton-enviar:hover {
-        background: linear-gradient(135deg, var(--brand-hover), var(--brand-primary)) !important;
-        box-shadow: 0 10px 28px rgba(179, 107, 40, 0.4) !important;
-        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(212, 137, 58, 0.6) !important;
+        transform: translateY(-3px);
+        filter: brightness(1.05);
     }
 
     aside.panel-pedido button.Boton-enviar:active {
         transform: translateY(-1px) scale(0.99) !important;
     }
 
-    /* --- ADAPTACIÓN RESPONSIVE ULTRA-FLUIDA MÓVIL --- */
+    /* --- ARQUITECTURA RESPONSIVA ADAPTATIVA CELULAR (PARCHE INCORPORADO) --- */
     @media (max-width: 990px) {
         body {
             flex-direction: column !important;
@@ -638,56 +673,106 @@
         }
 
         main {
-            padding: 40px 24px !important;
-            padding-bottom: 120px !important;
+            padding: 45px 24px !important;
+            padding-bottom: 140px !important;
         }
 
         h1.logo {
-            font-size: 2.8rem;
-            margin-bottom: 35px;
+            font-size: 3rem;
+            margin-bottom: 40px;
         }
 
+        /* Transformación del Carrito a Consola Flotante Táctil Inferior */
         aside.panel-pedido {
             width: 100% !important;
             height: auto !important;
-            max-height: 75px;
+            max-height: 80px;
             position: fixed !important;
             bottom: 0 !important;
             left: 0 !important;
             right: 0 !important;
             border-left: none !important;
-            border-top: 2px solid var(--brand-primary);
-            background-color: var(--bg-card) !important;
-            padding: 18px 28px !important;
-            box-shadow: 0 -12px 50px rgba(9, 13, 22, 0.12) !important;
-            border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+            border-top: 2px solid var(--brand-accent);
+            background-color: #0b0f1a !important;
+            padding: 20px 24px !important;
+            box-shadow: 0 -15px 50px rgba(0, 0, 0, 0.8) !important;
+            border-radius: var(--radius-card) var(--radius-card) 0 0 !important;
             overflow: hidden !important;
-            transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
             z-index: 9999 !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
         aside.panel-pedido.expandido {
-            max-height: 85vh !important;
+            max-height: 88vh !important;
             overflow-y: auto !important;
         }
 
+        /* --- PARCHE DE ALINEACIÓN SIMÉTRICA CELULAR --- */
         .cabecera-pedido {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            gap: 12px !important;
             cursor: pointer !important;
             padding-bottom: 0 !important;
             margin-bottom: 0 !important;
             border-bottom: none !important;
-            width: 100% !important;
         }
 
         aside.panel-pedido.expandido .cabecera-pedido {
-            border-bottom: 2px solid var(--bg-main) !important;
-            padding-bottom: 20px !important;
-            margin-bottom: 24px !important;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.04) !important;
+            padding-bottom: 22px !important;
+            margin-bottom: 28px !important;
+        }
+
+        .cabecera-pedido h2 {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            font-size: 1.2rem !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        .contador-badge {
+            margin: 0 !important;
+            padding: 3px 12px !important;
+            font-size: 0.8rem !important;
+            display: inline-flex !important;
+        }
+
+        /* Botón de control a la extrema derecha sin encimarse */
+        .cabecera-pedido::after {
+            content: '🔼 Ver pedido';
+            margin-left: auto !important;
+            flex-shrink: 0 !important;
+            color: var(--bg-cosmico);
+            font-size: 0.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--brand-accent), #f3a953);
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            transition: var(--transition-fluid);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(212, 137, 56, 0.2);
+        }
+
+        aside.panel-pedido.expandido .cabecera-pedido::after {
+            content: '🔽 Ocultar';
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-white);
+            box-shadow: none;
+            border: 1px solid var(--glass-border);
         }
 
         .Carrito-elementos {
-            max-height: 340px !important;
-            margin-top: 24px !important;
+            max-height: 360px !important;
+            margin-top: 28px !important;
         }
 
         aside.panel-pedido:not(.expandido) .label-cliente,
@@ -700,83 +785,13 @@
         }
 
         aside.panel-pedido:not(.expandido) .Total {
-            border-top: none !important;
-            padding-top: 0 !important;
-            margin-top: 0 !important;
-            font-size: 1.15rem !important;
-        }
-
-        /* Botón dinámico interactivo en móviles */
-        .cabecera-pedido::after {
-            content: '🔼 Ver pedido';
-            color: var(--brand-primary);
-            font-size: 0.8rem;
-            font-weight: 700;
-            background-color: var(--brand-light);
-            padding: 8px 18px;
-            border-radius: 50px;
-            transition: var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        aside.panel-pedido.expandido .cabecera-pedido::after {
-            content: '🔽 Ocultar';
-            background-color: var(--bg-main);
-            color: var(--text-muted);
+            display: none !important; /* Libera espacio total para evitar amontonamiento en reposo */
         }
     }
-
-            /* --- PARCHE ULTRA-RESPONSIVO PARA VISTA CELULAR --- */
-    @media (max-width: 990px) {
-        /* Fuerza a que el contenedor ocupe todo el ancho de forma simétrica */
-        .cabecera-pedido {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-            gap: 10px !important;
-        }
-
-        /* Agrupa el título y el número para que no se separen por el botón */
-        .cabecera-pedido h2 {
-            display: flex !important;
-            align-items: center !important;
-            gap: 8px !important;
-            font-size: 1.15rem !important;
-            margin: 0 !important;
-            white-space: nowrap !important;
-        }
-
-        /* Ajusta el badge del contador para que mantenga un tamaño armónico */
-        .contador-badge {
-            margin: 0 !important;
-            padding: 2px 10px !important;
-            font-size: 0.8rem !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-        }
-
-        /* Estiliza y posiciona perfectamente el botón interactivo a la derecha */
-        .cabecera-pedido::after {
-            margin-left: auto !important; /* Empuja el botón hacia el extremo derecho */
-            flex-shrink: 0 !important;   /* Evita que el botón se comprima o mutile textualmente */
-            font-size: 0.75rem !important;
-            padding: 6px 14px !important;
-        }
-        
-        /* Asegura que los textos del total no colisionen con los botones principales */
-        aside.panel-pedido:not(.expandido) .Total {
-            display: none !important; /* Oculta el total numérico si el carrito está cerrado para dar espacio libre */
-        }
-    }
-
     </style>
-
-
 </head>
+
+
 <body>
 
     <!-- CONTENEDOR PRINCIPAL DE LA TIENDA -->
