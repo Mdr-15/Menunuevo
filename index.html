@@ -4,529 +4,675 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Wings - Menú Digital</title>
-        
+    
+    <!-- Fuentes tipográficas modernas y elegantes -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
     <style>
-     /* --- ESTILOS BASE SPACE WINGS (Tema Claro Elegante Premium) --- */
-        body { 
-            background-color: #f8fafc; /* Fondo pizarra claro, ultra limpio y moderno */
-            color: #334155; 
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            margin: 0; 
-            display: flex; 
-            min-height: 100vh; 
-        }
-        #pantalla-tienda {
-            display: flex;
-            width: 100%;
-        }
-        main { 
-            flex: 1; 
-            padding: 40px; 
-            box-sizing: border-box; 
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h1.logo { 
-            color: #c27d38; /* Tono café canela cálido y distinguido */
-            font-size: 2.6rem; 
-            text-transform: uppercase; 
-            text-align: center; 
-            margin-bottom: 35px; 
-            font-weight: 900; 
-            letter-spacing: 2px;
-        }
-        h2.seccion-titulo { 
-            color: #c27d38; 
-            border-bottom: 2px solid #e2e8f0; 
-            padding-bottom: 10px; 
-            margin-top: 40px; 
-            text-transform: uppercase; 
-            font-size: 1.3rem; 
-            letter-spacing: 1px;
-            position: relative;
-        }
-        h2.seccion-titulo::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 60px;
-            height: 2px;
-            background-color: #c27d38;
-        }
-        .grid-productos { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 24px; 
-            margin-top: 20px; 
-        }
-        
-        /* --- TARJETAS DE PRODUCTOS --- */
-        .tarjeta-producto { 
-            background-color: #ffffff; 
-            border: 1px solid rgba(226, 232, 240, 0.8); 
-            border-radius: 16px; /* Bordes más suaves y curvos */
-            padding: 24px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01); 
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-        .tarjeta-producto:hover {
-            transform: translateY(-5px); /* Efecto de elevación interactiva */
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-            border-color: rgba(194, 125, 56, 0.3);
-        }
-        .tag-categoria { 
-            background-color: #fdf4eb; /* Fondo suave canela pálido */
-            color: #c27d38; 
-            padding: 4px 10px; 
-            border-radius: 20px; /* Estilo píldora moderno */
-            font-size: 0.75rem; 
-            font-weight: 700; 
-            margin-bottom: 12px; 
-            display: inline-block;
-            align-self: flex-start;
-        }
-        .tarjeta-producto strong {
-            font-size: 1.2rem;
-            color: #1e293b;
-            font-weight: 700;
-        }
-        .precio { 
-            font-size: 1.3rem; 
-            color: #c27d38; 
-            font-weight: 800; 
-            margin: 12px 0; 
-        }
+    /* --- VARIABLES GLOBALES DE DISEÑO PREMIUM --- */
+    :root {
+        --bg-main: #f8fafc;        /* Fondo general ultra limpio */
+        --bg-card: #ffffff;        /* Fondo de tarjetas y paneles */
+        --brand-primary: #c27d38;   /* Café canela insignia de la marca */
+        --brand-light: #fdf4eb;     /* Variación suave para fondos de acento */
+        --brand-hover: #a8682a;     /* Café canela oscuro para interacciones */
+        --text-dark: #0f172a;       /* Texto principal (Slate 900) */
+        --text-muted: #64748b;      /* Texto secundario/notas (Slate 500) */
+        --border-color: #e2e8f0;    /* Líneas de división sutiles (Slate 200) */
+        --success: #10b981;         /* Verde para confirmaciones */
+        --error: #ef4444;           /* Rojo para cancelaciones y alertas */
+        --error-light: #fef2f2;     /* Fondo suave para botones de eliminar */
+        --radius-lg: 20px;          /* Esquinas muy suaves para tarjetas */
+        --radius-md: 12px;          /* Esquinas para elementos internos */
+        --radius-sm: 8px;           /* Esquinas para botones pequeños y selectores */
+        --shadow-sm: 0 4px 6px -1px rgba(15, 23, 42, 0.03), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+        --shadow-md: 0 12px 25px -5px rgba(15, 23, 42, 0.06), 0 4px 12px -4px rgba(15, 23, 42, 0.04);
+        --shadow-lg: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
+        --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        /* --- CONFIGURADOR DE COMBOS --- */
-        .tarjeta-combo-full {
-            background-color: #ffffff;
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            border-radius: 16px;
-            padding: 24px;
-            margin-top: 24px;
-            width: 100%;
-            box-sizing: border-box;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
-            transition: box-shadow 0.25s ease;
-        }
-        .tarjeta-combo-full:hover {
-            box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.04);
-        }
-        .header-combo {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        .header-combo h3 {
-            margin: 0;
-            font-size: 1.3rem;
-            color: #1e293b;
-            font-weight: 700;
-        }
-        .header-combo .precio-combo {
-            color: #c27d38;
-            font-size: 1.4rem;
-            font-weight: 800;
-        }
-        .config-box {
-            background-color: #f8fafc; 
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
-            
-            /* --- CONFIGURACIÓN VERTICAL CONGELADA --- */
-            display: flex !important;
+    /* --- ESTILOS BASE --- */
+    body {
+        background-color: var(--bg-main);
+        color: var(--text-dark);
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+        margin: 0;
+        display: flex;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    #pantalla-tienda {
+        display: flex;
+        width: 100%;
+    }
+
+    main {
+        flex: 1;
+        padding: 50px 40px;
+        box-sizing: border-box;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* --- LOGOTIPO Y ENCABEZADOS --- */
+    h1.logo {
+        font-family: 'Space Grotesk', sans-serif;
+        color: var(--brand-primary);
+        font-size: 3rem;
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 45px;
+        font-weight: 700;
+        letter-spacing: -1px;
+    }
+
+    h2.seccion-titulo {
+        font-family: 'Space Grotesk', sans-serif;
+        color: var(--text-dark);
+        padding-bottom: 12px;
+        margin-top: 50px;
+        text-transform: uppercase;
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        position: relative;
+    }
+
+    h2.seccion-titulo::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--brand-primary);
+        border-radius: 2px;
+    }
+    /* --- CONTENEDORES Y CUADRÍCULAS --- */
+    .grid-productos {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+        gap: 28px;
+        margin-top: 25px;
+    }
+
+    #contenedor-combos {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 25px;
+    }
+
+    /* --- TARJETAS DE PRODUCTOS INDIVIDUALES --- */
+    .tarjeta-producto {
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .tarjeta-producto:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-md);
+        border-color: rgba(194, 125, 56, 0.3);
+    }
+
+    .tag-categoria {
+        background-color: var(--brand-light);
+        color: var(--brand-primary);
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+        display: inline-block;
+        align-self: flex-start;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .tarjeta-producto h3 {
+        color: var(--text-dark);
+        font-weight: 700;
+        margin: 8px 0;
+    }
+
+    .precio {
+        font-size: 1.4rem;
+        color: var(--brand-primary);
+        font-weight: 800;
+        margin: 14px 0;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* --- CONFIGURADOR DE COMBOS ADVANCED --- */
+    .tarjeta-combo-full {
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 32px;
+        width: 100%;
+        box-sizing: border-box;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+    }
+
+    .tarjeta-combo-full:hover {
+        box-shadow: var(--shadow-md);
+    }
+
+    .header-combo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        border-bottom: 1px dashed var(--border-color);
+        padding-bottom: 16px;
+    }
+
+    .header-combo h3 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: var(--text-dark);
+        font-weight: 700;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .header-combo .precio-combo {
+        color: var(--brand-primary);
+        font-size: 1.6rem;
+        font-weight: 800;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .config-box {
+        background-color: var(--bg-main);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 24px;
+        margin-bottom: 20px;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 18px;
+    }
+
+    .campo-grupo {
+        margin-bottom: 0;
+    }
+
+    .campo-grupo label {
+        display: block;
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        letter-spacing: 0.8px;
+    }
+
+    /* --- FORMULARIOS Y SELECTORES MODERNOS --- */
+    select {
+        width: 100%;
+        background-color: var(--bg-card);
+        color: var(--text-dark);
+        border: 1px solid var(--border-color);
+        padding: 12px 16px;
+        border-radius: var(--radius-sm);
+        font-size: 0.9rem;
+        font-family: inherit;
+        font-weight: 500;
+        box-sizing: border-box;
+        cursor: pointer;
+        transition: var(--transition);
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 16px center;
+        background-size: 16px;
+        padding-right: 40px;
+    }
+
+    select:focus {
+        outline: none;
+        border-color: var(--brand-primary);
+        box-shadow: 0 0 0 3px rgba(194, 125, 56, 0.15);
+    }
+    /* --- BOTONES MODERNOS --- */
+    .btn-agregar-combo {
+        background-color: var(--text-dark);
+        color: #ffffff;
+        border: none;
+        padding: 14px 28px;
+        border-radius: var(--radius-sm);
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: var(--transition);
+        float: right !important;
+        margin-top: 5px !important;
+        margin-bottom: 10px !important;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .btn-agregar-combo:hover {
+        background-color: var(--brand-primary);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(194, 125, 56, 0.2);
+    }
+
+    .btn-agregar-combo:active {
+        transform: scale(0.98);
+    }
+
+    .btn-agregar-individual {
+        background-color: var(--text-dark);
+        color: #ffffff;
+        border: none;
+        padding: 14px;
+        border-radius: var(--radius-sm);
+        font-weight: 700;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 15px;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        transition: var(--transition);
+    }
+
+    .btn-agregar-individual:hover {
+        background-color: var(--brand-primary);
+        box-shadow: 0 4px 12px rgba(194, 125, 56, 0.2);
+    }
+
+    .btn-agregar-individual:active {
+        transform: scale(0.98);
+    }
+
+    /* --- INTERFAZ LATERAL FIJA DEL PEDIDO --- */
+    aside.panel-pedido {
+        width: 380px;
+        background-color: var(--bg-card);
+        border-left: 1px solid var(--border-color);
+        padding: 32px 24px;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        z-index: 100;
+        box-shadow: -10px 0 30px rgba(15, 23, 42, 0.02);
+    }
+
+    .cabecera-pedido {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid var(--bg-main);
+        padding-bottom: 20px;
+        margin-bottom: 24px;
+    }
+
+    .cabecera-pedido h2 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .contador-badge {
+        background-color: var(--brand-primary);
+        color: #ffffff;
+        border-radius: 50px;
+        padding: 4px 12px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .label-cliente {
+        display: block;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+    }
+
+    .input-nombre {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-color);
+        background-color: var(--bg-main);
+        color: var(--text-dark);
+        box-sizing: border-box;
+        font-size: 0.95rem;
+        font-family: inherit;
+        font-weight: 500;
+        transition: var(--transition);
+    }
+
+    .input-nombre:focus {
+        outline: none;
+        border-color: var(--brand-primary);
+        background-color: var(--bg-card);
+        box-shadow: 0 0 0 3px rgba(194, 125, 56, 0.15);
+    }
+
+    .Carrito-elementos {
+        flex: 1;
+        overflow-y: auto;
+        margin-top: 20px;
+        padding-right: 4px;
+    }
+
+    /* Estilización sutil de la barra de desplazamiento interna */
+    .Carrito-elementos::-webkit-scrollbar {
+        width: 6px;
+    }
+    .Carrito-elementos::-webkit-scrollbar-thumb {
+        background-color: var(--border-color);
+        border-radius: 10px;
+    }
+
+    /* --- FILAS DEL CARRITO --- */
+    .item-carrito-fila {
+        background-color: var(--bg-main);
+        padding: 16px;
+        border-radius: var(--radius-md);
+        margin-bottom: 14px;
+        border: 1px solid var(--border-color);
+        box-sizing: border-box;
+    }
+
+    .item-encabezado-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .item-titulo-carrito {
+        margin: 0;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--text-dark);
+    }
+
+    .item-salsa-carrito {
+        margin: 4px 0 0 0;
+        color: var(--brand-primary);
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .item-desc-carrito {
+        margin: 6px 0 0 0;
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        line-height: 1.4;
+    }
+
+    .item-precio-carrito {
+        font-weight: 700;
+        color: var(--brand-primary);
+        font-size: 0.95rem;
+        margin: 8px 0 0 0;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .input-nota-carrito {
+        width: 100%;
+        margin-top: 12px;
+        padding: 8px 12px;
+        border: 1px solid var(--border-color);
+        background-color: var(--bg-card);
+        border-radius: var(--radius-sm);
+        font-size: 0.75rem;
+        box-sizing: border-box;
+        color: var(--text-dark);
+        font-family: inherit;
+        transition: var(--transition);
+    }
+
+    .input-nota-carrito:focus {
+        outline: none;
+        border-color: var(--brand-primary);
+    }
+    /* --- CONTRELES DE CANTIDAD Y ACCIÓN --- */
+    .controles-contenedor {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .item-botones-qty {
+        display: flex;
+        align-items: center;
+        background-color: var(--bg-card);
+        border-radius: var(--radius-sm);
+        padding: 4px;
+        border: 1px solid var(--border-color);
+    }
+
+    .item-botones-qty button {
+        background: var(--bg-main);
+        color: var(--text-dark);
+        border: 1px solid var(--border-color);
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+    }
+
+    .item-botones-qty button:hover {
+        background-color: var(--brand-light);
+        border-color: var(--brand-primary);
+        color: var(--brand-primary);
+    }
+
+    .item-botones-qty button:active {
+        transform: scale(0.9);
+    }
+
+    .item-botones-qty span {
+        color: var(--text-dark);
+        font-size: 0.85rem;
+        font-weight: 700;
+        padding: 0 12px;
+        min-width: 16px;
+        text-align: center;
+    }
+
+    .btn-cancelar {
+        background: var(--error-light);
+        border: 1px solid rgba(239, 68, 68, 0.15);
+        color: var(--error);
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 4px 10px;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+    }
+
+    .btn-cancelar:hover {
+        background: var(--error);
+        color: #ffffff;
+        border-color: var(--error);
+    }
+
+    /* --- PANEL DE TOTALES Y BOTÓN WHATSAPP --- */
+    aside.panel-pedido .Total {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.3rem !important;
+        font-weight: 700 !important;
+        color: var(--text-dark) !important;
+        margin-top: 24px !important;
+        border-top: 2px solid var(--bg-main);
+        padding-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    aside.panel-pedido #carrito-total {
+        color: var(--brand-primary);
+        font-weight: 800;
+    }
+
+    aside.panel-pedido button.Boton-enviar {
+        background-color: var(--brand-primary) !important;
+        color: #ffffff !important;
+        border: none !important;
+        padding: 16px 24px !important;
+        border-radius: var(--radius-md) !important;
+        font-size: 1rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        cursor: pointer !important;
+        width: 100% !important;
+        margin-top: 20px !important;
+        box-shadow: 0 4px 14px rgba(194, 125, 56, 0.3) !important;
+        transition: var(--transition) !important;
+        display: block !important;
+    }
+
+    aside.panel-pedido button.Boton-enviar:hover {
+        background-color: var(--brand-hover) !important;
+        box-shadow: 0 6px 20px rgba(194, 125, 56, 0.4) !important;
+        transform: translateY(-1px);
+    }
+
+    aside.panel-pedido button.Boton-enviar:active {
+        transform: scale(0.99) !important;
+    }
+
+    /* --- DISEÑO RESPONSIVO MÓVIL (CARRITO FLOTANTE COLAPSABLE) --- */
+    @media (max-width: 990px) {
+        body {
             flex-direction: column !important;
-            gap: 12px; /* Espaciado uniforme entre cada renglón */
-        }      
-        .campo-grupo {
-            margin-bottom: 0;
-        }
-        .campo-grupo label {
-            display: block;
-            color: #64748b; 
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            letter-spacing: 0.5px;
-        }
-        select { 
-            width: 100%; 
-            background-color: #ffffff; 
-            color: #334155; 
-            border: 1px solid #cbd5e1; 
-            padding: 10px; 
-            border-radius: 8px; 
-            font-size: 0.85rem;
-            box-sizing: border-box;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-        select:focus {
-            outline: none;
-            border-color: #c27d38;
-        }
-        
-        /* --- BOTONES MODERNOS --- */
-         .btn-agregar-combo {
-            background-color: #475569; /* Gris oscuro original */
-            color: #ffffff; 
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            transition: background-color 0.2s, transform 0.1s;
-            
-            /* --- ALINEACIÓN SEGURA DENTRO DE LA TARJETA --- */
-            float: right !important; /* Mantiene la posición a la derecha */
-            margin-top: 5px !important;
-            margin-bottom: 15px !important; /* Espacio extra abajo para que respire la tarjeta */
-        }
-        .btn-agregar-combo:hover {
-            background-color: #a8682a;
-        }
-        .btn-agregar-combo:active {
-            transform: scale(0.98);
-        }
-        .btn-agregar-individual {
-            background-color: #475569;
-            color: #ffffff;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            transition: background-color 0.2s, transform 0.1s;
-        }
-        .btn-agregar-individual:hover {
-            background-color: #334155;
-        }
-        .btn-agregar-individual:active {
-            transform: scale(0.98);
         }
 
-        /* --- INTERFAZ LATERAL FIJA DEL PEDIDO --- */
-        aside.panel-pedido { 
-            width: 360px; 
-            background-color: #ffffff; 
-            border-left: 1px solid #e2e8f0; 
-            padding: 24px; 
-            position: sticky; 
-            top: 0; 
-            height: 100vh; 
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-            box-shadow: -10px 0 15px -3px rgba(0, 0, 0, 0.02);
-        }
-        .cabecera-pedido { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 2px solid #f1f5f9; 
-            padding-bottom: 16px; 
-            margin-bottom: 20px;
-        }
-        .cabecera-pedido h2 {
-            margin: 0;
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: #1e293b;
-        }
-        .contador-badge { 
-            background-color: #c27d38; 
-            color: #ffffff; 
-            border-radius: 50%; 
-            width: 26px; 
-            height: 26px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-weight: bold; 
-            font-size: 0.85rem;
-        }
-        .label-cliente {
-            display: block; 
-            color: #64748b; 
-            margin-bottom: 6px; 
-            font-size: 0.75rem; 
-            font-weight: 700; 
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .input-nombre { 
-            width: 100%; 
-            padding: 12px; 
-            border-radius: 8px; 
-            border: 1px solid #cbd5e1; 
-            background-color: #f8fafc; 
-            color: #334155; 
-            box-sizing: border-box; 
-            font-size: 0.9rem; 
-            transition: border-color 0.2s, background-color 0.2s;
-        }
-        .input-nombre:focus {
-            outline: none;
-            border-color: #c27d38;
-            background-color: #ffffff;
-        }
-        .Carrito-elementos { 
-            flex: 1; 
-            overflow-y: auto; 
-            margin-top: 16px; 
-        }
-        .item-carrito-fila { 
-            background-color: #f8fafc; 
-            padding: 12px; 
-            border-radius: 8px; 
-            margin-bottom: 10px; 
-            border: 1px solid #e2e8f0; 
-        }
-        .item-encabezado-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .item-titulo-carrito {
-            margin: 0;
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: #1e293b;
-        }
-        .item-salsa-carrito {
-            margin: 4px 0 0 0;
-            color: #c27d38;
-            font-size: 0.8rem;
-            font-style: italic;
-        }
-        .item-desc-carrito {
-            margin: 4px 0 0 0;
-            color: #64748b;
-            font-size: 0.75rem;
-            line-height: 1.3;
-        }
-        .item-precio-carrito {
-            font-weight: 700;
-            color: #c27d38;
-            font-size: 0.9rem;
-            margin: 4px 0 0 0;
-        }
-        /* --- CONTROLES DE CANTIDAD Y CANCELACIÓN EN EL CARRITO --- */
-        .controles-contenedor {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 10px;
-        }
-        .item-botones-qty { 
-            display: flex; 
-            align-items: center; 
-            background-color: #f1f5f9; /* Gris sutil moderno */
-            border-radius: 8px; /* Redondeado consistente */
-            padding: 3px;
-            border: 1px solid #e2e8f0;
-        }
-        .item-botones-qty button { 
-            background: #ffffff;
-            color: #334155; 
-            border: 1px solid #e2e8f0; 
-            width: 24px; 
-            height: 24px; 
-            border-radius: 6px;
-            cursor: pointer; 
-            font-weight: bold; 
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            transition: all 0.15s ease;
-        }
-        .item-botones-qty button:hover {
-            background-color: #f8fafc;
-            border-color: #cbd5e1;
-            color: #c27d38; /* Cambio al color de tu marca */
-        }
-        .item-botones-qty button:active {
-            transform: scale(0.92);
-        }
-        .item-botones-qty span {
-            color: #1e293b;
-            font-size: 0.85rem;
-            font-weight: 700;
-            padding: 0 10px;
-            min-width: 14px;
-            text-align: center;
-        }
-        .btn-cancelar {
-            background: #fef2f2; /* Fondo rojo ultra suave */
-            border: 1px solid #fee2e2;
-            color: #ef4444; 
-            font-size: 0.9rem;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 5px 8px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.15s ease;
-        }
-        .btn-cancelar:hover {
-            background: #fee2e2;
-            color: #dc2626;
-            transform: translateY(-1px);
-        }
-        .btn-cancelar:active {
-            transform: translateY(0);
+        #pantalla-tienda {
+            flex-direction: column !important;
         }
 
-            /* --- DISEÑO RESPONSIVO: CARRITO FLOTANTE MINIMIZABLE EN CELULAR --- */
-        @media (max-width: 990px) { 
-            body { 
-                flex-direction: column !important; 
-            } 
-            #pantalla-tienda { 
-                flex-direction: column !important; 
-            }
-            main {
-                padding: 15px !important;
-                padding-top: 30px !important; /* Ajustado para balancear el espacio superior */
-                padding-bottom: 90px !important; /* Espacio inferior seguro para la barra flotante */
-            }
-            
-            /* El panel lateral se convierte en una barra colapsable adaptada a tu paleta clara */
-            aside.panel-pedido { 
-                width: 100% !important; 
-                height: auto !important;
-                max-height: 65px; /* Altura compacta por defecto */
-                position: fixed !important; 
-                bottom: 0 !important; 
-                left: 0 !important;
-                right: 0 !important;
-                border-left: none !important; 
-                border-top: 3px solid #c27d38; /* Color café canela de tu marca */
-                background-color: #ffffff !important; /* Mantiene la estética premium clara */
-                padding: 12px 20px !important;
-                box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08) !important; 
-                border-radius: 20px 20px 0 0 !important; 
-                overflow: hidden !important;
-                transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important; /* Animación más fluida */
-                z-index: 9999 !important;
-            } 
-            
-            /* Clase dinámica que activa el JavaScript al hacer clic */
-            aside.panel-pedido.expandido {
-                max-height: 80vh !important; 
-                overflow-y: auto !important;
-            }
-
-            /* Forzamos que la cabecera del pedido actúe como un gran botón táctil alineado */
-            .cabecera-pedido {
-                cursor: pointer !important;
-                padding-bottom: 5px !important;
-                display: flex !important;
-                justify-content: space-between !important;
-                align-items: center !important;
-                width: 100% !important;
-            }
-
-            .Carrito-elementos {
-                max-height: 350px !important; 
-                margin-top: 15px !important;
-            }
-            
-            /* Ocultamos los bloques internos si el carrito está cerrado */
-            aside.panel-pedido:not(.expandido) .label-cliente,
-            aside.panel-pedido:not(.expandido) .input-nombre,
-            aside.panel-pedido:not(.expandido) .Carrito-elementos,
-            aside.panel-pedido:not(.expandido) .Boton-enviar,
-            aside.panel-pedido:not(.expandido) .item-carrito-fila {
-                display: none !important;
-            }
-            
-            /* Corrección del Total: Se alinea limpio a la derecha de la cabecera cuando está cerrado */
-            aside.panel-pedido:not(.expandido) .precio-total,
-            aside.panel-pedido:not(.expandido) [id*="total"] {
-                font-size: 1.1rem !important;
-                font-weight: 800 !important;
-                color: #c27d38 !important;
-            }
-            
-            /* Indicadores visuales interactivos usando tu color de acento */
-            .cabecera-pedido::after {
-                content: '🔼 Ver pedido';
-                color: #c27d38;
-                font-size: 0.85rem;
-                font-weight: bold;
-                background-color: #fdf4eb;
-                padding: 6px 12px;
-                border-radius: 20px;
-                transition: all 0.2s;
-            }
-            aside.panel-pedido.expandido .cabecera-pedido::after {
-                content: '🔽 Ocultar';
-                background-color: #f1f5f9;
-                color: #64748b;
-            }
+        main {
+            padding: 30px 20px !important;
+            padding-bottom: 100px !important;
         }
 
-    
-            /* --- DISEÑO DE ALTA GAMA PARA EL BOTÓN IMPRIMIR --- */
-        aside.panel-pedido button:not(.item-botones-qty button):not(.btn-cancelar) {
-            background-color: #475569 !important; /* Gris oscuro elegante */
-            color: #ffffff !important;
-            border: none !important;
-            padding: 14px 20px !important;
-            border-radius: 10px !important;
-            font-size: 0.95rem !important;
-            font-weight: 700 !important;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            cursor: pointer !important;
+        h1.logo {
+            font-size: 2.4rem;
+            margin-bottom: 30px;
+        }
+
+        aside.panel-pedido {
             width: 100% !important;
+            height: auto !important;
+            max-height: 70px;
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            border-left: none !important;
+            border-top: 2px solid var(--brand-primary);
+            background-color: var(--bg-card) !important;
+            padding: 16px 24px !important;
+            box-shadow: 0 -10px 40px rgba(15, 23, 42, 0.1) !important;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+            overflow: hidden !important;
+            transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            z-index: 9999 !important;
+        }
+
+        aside.panel-pedido.expandido {
+            max-height: 85vh !important;
+            overflow-y: auto !important;
+        }
+
+        .cabecera-pedido {
+            cursor: pointer !important;
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+            border-bottom: none !important;
+            width: 100% !important;
+        }
+
+        aside.panel-pedido.expandido .cabecera-pedido {
+            border-bottom: 2px solid var(--bg-main) !important;
+            padding-bottom: 16px !important;
+            margin-bottom: 20px !important;
+        }
+
+        .Carrito-elementos {
+            max-height: 320px !important;
             margin-top: 20px !important;
-            box-shadow: 0 4px 6px -1px rgba(71, 85, 105, 0.2) !important;
-            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s !important;
-            display: block !important;
         }
 
-        aside.panel-pedido button:not(.item-botones-qty button):not(.btn-cancelar):hover {
-            background-color: #334155 !important; /* Más oscuro al pasar el mouse */
-            box-shadow: 0 10px 15px -3px rgba(71, 85, 105, 0.3) !important;
+        aside.panel-pedido:not(.expandido) .label-cliente,
+        aside.panel-pedido:not(.expandido) .input-nombre,
+        aside.panel-pedido:not(.expandido) .Carrito-elementos,
+        aside.panel-pedido:not(.expandido) button.Boton-enviar,
+        aside.panel-pedido:not(.expandido) .item-carrito-fila,
+        aside.panel-pedido:not(.expandido) div:has(> .input-nombre) {
+            display: none !important;
         }
 
-        aside.panel-pedido button:not(.item-botones-qty button):not(.btn-cancelar):active {
-            transform: scale(0.98) !important; /* Efecto físico al presionarlo */
-        }
-
-        /* Estilo complementario para limpiar el texto del Total */
-        aside.panel-pedido div:has(> button), 
-        aside.panel-pedido p:has(button),
-        aside.panel-pedido .Total {
+        aside.panel-pedido:not(.expandido) .Total {
+            border-top: none !important;
+            padding-top: 0 !important;
+            margin-top: 0 !important;
             font-size: 1.1rem !important;
-            font-weight: 800 !important;
-            color: #1e293b !important;
-            margin-top: 15px !important;
         }
 
-    
+        /* Indicadores interactivos del estado del carrito en móvil */
+        .cabecera-pedido::after {
+            content: '🔼 Ver pedido';
+            color: var(--brand-primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            background-color: var(--brand-light);
+            padding: 8px 16px;
+            border-radius: 50px;
+            transition: var(--transition);
+        }
+
+        aside.panel-pedido.expandido .cabecera-pedido::after {
+            content: '🔽 Ocultar';
+            background-color: var(--bg-main);
+            color: var(--text-muted);
+        }
+    }
     </style>
+
   
 </head>
 <body>
