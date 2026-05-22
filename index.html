@@ -726,6 +726,53 @@
             color: var(--text-muted);
         }
     }
+
+            /* --- PARCHE ULTRA-RESPONSIVO PARA VISTA CELULAR --- */
+    @media (max-width: 990px) {
+        /* Fuerza a que el contenedor ocupe todo el ancho de forma simétrica */
+        .cabecera-pedido {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            gap: 10px !important;
+        }
+
+        /* Agrupa el título y el número para que no se separen por el botón */
+        .cabecera-pedido h2 {
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            font-size: 1.15rem !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        /* Ajusta el badge del contador para que mantenga un tamaño armónico */
+        .contador-badge {
+            margin: 0 !important;
+            padding: 2px 10px !important;
+            font-size: 0.8rem !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        /* Estiliza y posiciona perfectamente el botón interactivo a la derecha */
+        .cabecera-pedido::after {
+            margin-left: auto !important; /* Empuja el botón hacia el extremo derecho */
+            flex-shrink: 0 !important;   /* Evita que el botón se comprima o mutile textualmente */
+            font-size: 0.75rem !important;
+            padding: 6px 14px !important;
+        }
+        
+        /* Asegura que los textos del total no colisionen con los botones principales */
+        aside.panel-pedido:not(.expandido) .Total {
+            display: none !important; /* Oculta el total numérico si el carrito está cerrado para dar espacio libre */
+        }
+    }
+
     </style>
 
 
