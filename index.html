@@ -894,79 +894,62 @@
   let carrito = [];
  
        
-async function cargarMenuCompleto() {
-  const tienda = document.getElementById('pantalla-tienda');
-  const contenedorMensaje = document.getElementById('mensaje-cerrado');
-  const textoMensaje = document.getElementById('texto-mensaje');
+function parsearEstructuraMenu(texto) {
+  // Separación limpia de filas compatible con cualquier sistema
+  const lineas = texto.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+  
+  // Limpiamos los arreglos globales de datos para que no se dupliquen
+  baseDatosProductos.individuales = [];
+  baseDatosProductos.combos = [];
 
-  try {
-    // === PASO 1: VERIFICAR HORARIO DESDE GOOGLE SHEETS ===
-    const urlConfigFinal = servidorGoogle + idDocumento + endpointConfig + "&t=" + new Date().getTime();
-    const respuestaConfig = await fetch(urlConfigFinal, { cache: "no-store" });
-    const textoConfig = await respuestaConfig.text();
+  // Limpiamos la pantalla antes de dibujar los productos
+  const contenedorIndividuales = document.getElementById('contenedor-individuales');
+  const contenedorCombos = document.getElementById('contenedor-combos');
+  if (contenedorIndividuales) contenedorIndividuales.innerHTML = '';
+  if (contenedorCombos) contenedorCombos.innerHTML = '';
+
+  const idxId = 0;   // Columna A (Id_platillo)
+  const idxCat = 1;  // Columna B (Categoria)
+  const idxNom = 2;  // Columna C (Producto)
+  const idxPre = 3;  // Columna D (Precio)
+  const idxDisp = 4; // Columna E (Disponible)
+
+  for (let i = 0; i < lineas.length; i++) {
+    const linea = lineas[i];
     
-    if (textoConfig && textoConfig.includes("google.visualization.Query.setResponse")) {
-      const datosJson = JSON.parse(textoConfig.substr(47).slice(0, -2));
-      
-      if (datosJson.table && datosJson.table.rows && datosJson.table.rows.length > 0) {
-        const celdas = datosJson.table.rows[0].c;
-
-        // Mapeo seguro de las columnas A, B, C y D
-        const stringApertura = celdas && celdas[0] && celdas[0].v ? celdas[0].v.toString() : "12:00";
-        const stringCierre   = celdas && celdas[1] && celdas[1].v ? celdas[1].v.toString() : "22:00";
-        const diasCerradoRaw = celdas && celdas[2] && celdas[2].v ? celdas[2].v.toString() : "";
-        const mensajeCerrado = celdas && celdas[3] && celdas[3].v ? celdas[3].v : "Por el momento estamos cerrados";
-
-        const diasCerrados = diasCerradoRaw.split(',').map(d => parseInt(d.trim())).filter(n => !isNaN(n));
-
-        // Procesar horas y minutos de apertura
-        const [hApertura, mApertura] = stringApertura.split(':').map(Number);
-        const minutosAperturaTotal = (hApertura * 60) + (mApertura || 0);
-
-        // Procesar horas y minutos de cierre
-        const [hCierre, mCierre] = stringCierre.split(':').map(Number);
-        const minutosCierreTotal = (hCierre * 60) + (mCierre || 0);
-
-        // Obtener tiempo actual exacto en la Zona Horaria de México
-        const ahora = new Date();
-        const opcionesHora = { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "America/Mexico_City" };
-        const [horaActual, minutoActual] = ahora.toLocaleString("es-MX", opcionesHora).split(':').map(Number);
-        const minutosActualesTotal = (horaActual * 60) + minutoActual;
-        
-        // Obtener número del día de la semana (0 = Domingo, 1 = Lunes, etc.)
-        const fechaFormateada = ahora.toLocaleString("en-US", { timeZone: "America/Mexico_City" });
-        const diaActualNum = new Date(fechaFormateada).getDay();
-
-        // Evaluar condiciones de cierre por minutos totales del día
-        const estaCerradoPorDia = diasCerrados.includes(diaActualNum);
-        const estaCerradoPorHora = (minutosActualesTotal < minutosAperturaTotal || minutosActualesTotal >= minutosCierreTotal);
-
-        if (estaCerradoPorDia || estaCerradoPorHora) {
-          if (textoMensaje) textoMensaje.innerHTML = mensajeCerrado;
-          if (tienda) tienda.style.display = 'none';
-          if (contenedorMensaje) contenedorMensaje.style.display = 'block';
-          return; // Detiene la carga para mostrar el cartel de cerrado
-        }
-      }
+    // Si la línea es el encabezado del Excel, la saltamos automáticamente
+    if (linea.toLowerCase().includes('id_platillo') || linea.toLowerCase().includes('categoria')) {
+      continue;
     }
-  } catch (error) {
-    console.error("Aviso: No se pudo validar el horario de Sheets, abriendo menú por seguridad:", error);
-  }
-
-  // === PASO 2: MODO ABIERTO (Carga tradicional de platillos) ===
-  if (tienda) tienda.style.display = 'flex';
-  if (contenedorMensaje) contenedorMensaje.style.display = 'none';
-
-  try {
-    // Usamos fetch limpio rompiendo la caché de Google con un parámetro de tiempo dinámico
-    const urlFinal = urlGoogleSheets + "&cachebust=" + new Date().getTime();
-    const respuesta = await fetch(urlFinal);
-    const datosCsv = await respuesta.text();
     
-    // Forzamos el renderizado de los productos pasándole los datos limpios obtenidos
-    parsearEstructuraMenu(datosCsv);
-  } catch (error) {
-    console.error("Error crítico al procesar la lista de productos:", error);
+    // Separar columnas por comas respetando las comillas de Google Sheets
+    const columnas = linea.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+    
+    if (columnas.length < 4) continue;
+
+    const id = limpiarTextoSheets(columnas[idxId]);
+    const categoria = limpiarTextoSheets(columnas[idxCat]).toLowerCase();
+    const nombre = limpiarTextoSheets(columnas[idxNom]);
+    const precioRaw = limpiarTextoSheets(columnas[idxPre]);
+    const disponible = columnas[idxDisp] ? limpiarTextoSheets(columnas[idxDisp]).toLowerCase() : 'si';
+
+    // Si no está disponible, no lo mostramos
+    if (disponible === 'no') continue;
+
+    // Extraer solo los números y el punto decimal del precio
+    const precio = parseFloat(precioRaw.replace(/[^0-9.]/g, ''));
+    if (isNaN(precio)) continue;
+
+    const producto = { id, nombre, precio, categoria };
+
+    // Clasificar e inyectar en la interfaz según tu código original
+    if (categoria.includes('combo')) {
+      baseDatosProductos.combos.push(producto);
+      inyectarTarjetaCombo(producto);
+    } else {
+      baseDatosProductos.individuales.push(producto);
+      inyectarTarjetaIndividual(producto);
+    }
   }
 }
 
