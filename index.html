@@ -530,49 +530,51 @@
   
 </head>
 <body>
-
-<!-- CARTEL DE CERRADO PROFESIONAL CON ESTILO SPACE WINGS -->
-<div id="mensaje-cerrado" style="display: none; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; z-index: 99999; text-align: center; padding: 20px; font-family: 'Poppins', 'Segoe UI', sans-serif; background-color: #0b0e14; color: #ffffff; box-sizing: border-box;">
-        <div style="background: linear-gradient(145deg, #141923, #1b2230); border: 2px solid #ff9f00; border-radius: 24px; padding: 50px 30px; max-width: 480px; width: 100%; box-shadow: 0 0 30px rgba(255, 159, 0, 0.2), inset 0 0 15px rgba(255,159,0,0.05); position: relative; overflow: hidden;">
-      
-        <!-- Efecto de brillo de fondo espacial -->
-        <div style="position: absolute; top: -50px; left: -50px; width: 150px; height: 150px; background: rgba(255, 159, 0, 0.1); filter: blur(50px); border-radius: 50%;"></div>
-       
-        <!-- Ícono Animado en CSS -->
-        <div style="font-size: 80px; margin-bottom: 25px; display: inline-block; filter: drop-shadow(0 0 10px rgba(255,159,0,0.3)); animation: floatIcon 3s ease-in-out infinite;">🚀</div>
+<!-- CARTEL DE CERRADO PROFESIONAL INTEGRADO -->
+<div id="mensaje-cerrado" style="display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; z-index: 99999; text-align: center; padding: 20px; font-family: sans-serif; background-color: #0b0e14; box-sizing: border-box;">
+    
+    <div style="background: linear-gradient(145deg, #141923, #1b2230); border: 2px solid #ff9f00; border-radius: 24px; padding: 50px 30px; max-width: 450px; width: 100%; box-shadow: 0 0 30px rgba(255, 159, 0, 0.2); position: relative; overflow: hidden; box-sizing: border-box;">
         
-                       <!-- Estado -->
-        <span style="background-color: rgba(231, 76, 60, 0.15); color: #ff4757; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; padding: 6px 16px; border-radius: 50px; border: 1px solid rgba(231, 76, 60, 0.3); display: inline-block; margin-bottom: 20px;">
-            Estación Cerrada
-        </span>
+        <!-- Ícono Animado -->
+        <div style="font-size: 75px; margin-bottom: 20px; display: inline-block; animation: floatIcon 3s ease-in-out infinite;">🚀</div>
         
-        <!-- 🪐 TÍTULO DINÁMICO: Aquí se pintará de forma automática lo que escribas en tu columna D -->
-        <h2 id="texto-alerta" style="color: #ffffff; font-size: 24px; font-weight: 700; margin: 0; line-height: 1.4; font-family: sans-serif; letter-spacing: -0.5px;">
-            <!-- El código JavaScript llenará este espacio en vivo -->
-        </h2>
+        <!-- Tag de Estado -->
+        <div>
+            <span style="background-color: rgba(231, 76, 60, 0.15); color: #ff4757; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; padding: 6px 16px; border-radius: 50px; border: 1px solid rgba(231, 76, 60, 0.3); display: inline-block; margin-bottom: 20px;">
+                Estación Cerrada
+            </span>
+        </div>
         
-        <!-- Línea divisoria decorativa -->
-        <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #ff9f00, #ff4757); margin: 25px auto 0 auto; border-radius: 2px;"></div>
-
-        <!-- Subtexto informativo -->
-        <p style="color: #a0a5b5; font-size: 15px; margin: 0; line-height: 1.6;">
+        <!-- TÍTULO DINÁMICO (Aquí se pintará tu columna de Google Sheets) -->
+        <h2 id="texto-alerta" style="color: #ffffff; font-size: 24px; font-weight: 700; margin: 0; line-height: 1.4; letter-spacing: -0.5px;"></h2>
+        
+        <!-- Línea decorativa -->
+        <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #ff9f00, #ff4757); margin: 25px auto; border-radius: 2px;"></div>
+        
+        <!-- Subtexto informativo fijo -->
+        <p style="color: #a0a5b5; font-size: 14px; margin: 0 0 10px 0; line-height: 1.6;">
             Preparamos los motores para tu próximo pedido. Consulta nuestros horarios oficiales e intenta nuevamente.
         </p>
         
-        <!-- Redes o firma del negocio opcional -->
-        <div style="margin-top: 35px; color: #ff9f00; font-size: 13px; font-weight: 600; letter-spacing: 0.5px;">
+        <div style="margin-top: 30px; color: #ff9f00; font-size: 12px; font-weight: 600; letter-spacing: 1px;">
             SPACE WINGS 🪐
         </div>
     </div>
 </div>
 
-<!-- Animación CSS embebida para que el cohete flote elegantemente -->
 <style>
 @keyframes floatIcon {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(3deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
 }
+</style>
+
+
+
+
+
+    
 
     
     <!-- CONTENEDOR PRINCIPAL DE LA TIENDA -->
