@@ -894,7 +894,7 @@
   let carrito = [];
  
        
-  async function cargarMenuCompleto() {
+ async function cargarMenuCompleto() {
   const tienda = document.getElementById('pantalla-tienda');
   const contenedorMensaje = document.getElementById('mensaje-cerrado');
   const textoMensaje = document.getElementById('texto-mensaje');
@@ -909,38 +909,43 @@
       const datosJson = JSON.parse(textoConfig.substr(47).slice(0, -2));
       
       if (datosJson.table && datosJson.table.rows && datosJson.table.rows.length > 0) {
-        // Obtenemos la primera fila de datos de la tabla (Fila 2 del Excel)
         const filaConfig = datosJson.table.rows[0].c;
 
-        // Extraer y asegurar la lectura numérica de las celdas A2, B2, C2 y D2
-        const horaApertura = filaConfig[0] ? parseInt(filaConfig[0].v) : 12;
-        const horaCierre = filaConfig[1] ? parseInt(filaConfig[1].v) : 22;
+        // Leer textos de las celdas (Ej: "09:00", "20:00")
+        const stringApertura = filaConfig[0] ? filaConfig[0].v.toString() : "12:00";
+        const stringCierre = filaConfig[1] ? filaConfig[1].v.toString() : "22:00";
         const diasCerradoRaw = filaConfig[2] ? filaConfig[2].v.toString() : "";
         const mensajeCerrado = filaConfig[3] ? filaConfig[3].v : "Lo sentimos, está cerrado.";
 
         const diasCerrados = diasCerradoRaw.split(',').map(d => parseInt(d.trim())).filter(n => !isNaN(n));
 
-        // Obtener fecha y hora en la zona horaria local de México de forma totalmente compatible
+        // Procesar horas y minutos de apertura
+        const [hApertura, mApertura] = stringApertura.split(':').map(Number);
+        const minutosAperturaTotal = (hApertura * 60) + (mApertura || 0);
+
+        // Procesar horas y minutos de cierre
+        const [hCierre, mCierre] = stringCierre.split(':').map(Number);
+        const minutosCierreTotal = (hCierre * 60) + (mCierre || 0);
+
+        // Obtener tiempo actual exacto en México
         const ahora = new Date();
+        const opcionesHora = { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "America/Mexico_City" };
+        const [horaActual, minutoActual] = ahora.toLocaleString("es-MX", opcionesHora).split(':').map(Number);
+        const minutosActualesTotal = (horaActual * 60) + minutoActual;
         
-        // Convertimos la hora actual a un formato numérico seguro de 24h
-        const horaActual = parseInt(ahora.toLocaleString("es-MX", { hour: "2-digit", hour12: false, timeZone: "America/Mexico_City" }));
-        
-        // Obtener el día de la semana de forma nativa y robusta (0 = Domingo, 1 = Lunes, ..., 6 = Sábado)
-        // Usamos una fecha formateada para asegurar la zona horaria exacta sin importar el dispositivo del cliente
+        // Obtener número de día de la semana
         const fechaFormateada = ahora.toLocaleString("en-US", { timeZone: "America/Mexico_City" });
         const diaActualNum = new Date(fechaFormateada).getDay();
 
-        // Evaluar condiciones de cierre
+        // Evaluar condiciones de cierre por minutos totales
         const estaCerradoPorDia = diasCerrados.includes(diaActualNum);
-        const estaCerradoPorHora = (horaActual < horaApertura || horaActual >= horaCierre);
+        const estaCerradoPorHora = (minutosActualesTotal < minutosAperturaTotal || minutosActualesTotal >= minutosCierreTotal);
 
         if (estaCerradoPorDia || estaCerradoPorHora) {
-          // Si el negocio está cerrado según el Excel, despliega el aviso personalizado
           if (textoMensaje) textoMensaje.innerHTML = mensajeCerrado;
           if (tienda) tienda.style.display = 'none';
           if (contenedorMensaje) contenedorMensaje.style.display = 'block';
-          return; // Frena de forma segura la ejecución del código para no mostrar productos
+          return; // Detiene el flujo de forma segura
         }
       }
     }
