@@ -893,25 +893,26 @@
   let baseDatosProductos = { individuales: [], combos: [] };
   let carrito = [];
  
-        async function cargarMenuCompleto() {
+       
+  async function cargarMenuCompleto() {
   const tienda = document.getElementById('pantalla-tienda');
   const contenedorMensaje = document.getElementById('mensaje-cerrado');
   const textoMensaje = document.getElementById('texto-mensaje');
 
   try {
-    // === PASO 1: INTENTAR VERIFICAR EL HORARIO ===
+    // === PASO 1: VERIFICAR HORARIO DESDE GOOGLE SHEETS ===
     const urlConfigFinal = servidorGoogle + idDocumento + endpointConfig + "&t=" + new Date().getTime();
     const respuestaConfig = await fetch(urlConfigFinal, { cache: "no-store" });
     const textoConfig = await respuestaConfig.text();
     
-    // Validar rigurosamente que Google Sheets responda con el formato JSON esperado
     if (textoConfig && textoConfig.includes("google.visualization.Query.setResponse")) {
       const datosJson = JSON.parse(textoConfig.substr(47).slice(0, -2));
       
       if (datosJson.table && datosJson.table.rows && datosJson.table.rows.length > 0) {
+        // Obtenemos la primera fila de datos de la tabla (Fila 2 del Excel)
         const filaConfig = datosJson.table.rows[0].c;
 
-        // Extraer celdas de configuración de la Fila 2
+        // Extraer y asegurar la lectura numérica de las celdas A2, B2, C2 y D2
         const horaApertura = filaConfig[0] ? parseInt(filaConfig[0].v) : 12;
         const horaCierre = filaConfig[1] ? parseInt(filaConfig[1].v) : 22;
         const diasCerradoRaw = filaConfig[2] ? filaConfig[2].v.toString() : "";
@@ -919,7 +920,7 @@
 
         const diasCerrados = diasCerradoRaw.split(',').map(d => parseInt(d.trim())).filter(n => !isNaN(n));
 
-        // Obtener tiempo actual en zona horaria local
+        // Obtener fecha y hora en zona horaria local de México
         const ahora = new Date();
         const horaActual = parseInt(ahora.toLocaleString("es-MX", { hour: "2-digit", hour12: false, timeZone: "America/Mexico_City" }));
         const diaSemanaActual = ahora.toLocaleDateString("en-US", { weekday: "numeric", timeZone: "America/Mexico_City" });
@@ -929,20 +930,19 @@
         const estaCerradoPorHora = (horaActual < horaApertura || horaActual >= horaCierre);
 
         if (estaCerradoPorDia || estaCerradoPorHora) {
-          // Bloquear pantalla y desplegar mensaje de cerrado
+          // Si el negocio está cerrado según el Excel, despliega el aviso personalizado
           if (textoMensaje) textoMensaje.innerHTML = mensajeCerrado;
           if (tienda) tienda.style.display = 'none';
           if (contenedorMensaje) contenedorMensaje.style.display = 'block';
-          return; // Detiene el flujo de forma segura
+          return; // Frena de forma segura la ejecución del código
         }
       }
     }
   } catch (error) {
-    console.error("Aviso: No se pudo validar el horario, aplicando modo seguro de apertura:", error);
+    console.error("Aviso: No se pudo validar el horario de Sheets, abriendo menú por seguridad:", error);
   }
 
-  // === PASO 2: MODO SEGURO / ABIERTO (Carga normal de platillos) ===
-  // Si el negocio está abierto o si la API de configuración falla, se fuerza la visualización del menú
+  // === PASO 2: MODO ABIERTO (Carga tradicional de platillos) ===
   if (tienda) tienda.style.display = 'flex';
   if (contenedorMensaje) contenedorMensaje.style.display = 'none';
 
@@ -959,11 +959,10 @@
     const datosCsv = await respuesta.text();
     parsearEstructuraMenu(datosCsv);
   } catch (error) {
-    console.error("Error crítico al descargar la lista de productos:", error);
+    console.error("Error crítico al procesar la lista de productos:", error);
   }
 }
 
-  
 
 
 
