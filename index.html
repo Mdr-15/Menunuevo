@@ -894,7 +894,7 @@
   let carrito = [];
  
        
- async function cargarMenuCompleto() {
+async function cargarMenuCompleto() {
   const tienda = document.getElementById('pantalla-tienda');
   const contenedorMensaje = document.getElementById('mensaje-cerrado');
   const textoMensaje = document.getElementById('texto-mensaje');
@@ -909,13 +909,14 @@
       const datosJson = JSON.parse(textoConfig.substr(47).slice(0, -2));
       
       if (datosJson.table && datosJson.table.rows && datosJson.table.rows.length > 0) {
-        const filaConfig = datosJson.table.rows[0].c;
+        // Extraemos las celdas de la Fila 2 de forma explícita por columna
+        const celdas = datosJson.table.rows[0].c;
 
-        // Leer textos de las celdas (Ej: "09:00", "20:00")
-        const stringApertura = filaConfig[0] ? filaConfig[0].v.toString() : "12:00";
-        const stringCierre = filaConfig[1] ? filaConfig[1].v.toString() : "22:00";
-        const diasCerradoRaw = filaConfig[2] ? filaConfig[2].v.toString() : "";
-        const mensajeCerrado = filaConfig[3] ? filaConfig[3].v : "Lo sentimos, está cerrado.";
+        // Mapeo seguro de las columnas A, B, C y D (Verificando que existan datos)
+        const stringApertura = celdas[0] && celdas[0].v ? celdas[0].v.toString() : "12:00";
+        const stringCierre   = celdas[1] && celdas[1].v ? celdas[1].v.toString() : "22:00";
+        const diasCerradoRaw = celdas[2] && celdas[2].v ? celdas[2].v.toString() : "";
+        const mensajeCerrado = celdas[3] && celdas[3].v ? celdas[3].v : "Por el momento estamos cerrados";
 
         const diasCerrados = diasCerradoRaw.split(',').map(d => parseInt(d.trim())).filter(n => !isNaN(n));
 
@@ -927,17 +928,17 @@
         const [hCierre, mCierre] = stringCierre.split(':').map(Number);
         const minutosCierreTotal = (hCierre * 60) + (mCierre || 0);
 
-        // Obtener tiempo actual exacto en México
+        // Obtener tiempo actual exacto en la Zona Horaria de México
         const ahora = new Date();
         const opcionesHora = { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "America/Mexico_City" };
         const [horaActual, minutoActual] = ahora.toLocaleString("es-MX", opcionesHora).split(':').map(Number);
         const minutosActualesTotal = (horaActual * 60) + minutoActual;
         
-        // Obtener número de día de la semana
+        // Obtener número del día de la semana (0 = Domingo, 1 = Lunes, etc.)
         const fechaFormateada = ahora.toLocaleString("en-US", { timeZone: "America/Mexico_City" });
         const diaActualNum = new Date(fechaFormateada).getDay();
 
-        // Evaluar condiciones de cierre por minutos totales
+        // Evaluar condiciones de cierre por minutos totales del día
         const estaCerradoPorDia = diasCerrados.includes(diaActualNum);
         const estaCerradoPorHora = (minutosActualesTotal < minutosAperturaTotal || minutosActualesTotal >= minutosCierreTotal);
 
@@ -945,7 +946,7 @@
           if (textoMensaje) textoMensaje.innerHTML = mensajeCerrado;
           if (tienda) tienda.style.display = 'none';
           if (contenedorMensaje) contenedorMensaje.style.display = 'block';
-          return; // Detiene el flujo de forma segura
+          return; // Detiene la carga para mostrar el cartel de cerrado
         }
       }
     }
@@ -953,19 +954,15 @@
     console.error("Aviso: No se pudo validar el horario de Sheets, abriendo menú por seguridad:", error);
   }
 
-    // === PASO 2: MODO ABIERTO (Carga tradicional de platillos) ===
+  // === PASO 2: MODO ABIERTO (Carga tradicional de platillos) ===
   if (tienda) tienda.style.display = 'flex';
   if (contenedorMensaje) contenedorMensaje.style.display = 'none';
 
   try {
-    // Agregamos un número aleatorio al final (&v=...) para obligar a Google a dar los datos más nuevos de tus platos
     const urlFinal = urlGoogleSheets + "&v=" + new Date().getTime();
     const respuesta = await fetch(urlFinal, { cache: "no-store" });
     const datosCsv = await respuesta.text();
-    
-    // Ejecutamos tu renderizador pasándole los datos limpios
     parsearEstructuraMenu(datosCsv);
-    
   } catch (error) {
     console.error("Error crítico al procesar la lista de productos:", error);
   }
