@@ -909,14 +909,13 @@ async function cargarMenuCompleto() {
       const datosJson = JSON.parse(textoConfig.substr(47).slice(0, -2));
       
       if (datosJson.table && datosJson.table.rows && datosJson.table.rows.length > 0) {
-        // Extraemos las celdas de la Fila 2 de forma explícita por columna
         const celdas = datosJson.table.rows[0].c;
 
-        // Mapeo seguro de las columnas A, B, C y D (Verificando que existan datos)
-        const stringApertura = celdas[0] && celdas[0].v ? celdas[0].v.toString() : "12:00";
-        const stringCierre   = celdas[1] && celdas[1].v ? celdas[1].v.toString() : "22:00";
-        const diasCerradoRaw = celdas[2] && celdas[2].v ? celdas[2].v.toString() : "";
-        const mensajeCerrado = celdas[3] && celdas[3].v ? celdas[3].v : "Por el momento estamos cerrados";
+        // Mapeo seguro de las columnas A, B, C y D
+        const stringApertura = celdas && celdas[0] && celdas[0].v ? celdas[0].v.toString() : "12:00";
+        const stringCierre   = celdas && celdas[1] && celdas[1].v ? celdas[1].v.toString() : "22:00";
+        const diasCerradoRaw = celdas && celdas[2] && celdas[2].v ? celdas[2].v.toString() : "";
+        const mensajeCerrado = celdas && celdas[3] && celdas[3].v ? celdas[3].v : "Por el momento estamos cerrados";
 
         const diasCerrados = diasCerradoRaw.split(',').map(d => parseInt(d.trim())).filter(n => !isNaN(n));
 
@@ -959,17 +958,17 @@ async function cargarMenuCompleto() {
   if (contenedorMensaje) contenedorMensaje.style.display = 'none';
 
   try {
-    const urlFinal = urlGoogleSheets + "&v=" + new Date().getTime();
-    const respuesta = await fetch(urlFinal, { cache: "no-store" });
+    // Usamos fetch limpio rompiendo la caché de Google con un parámetro de tiempo dinámico
+    const urlFinal = urlGoogleSheets + "&cachebust=" + new Date().getTime();
+    const respuesta = await fetch(urlFinal);
     const datosCsv = await respuesta.text();
+    
+    // Forzamos el renderizado de los productos pasándole los datos limpios obtenidos
     parsearEstructuraMenu(datosCsv);
   } catch (error) {
     console.error("Error crítico al procesar la lista de productos:", error);
   }
 }
-
-
-
 
 
         function limpiarTextoSheets(celda) {
