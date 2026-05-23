@@ -531,13 +531,48 @@
 </head>
 <body>
 
-        <!-- 🟢 PEGA ESTO AQUÍ: MENSAJE DE CERRADO -->
-<div id="mensaje-cerrado" style="display: none; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; text-align: center; padding: 20px; font-family: sans-serif; background-color: #161a1f; color: #ffffff; border-radius: 12px; max-width: 500px; margin: 40px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-    <div style="font-size: 70px; margin-bottom: 20px; animation: pulse 2s infinite;">⏰</div>
-    <h2 id="texto-alerta" style="color: #ff9f00; font-size: 28px; font-weight: bold; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1px;"></h2>
-    <p style="color: #ffffff; font-size: 16px; margin: 0; opacity: 0.85; line-height: 1.5;">Vuelve a visitarnos dentro del horario de servicio.</p>
+<!-- CARTEL DE CERRADO PROFESIONAL CON ESTILO SPACE WINGS -->
+<div id="mensaje-cerrado" style="display: none; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 90vh; text-align: center; padding: 30px 20px; font-family: 'Poppins', 'Segoe UI', sans-serif; background-color: #0b0e14; color: #ffffff;">
+        <div style="background: linear-gradient(145deg, #141923, #1b2230); border: 2px solid #ff9f00; border-radius: 24px; padding: 50px 30px; max-width: 480px; width: 100%; box-shadow: 0 0 30px rgba(255, 159, 0, 0.2), inset 0 0 15px rgba(255,159,0,0.05); position: relative; overflow: hidden;">
+      
+        <!-- Efecto de brillo de fondo espacial -->
+        <div style="position: absolute; top: -50px; left: -50px; width: 150px; height: 150px; background: rgba(255, 159, 0, 0.1); filter: blur(50px); border-radius: 50%;"></div>
+       
+        <!-- Ícono Animado en CSS -->
+        <div style="font-size: 80px; margin-bottom: 25px; display: inline-block; filter: drop-shadow(0 0 10px rgba(255,159,0,0.3)); animation: floatIcon 3s ease-in-out infinite;">🚀</div>
+        
+        <!-- Estado -->
+        <span style="background-color: rgba(231, 76, 60, 0.15); color: #ff4757; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; padding: 6px 16px; border-radius: 50px; border: 1px solid rgba(231, 76, 60, 0.3); display: inline-block; margin-bottom: 20px;">
+            Estación Cerrada
+        </span>
+        
+        <!-- Título Dinámico -->
+        <h2 id="texto-alerta" style="color: #ffffff; font-size: 26px; font-weight: 700; margin: 0 0 15px 0; line-height: 1.3; font-family: sans-serif; letter-spacing: -0.5px;"></h2>
+        
+        <!-- Línea divisoria decorativa -->
+        <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #ff9f00, #ff4757); margin: 20px auto; border-radius: 2px;"></div>
+        
+        <!-- Subtexto informativo -->
+        <p style="color: #a0a5b5; font-size: 15px; margin: 0; line-height: 1.6;">
+            Preparamos los motores para tu próximo pedido. Consulta nuestros horarios oficiales e intenta nuevamente.
+        </p>
+        
+        <!-- Redes o firma del negocio opcional -->
+        <div style="margin-top: 35px; color: #ff9f00; font-size: 13px; font-weight: 600; letter-spacing: 0.5px;">
+            SPACE WINGS 🪐
+        </div>
+    </div>
 </div>
 
+<!-- Animación CSS embebida para que el cohete flote elegantemente -->
+<style>
+@keyframes floatIcon {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(3deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+    
     <!-- CONTENEDOR PRINCIPAL DE LA TIENDA -->
     <div id="pantalla-tienda">
         <main>
