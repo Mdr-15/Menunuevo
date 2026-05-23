@@ -532,11 +532,11 @@
 <body>
 
         <!-- 🟢 PEGA ESTO AQUÍ: MENSAJE DE CERRADO -->
-    <div id="mensaje-cerrado" style="display: none; text-align: center; padding: 60px 20px; font-family: sans-serif;">
-        <div style="font-size: 60px; margin-bottom: 20px;">⏰</div>
-        <h2 id="texto-alerta" style="color: #ffffff; font-size: 28px; font-weight: bold;"></h2>
-        <p style="color: #b3b3b3; margin-top: 10px;">Vuelve a visitarnos dentro del horario de servicio.</p>
-    </div>
+<div id="mensaje-cerrado" style="display: none; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; text-align: center; padding: 20px; font-family: sans-serif; background-color: #161a1f; color: #ffffff; border-radius: 12px; max-width: 500px; margin: 40px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+    <div style="font-size: 70px; margin-bottom: 20px; animation: pulse 2s infinite;">⏰</div>
+    <h2 id="texto-alerta" style="color: #ff9f00; font-size: 28px; font-weight: bold; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1px;"></h2>
+    <p style="color: #ffffff; font-size: 16px; margin: 0; opacity: 0.85; line-height: 1.5;">Vuelve a visitarnos dentro del horario de servicio.</p>
+</div>
 
     <!-- CONTENEDOR PRINCIPAL DE LA TIENDA -->
     <div id="pantalla-tienda">
@@ -598,12 +598,12 @@ async function cargarMenuCompleto() {
         const lineasHorario = textoHorarioCSV.split('\n').map(l => l.trim()).filter(l => l.length > 0);
         
         if (lineasHorario.length > 1) {
-            // Evaluamos la fila 1 (donde están tus horas y el mensaje)
+            // 🟢 CORREGIDO: Leemos la fila 1 (donde están tus horas y el mensaje)
             const columnasHorario = lineasHorario[1].split(',').map(limpiarTextoSheets);
             
-            const horaApertura = columnasHorario[0];   // Columna A (Ej: "18:00")
-            const horaCierre = columnasHorario[1];     // Columna B (Ej: "02:00")
-            const mensajeCerrado = columnasHorario[2]; // Columna C (Ej: "Por el momento...")
+            const horaApertura = columnasHorario[0];   // Columna A (Ej: "08:00")
+            const horaCierre = columnasHorario[1];     // Columna B (Ej: "09:00")
+            const mensajeCerrado = columnasHorario[2]; // Columna C ("Por el momento estamos cerrados")
             
             // Obtener la hora actual de tu dispositivo en formato HH:MM
             const ahora = new Date().toTimeString().substring(0, 5); 
@@ -613,7 +613,7 @@ async function cargarMenuCompleto() {
             if (horaApertura <= horaCierre) {
                 estaAbierto = (ahora >= horaApertura && ahora <= horaCierre);
             } else {
-                estaAbierto = (ahora >= horaApertura || ahora <= cierre);
+                estaAbierto = (ahora >= horaApertura || ahora <= horaCierre);
             }
             
             // Apuntamos a los contenedores HTML
@@ -625,14 +625,14 @@ async function cargarMenuCompleto() {
                 // 🛑 SI ESTÁ CERRADO: Oculta la tienda por completo y activa el cartel
                 if (tiendaHtml) tiendaHtml.style.display = 'none';
                 if (cerradoHtml) {
-                    cerradoHtml.style.display = 'block';
+                    cerradoHtml.style.display = 'flex'; // Activamos el diseño flex centrado
                     if (textoAlerta) textoAlerta.innerText = mensajeCerrado || "Por el momento estamos cerrados";
                 }
                 console.log("⏰ Negocio cerrado. Se muestra el mensaje de la hoja.");
                 return; // Detiene el código aquí para no perder recursos cargando los platillos
             } else {
-                // 🍏 SI ESTÁ ABIERTO: Muestra la tienda y oculta el cartel de cerrado
-                if (tiendaHtml) tiendaHtml.style.display = ''; // o 'block' según use tu diseño original
+                // 🍏 SI ESTÁ ABIERTO: Restauramos el diseño original limpio de CSS y ocultamos cartel
+                if (tiendaHtml) tiendaHtml.style.display = ''; 
                 if (cerradoHtml) cerradoHtml.style.display = 'none';
             }
         }
@@ -648,7 +648,7 @@ async function cargarMenuCompleto() {
         });
 
         const textoCSV = await respuesta.text();
-        baseDatosProductos = parsearEstructuraMenu(textoCSV); // Llama a tu función de la foto
+        baseDatosProductos = parsearEstructuraMenu(textoCSV);
         
         renderizarArticulosIndividuales(baseDatosProductos.individuales);
         renderizarCombosDinamicos(baseDatosProductos.combos);
