@@ -632,7 +632,7 @@ async function cargarMenuCompleto() {
                 return; // Detiene el código aquí para no perder recursos cargando los platillos
             } else {
                 // 🍏 SI ESTÁ ABIERTO: Muestra la tienda y oculta el cartel de cerrado
-                if (tiendaHtml) tiendaHtml.style.display = 'grid'; // o 'block' según use tu diseño original
+                if (tiendaHtml) tiendaHtml.style.display = ''; // o 'block' según use tu diseño original
                 if (cerradoHtml) cerradoHtml.style.display = 'none';
             }
         }
