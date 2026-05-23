@@ -835,139 +835,128 @@
     }
     </style>
 </head>
-
-
 <body>
 
-
   <!-- 1. CONTENEDOR DEL MENSAJE DE CERRADO (Oculto por defecto) -->
-  <div id="mensaje-cerrado" style="display: none; text-align: center; padding: 60px 20px; font-family: 'Poppins', sans-serif; max-width: 500px; margin: 100px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 12px; background: #fff;">
+  <div id="mensaje-cerrado" style="display: none; text-align: center; padding: 60px 20px; font-family: 'Plus Jakarta Sans', sans-serif; max-width: 500px; margin: 100px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 12px; background: #fff;">
     <div style="font-size: 50px; margin-bottom: 20px;">🕒</div>
     <h2 id="texto-mensaje" style="color: #333; font-size: 20px; line-height: 1.6; font-weight: 500;">Verificando horario...</h2>
   </div>
 
-  <!-- 2. CONTENEDOR DE TU MENÚ ACTUAL (Oculto por defecto mientras valida) -->
-  <div id="contenido-pagina" style="display: none;">
-    
-    <!-- === AQUÍ DEJA TODO TU CÓDIGO HTML ACTUAL === -->
-    <!-- Mantén intactos tus contenedores de platos, el buscador, etc. -->
-    
+  <!-- 2. CONTENEDOR PRINCIPAL DE LA TIENDA (Oculto por defecto mientras valida) -->
+  <div id="pantalla-tienda" style="display: none;">
+    <main>
+      <h1 class="logo">Space Wings</h1>
+      <h2 class="seccion-titulo">Nuestras Especialidades</h2>
+      <div id="contenedor-individuales" class="grid-productos"></div>
+      
+      <h2 class="seccion-titulo">Combos Space Wings</h2>
+      <div id="contenedor-combos"></div>
+    </main>
+
+    <aside class="panel-pedido">
+      <div class="cabecera-pedido"><h2>🛒 Pedido</h2><div class="contador-badge" id="badge-contador">0</div></div>
+      <div style="margin-top: 5px;"><label class="label-cliente">Cliente *</label><input type="text" id="nombre-cliente" class="input-nombre" placeholder="Ingresa tu nombre"></div>
+      <div class="Carrito-elementos" id="carrito-lista"><p id="carrito-vacio-texto" style="color: #718096; text-align: center; margin-top: 15px; font-size: 0.75rem;">Carrito vacío.</p></div>
+      <div class="Total"><span>Total:</span><span id="carrito-total">$0.00</span></div>
+      <button class="Boton-enviar" id="btn-whatsapp">Enviar Pedido</button>
+    </aside>
+  </div>
+
+  <!-- SECCIÓN INTERACTIVA DE AGRADECIMIENTO -->
+  <div id="pantalla-agradecimiento" style="display: none; text-align: center; padding: 40px 20px; background-color: #161a1f; border-radius: 12px; max-width: 450px; margin: 40px auto; border: 1px solid #232931; box-sizing: border-box;">
+    <span style="font-size: 3.5rem;">🚀</span>
+    <h2 style="color: #ff9f00; text-transform: uppercase; margin-top: 10px; font-size: 1.4rem;">¡Pedido Confirmed!</h2>
+    <p style="font-size: 1rem; color: #ffffff; margin-bottom: 5px;">Muchas gracias por tu compra, <strong id="agradecimiento-cliente" style="color: #ff9f00;"></strong>.</p>
+    <p style="color: #a0aec0; font-size: 0.85rem; margin-top: 0;">Tu orden está siendo procesada en la estación de control.</p>
+    <div style="background-color: #0d0f12; padding: 12px; border-radius: 8px; margin: 15px 0; border: 1px solid #232931;">
+      <span style="color: #a0aec0; font-size: 0.75rem; font-weight: bold; text-transform: uppercase;">Total a pagar:</span>
+      <div id="agradecimiento-total" style="font-size: 1.6rem; color: #ff9f00; font-weight: bold; margin-top: 3px;">$0.00</div>
+    </div>
+    <button onclick="volverAlMenu()" style="background-color: #ff9f00; color: #0d0f12; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; width: 100%;">Volver al Menú</button>
   </div>
 
 
 
-
-
-
-
-
-    
-    <!-- CONTENEDOR PRINCIPAL DE LA TIENDA -->
-    <div id="pantalla-tienda">
-        <main>
-            <h1 class="logo">Space Wings</h1>
-            <h2 class="seccion-titulo">Nuestras Especialidades</h2>
-            <div id="contenedor-individuales" class="grid-productos"></div>
-            <h2 class="seccion-titulo">Combos Space Wings</h2>
-            <div id="contenedor-combos"></div>
-        </main>
-
-        <aside class="panel-pedido">
-            <div class="cabecera-pedido"><h2>🛒 Pedido</h2><div class="contador-badge" id="badge-contador">0</div></div>
-            <div style="margin-top: 5px;"><label class="label-cliente">Cliente *</label><input type="text" id="nombre-cliente" class="input-nombre" placeholder="Ingresa tu nombre"></div>
-            <div class="Carrito-elementos" id="carrito-lista"><p id="carrito-vacio-texto" style="color: #718096; text-align: center; margin-top: 15px; font-size: 0.75rem;">Carrito vacío.</p></div>
-            <div class="Total"><span>Total:</span><span id="carrito-total">$0.00</span></div>
-            <button class="Boton-enviar" id="btn-whatsapp">Enviar Pedido</button>
-        </aside>
-    </div>
-
-    <!-- SECCIÓN INTERACTIVA DE AGRADECIMIENTO -->
-    <div id="pantalla-agradecimiento" style="display: none; text-align: center; padding: 40px 20px; background-color: #161a1f; border-radius: 12px; max-width: 450px; margin: 40px auto; border: 1px solid #232931; box-sizing: border-box;">
-        <span style="font-size: 3.5rem;">🚀</span>
-        <h2 style="color: #ff9f00; text-transform: uppercase; margin-top: 10px; font-size: 1.4rem;">¡Pedido Confirmado!</h2>
-        <p style="font-size: 1rem; color: #ffffff; margin-bottom: 5px;">Muchas gracias por tu compra, <strong id="agradecimiento-cliente" style="color: #ff9f00;"></strong>.</p>
-        <p style="color: #a0aec0; font-size: 0.85rem; margin-top: 0;">Tu orden está siendo procesada en la estación de control.</p>
-        <div style="background-color: #0d0f12; padding: 12px; border-radius: 8px; margin: 15px 0; border: 1px solid #232931;">
-            <span style="color: #a0aec0; font-size: 0.75rem; font-weight: bold; text-transform: uppercase;">Total a pagar:</span>
-            <div id="agradecimiento-total" style="font-size: 1.6rem; color: #ff9f00; font-weight: bold; margin-top: 3px;">$0.00</div>
-        </div>
-        <button onclick="volverAlMenu()" style="background-color: #ff9f00; color: #0d0f12; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; width: 100%;">Volver al Menú</button>
-    </div>
-
     <script>
         
 
-        //***** OBTENER LOS DATOS DEL ARCHIVO DE GOOGLE SHEETS
+       <script>
+  // ***** OBTENER LOS DATOS DEL ARCHIVO DE GOOGLE SHEETS *****
+  const servidorGoogle = "https://docs.google.com/spreadsheets/d/";
+  const idDocumento = "18DrAD8PX7jpvMoW9N8sKTlqXY4SiprjdmDMBKnfi8gQ";
+  const endpointApi = "/gviz/tq?tqx=out:csv&sheet=Hoja1";
+  const endpointConfig = "/gviz/tq?tqx=out:json&sheet=Configuracion";
+
+  const urlGoogleSheets = servidorGoogle + idDocumento + endpointApi;
+
+  let baseDatosProductos = { individuales: [], combos: [] };
+  let carrito = [];
+ 
         
-// ***** OBTENER LOS DATOS DEL ARCHIVO DE GOOGLE SHEETS *****
-const servidorGoogle = "https://docs.google.com/spreadsheets/d/";
-const idDocumento = "18DrAD8PX7jpvMoW9N8sKTlqXY4SiprjdmDMBKnfi8gQ";
-const endpointApi = "/gviz/tq?tqx=out:csv&sheet=Hoja1";
+  async function cargarMenuCompleto() {
+    const tienda = document.getElementById('pantalla-tienda');
+    const contenedorMensaje = document.getElementById('mensaje-cerrado');
+    const textoMensaje = document.getElementById('texto-mensaje');
 
-// Nueva constante para la pestaña de configuración horaria
-const endpointConfig = "/gviz/tq?tqx=out:json&sheet=Configuracion";
+    try {
+      // === PASO 1: VERIFICAR HORARIO DESDE SHEET ===
+      const urlConfigFinal = servidorGoogle + idDocumento + endpointConfig + "&t=" + new Date().getTime();
+      const respuestaConfig = await fetch(urlConfigFinal, { cache: "no-store" });
+      const textoConfig = await respuestaConfig.text();
+      
+      // Limpiar y parsear JSON de Google Sheets
+      const datosJson = JSON.parse(textoConfig.substr(47).slice(0, -2));
+      const filaConfig = datosJson.table.rows[0].c;
 
-const urlGoogleSheets = servidorGoogle + idDocumento + endpointApi;
+      const horaApertura = parseInt(filaConfig[0].v);
+      const horaCierre = parseInt(filaConfig[1].v);
+      const diasCerradoRaw = filaConfig[2] ? filaConfig[2].v.toString() : "";
+      const mensajeCerrado = filaConfig[3].v;
 
-let baseDatosProductos = { individuales: [], combos: [] };
-let carrito = [];
+      const diasCerrados = diasCerradoRaw.split(',').map(d => parseInt(d.trim())).filter(n => !isNaN(n));
 
-async function cargarMenuCompleto() {
-  const contenedorMenu = document.getElementById('contenido-pagina');
-  const contenedorMensaje = document.getElementById('mensaje-cerrado');
-  const textoMensaje = document.getElementById('texto-mensaje');
+      // Obtener hora y día local de México
+      const ahora = new Date();
+      const horaActual = parseInt(ahora.toLocaleString("es-MX", { hour: "2-digit", hour12: false, timeZone: "America/Mexico_City" }));
+      const diaSemanaActual = ahora.toLocaleDateString("en-US", { weekday: "numeric", timeZone: "America/Mexico_City" });
+      const diaActualNum = parseInt(diaSemanaActual) === 7 ? 0 : parseInt(diaSemanaActual);
 
-  try {
-    // === PASO 1: VERIFICAR SI EL NEGOCIO ESTÁ ABIERTO ===
-    const urlConfigFinal = servidorGoogle + idDocumento + endpointConfig + "&t=" + new Date().getTime();
-    const respuestaConfig = await fetch(urlConfigFinal, { cache: "no-store" });
-    const textoConfig = await respuestaConfig.text();
-    
-    // Parsear la respuesta de la hoja de Configuración
-    const datosJson = JSON.parse(textoConfig.substr(47).slice(0, -2));
-    const filaConfig = datosJson.table.rows[0].c;
+      const estaCerradoPorDia = diasCerrados.includes(diaActualNum);
+      const estaCerradoPorHora = (horaActual < horaApertura || horaActual >= horaCierre);
 
-    const horaApertura = parseInt(filaConfig[0].v);
-    const horaCierre = parseInt(filaConfig[1].v);
-    const diasCerradoRaw = filaConfig[2] ? filaConfig[2].v.toString() : "";
-    const mensajeCerrado = filaConfig[3].v;
-
-    const diasCerrados = diasCerradoRaw.split(',').map(d => parseInt(d.trim())).filter(n => !isNaN(n));
-
-    // Validar hora local (Ejemplo ajustado a la hora de México)
-    const ahora = new Date();
-    const horaActual = parseInt(ahora.toLocaleString("es-MX", { hour: "2-digit", hour12: false, timeZone: "America/Mexico_City" }));
-    const diaSemanaActual = ahora.toLocaleDateString("en-US", { weekday: "numeric", timeZone: "America/Mexico_City" });
-    const diaActualNum = parseInt(diaSemanaActual) === 7 ? 0 : parseInt(diaSemanaActual);
-
-    const estaCerradoPorDia = diasCerrados.includes(diaActualNum);
-    const estaCerradoPorHora = (horaActual < horaApertura || horaActual >= horaCierre);
-
-    if (estaCerradoPorDia || estaCerradoPorHora) {
-      // Si está cerrado, muestra el mensaje e interrumpe la carga de productos
-      textoMensaje.innerHTML = mensajeCerrado;
-      if (contenedorMenu) contenedorMenu.style.display = 'none';
-      if (contenedorMensaje) contenedorMensaje.style.display = 'block';
-      return; // Detiene el código aquí
-    }
-
-    // === PASO 2: SI ESTÁ ABIERTO, SE CARGAN LOS PRODUCTOS DE FORMA NORMAL ===
-    if (contenedorMenu) contenedorMenu.style.display = 'block';
-    if (contenedorMensaje) contenedorMensaje.style.display = 'none';
-
-    // Rompemos la caché de Google agregando la hora actual exacta
-    const urlFinal = urlGoogleSheets + "&t=" + new Date().getTime();
-
-    const respuesta = await fetch(urlFinal, {
-      cache: "no-store",
-      headers: {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache'
+      if (estaCerradoPorDia || estaCerradoPorHora) {
+        textoMensaje.innerHTML = mensajeCerrado;
+        if (tienda) tienda.style.display = 'none';
+        if (contenedorMensaje) contenedorMensaje.style.display = 'block';
+        return; // Frena la carga por completo
       }
-    });
 
-    // ... AQUÍ DEBAJO CONTINÚA TU CÓDIGO ORIGINAL ...
-    // (El proceso donde lees el CSV, separas combos e individuales, etc.)
+      // === PASO 2: SI ESTÁ ABIERTO, EXTRAER PRODUCTOS ===
+      if (tienda) tienda.style.display = 'flex';
+      if (contenedorMensaje) contenedorMensaje.style.display = 'none';
+
+      const urlFinal = urlGoogleSheets + "&t=" + new Date().getTime();
+      const respuesta = await fetch(urlFinal, {
+        cache: "no-store",
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
+      });
+
+      const datosCsv = await respuesta.text();
+      parsearEstructuraMenu(datosCsv);
+
+    } catch (error) {
+      console.error("Error en el sistema central:", error);
+      // Fallback de seguridad por si falla la conexión
+      if (tienda) tienda.style.display = 'flex';
+      if (contenedorMensaje) contenedorMensaje.style.display = 'none';
+    }
+  }
+
+
 
 
         function limpiarTextoSheets(celda) {
