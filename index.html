@@ -531,6 +531,13 @@
 </head>
 <body>
 
+        <!-- 🟢 PEGA ESTO AQUÍ: MENSAJE DE CERRADO -->
+    <div id="mensaje-cerrado" style="display: none; text-align: center; padding: 60px 20px; font-family: sans-serif;">
+        <div style="font-size: 60px; margin-bottom: 20px;">⏰</div>
+        <h2 id="texto-alerta" style="color: #ffffff; font-size: 28px; font-weight: bold;"></h2>
+        <p style="color: #b3b3b3; margin-top: 10px;">Vuelve a visitarnos dentro del horario de servicio.</p>
+    </div>
+
     <!-- CONTENEDOR PRINCIPAL DE LA TIENDA -->
     <div id="pantalla-tienda">
         <main>
@@ -573,15 +580,65 @@ const idDocumento = "18DrAD8PX7jpvMoW9N8sKTlqXY4SiprjdmDMBKnfi8gQ";
 const endpointApi = "/gviz/tq?tqx=out:csv&sheet=Hoja1";
 
 const urlGoogleSheets = servidorGoogle + idDocumento + endpointApi;
-
+        
+// 🟢 AGREGA ESTA NUEVA LÍNEA JUSTO AQUÍ ABAJO:
+const urlHorarioSheets = servidorGoogle + idDocumento + "/gviz/tq?tqx=out:csv&sheet=Configuracion";
+        
 let baseDatosProductos = { individuales: [], combos: [] };
 let carrito = [];
 
 async function cargarMenuCompleto() {
     try {
-        // Rompemos la caché de Google agregando la hora actual exacta
-        const urlFinal = urlGoogleSheets + "&t=" + new Date().getTime();
+        // ⏰ 1. VALIDACIÓN DEL HORARIO EN VIVO
+        const urlFinalHorario = urlHorarioSheets + "&t=" + new Date().getTime();
+        const respuestaHorario = await fetch(urlFinalHorario, { cache: "no-store" });
+        const textoHorarioCSV = await respuestaHorario.text();
+        
+        // Separamos las líneas del archivo CSV
+        const lineasHorario = textoHorarioCSV.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        
+        if (lineasHorario.length > 1) {
+            // Evaluamos la fila 1 (donde están tus horas y el mensaje)
+            const columnasHorario = lineasHorario[1].split(',').map(limpiarTextoSheets);
+            
+            const horaApertura = columnasHorario[0];   // Columna A (Ej: "18:00")
+            const horaCierre = columnasHorario[1];     // Columna B (Ej: "02:00")
+            const mensajeCerrado = columnasHorario[2]; // Columna C (Ej: "Por el momento...")
+            
+            // Obtener la hora actual de tu dispositivo en formato HH:MM
+            const ahora = new Date().toTimeString().substring(0, 5); 
+            
+            // Evaluar si el restaurante está abierto o cerrado (soporta cierres de madrugada)
+            let estaAbierto = false;
+            if (horaApertura <= horaCierre) {
+                estaAbierto = (ahora >= horaApertura && ahora <= horaCierre);
+            } else {
+                estaAbierto = (ahora >= horaApertura || ahora <= cierre);
+            }
+            
+            // Apuntamos a los contenedores HTML
+            const tiendaHtml = document.getElementById('pantalla-tienda');
+            const cerradoHtml = document.getElementById('mensaje-cerrado');
+            const textoAlerta = document.getElementById('texto-alerta');
+            
+            if (!estaAbierto) {
+                // 🛑 SI ESTÁ CERRADO: Oculta la tienda por completo y activa el cartel
+                if (tiendaHtml) tiendaHtml.style.display = 'none';
+                if (cerradoHtml) {
+                    cerradoHtml.style.display = 'block';
+                    if (textoAlerta) textoAlerta.innerText = mensajeCerrado || "Por el momento estamos cerrados";
+                }
+                console.log("⏰ Negocio cerrado. Se muestra el mensaje de la hoja.");
+                return; // Detiene el código aquí para no perder recursos cargando los platillos
+            } else {
+                // 🍏 SI ESTÁ ABIERTO: Muestra la tienda y oculta el cartel de cerrado
+                if (tiendaHtml) tiendaHtml.style.display = 'grid'; // o 'block' según use tu diseño original
+                if (cerradoHtml) cerradoHtml.style.display = 'none';
+            }
+        }
 
+        // 🍔 2. CARGA ORIGINAL DE TUS PRODUCTOS (Tu código original sigue aquí abajo intacto)
+        const urlFinal = urlGoogleSheets + "&t=" + new Date().getTime();
         const respuesta = await fetch(urlFinal, { 
             cache: "no-store",
             headers: {
@@ -591,14 +648,14 @@ async function cargarMenuCompleto() {
         });
 
         const textoCSV = await respuesta.text();
-        baseDatosProductos = parsearEstructuraMenu(textoCSV);
+        baseDatosProductos = parsearEstructuraMenu(textoCSV); // Llama a tu función de la foto
         
         renderizarArticulosIndividuales(baseDatosProductos.individuales);
         renderizarCombosDinamicos(baseDatosProductos.combos);
         actualizarInterfazCarrito();
         console.log("⚡ Menú en vivo actualizado con éxito.");
     } catch (error) {
-        console.error("Fallo al inicializar base de datos:", error);
+        console.error("Fallo al inicializar base de datos o validar el horario:", error);
     }
 }
 
