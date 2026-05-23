@@ -2,1038 +2,690 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Space Wings — Experiencia Menú Digital</title>
-    
-    <!-- Tipografías de Vanguardia -->
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Wings - Menú Digital</title>
+        
     <style>
-    /* --- VARIABLES DE ALTA CLARIDAD VISUAL --- */
-    :root {
-        --bg-cosmico: #f6f8fa;      /* Fondo de porcelana ultra-suave que descansa la vista */
-        --bg-surface: #ffffff;      /* Blanco puro para paneles de control */
-        --glass-bg: rgba(255, 255, 255, 0.7); /* Cristal esmerilado claro y translúcido */
-        --glass-border: rgba(9, 13, 22, 0.06); /* Borde sutil de contención */
-        --glass-border-glow: rgba(179, 107, 40, 0.2); 
-        
-        /* Paleta Cromática "Canela Tostada" */
-        --brand-accent: #b36b28;     /* Canela de autor elegante de alto contraste */
-        --brand-glow: rgba(179, 107, 40, 0.08);
-        --text-gold: #475569;       /* Gris pizarra suave para subtítulos secundarios */
-        --text-white: #0f172a;      /* Negro tinta profundo (Slate 900) para máxima lectura */
-        --text-muted: #64748b;      /* Gris acero intermedio */
-        
-        /* Estado del Sistema */
-        --success: #0eb87f;
-        --error-vibrant: #dc2626;
-        --error-dim: #fef2f2;
-        
-        /* Radios Orgánicos (Squircle Shapes) */
-        --radius-card: 24px;
-        --radius-interactive: 14px;
-        --radius-pill: 100px;
-        
-        /* Ingeniería de Sombras Orgánicas Blandas */
-        --shadow-nebula: 0 10px 30px -10px rgba(9, 13, 22, 0.05), 0 1px 3px rgba(9, 13, 22, 0.02);
-        --shadow-glow: 0 4px 12px rgba(179, 107, 40, 0.15);
-        --transition-fluid: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    /* --- LIENZO DEL SISTEMA --- */
-    body {
-        background-color: var(--bg-cosmico);
-        color: var(--text-white);
-        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-        margin: 0;
-        display: flex;
-        min-height: 100vh;
-        -webkit-font-smoothing: antialiased;
-        overflow-x: hidden;
-        /* Suaves destellos de luz cálida de fondo */
-        background-image: 
-            radial-gradient(circle at 10% 20%, rgba(179, 107, 40, 0.03) 0%, transparent 40%),
-            radial-gradient(circle at 90% 80%, rgba(179, 107, 40, 0.02) 0%, transparent 50%);
-        background-attachment: fixed;
-    }
-
-    #pantalla-tienda {
-        display: flex;
-        width: 100%;
-    }
-
-    main {
-        flex: 1;
-        padding: 70px 60px;
-        box-sizing: border-box;
-        max-width: 1280px;
-        margin: 0 auto;
-    }
-
-    /* --- MARCA E IDENTIDAD VISUAL --- */
-    h1.logo {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 4rem;
-        text-transform: uppercase;
-        text-align: center;
-        margin-bottom: 60px;
-        font-weight: 700;
-        letter-spacing: -2px;
-        background: linear-gradient(135deg, var(--text-white) 30%, var(--brand-accent) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    h2.seccion-titulo {
-        font-family: 'Space Grotesk', sans-serif;
-        color: var(--text-white);
-        padding-bottom: 18px;
-        margin-top: 70px;
-        text-transform: uppercase;
-        font-size: 1.5rem;
-        font-weight: 700;
-        letter-spacing: 1px;
-        position: relative;
-    }
-
-    h2.seccion-titulo::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 60px;
-        height: 3px;
-        background: linear-gradient(90deg, var(--brand-accent), transparent);
-        border-radius: var(--radius-pill);
-    }
-    /* --- RETÍCULAS DE EXHIBICIÓN EN TRES DIMENSIONES --- */
-    .grid-productos {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-        gap: 35px;
-        margin-top: 35px;
-    }
-
-    #contenedor-combos {
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-        margin-top: 35px;
-    }
-
-    /* --- TARJETAS CRISTALINAS INDIVIDUALES (GLASSMOPHISM CLARO) --- */
-    .tarjeta-producto {
-        background: var(--glass-bg);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid var(--glass-border);
-        border-radius: var(--radius-card);
-        padding: 35px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        box-shadow: var(--shadow-nebula);
-        transition: var(--transition-fluid);
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* Efecto de iluminación interna suave al pasar el mouse */
-    .tarjeta-producto::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: var(--radius-card);
-        padding: 1px;
-        background: linear-gradient(135deg, rgba(255,255,255,0.6), transparent 60%, rgba(179, 107, 40, 0.05));
-        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        pointer-events: none;
-        transition: var(--transition-fluid);
-    }
-
-    .tarjeta-producto:hover {
-        transform: translateY(-8px);
-        background: rgba(255, 255, 255, 0.95);
-        border-color: rgba(179, 107, 40, 0.25);
-        box-shadow: 0 20px 40px -15px rgba(9, 13, 22, 0.08);
-    }
-
-    .tarjeta-producto:hover::before {
-        background: linear-gradient(135deg, rgba(179, 107, 40, 0.3), transparent 40%, rgba(255,255,255,0.5));
-    }
-
-    /* Insignia Elegante de Categorías */
-    .tag-categoria {
-        background: rgba(179, 107, 40, 0.08);
-        color: var(--brand-accent);
-        border: 1px solid rgba(179, 107, 40, 0.12);
-        padding: 6px 16px;
-        border-radius: var(--radius-pill);
-        font-size: 0.72rem;
-        font-weight: 700;
-        margin-bottom: 24px;
-        display: inline-block;
-        align-self: flex-start;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .tarjeta-producto h3 {
-        color: var(--text-white);
-        font-size: 1.35rem;
-        font-weight: 700;
-        margin: 0 0 12px 0;
-        line-height: 1.3;
-        letter-spacing: -0.3px;
-    }
-
-    .precio {
-        font-size: 1.6rem;
-        color: var(--brand-accent);
-        font-weight: 700;
-        margin: 20px 0;
-        font-family: 'Space Grotesk', sans-serif;
-    }
-
-    /* --- CONFIGURADOR DE COMBOS PREMIUM --- */
-    .tarjeta-combo-full {
-        background: var(--glass-bg);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid var(--glass-border);
-        border-radius: var(--radius-card);
-        padding: 45px;
-        width: 100%;
-        box-sizing: border-box;
-        box-shadow: var(--shadow-nebula);
-        transition: var(--transition-fluid);
-        position: relative;
-    }
-
-    .tarjeta-combo-full:hover {
-        background: rgba(255, 255, 255, 0.95);
-        border-color: rgba(179, 107, 40, 0.2);
-        box-shadow: 0 20px 40px -15px rgba(9, 13, 22, 0.08);
-    }
-
-    .header-combo {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 35px;
-        border-bottom: 1px dashed rgba(9, 13, 22, 0.1);
-        padding-bottom: 24px;
-    }
-
-    .header-combo h3 {
-        margin: 0;
-        font-size: 1.75rem;
-        color: var(--text-white);
-        font-weight: 700;
-        font-family: 'Space Grotesk', sans-serif;
-        letter-spacing: -0.5px;
-    }
-
-    .header-combo .precio-combo {
-        color: var(--brand-accent);
-        font-size: 1.85rem;
-        font-weight: 700;
-        font-family: 'Space Grotesk', sans-serif;
-    }
-
-     /* --- OPTIMIZACIÓN DE ESPACIOS EN COMBOS --- */
-    .config-box {
-        background: rgba(9, 13, 22, 0.02);
-        border: 1px solid rgba(9, 13, 22, 0.03);
-        border-radius: var(--radius-interactive);
-        padding: 16px 20px; /* Reducido a la mitad para dar más espacio */
-        margin-bottom: 20px;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 14px; /* Menos separación entre campos para compactar la caja */
-    }
-
-    .campo-grupo {
-        width: 100% !important;
-        margin: 0 !important; /* Eliminamos márgenes externos que encogen el select */
-        padding: 0 !important;
-    }
-
-    .campo-grupo label {
-        display: block;
-        color: var(--text-gold);
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        margin-bottom: 6px; /* Menos espacio debajo de la etiqueta */
-        letter-spacing: 1px;
-    }
-
-    /* --- SELECTORES MÁS GRANDES Y LIMPIOS --- */
-    select {
-        width: 100% !important;
-        background-color: var(--bg-surface);
-        color: var(--text-white);
-        border: 1px solid var(--glass-border);
-        
-        /* Aumentamos el tamaño interno y de la letra */
-        padding: 14px 18px !important; 
-        font-size: 1.05rem !important; /* Texto notablemente más grande y legible */
-        font-weight: 650 !important;
-        
-        border-radius: var(--radius-interactive);
-        box-sizing: border-box !important;
-        cursor: pointer;
-        transition: var(--transition-fluid);
-        appearance: none;
-        
-        /* Flecha del menú desplegable */
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 20 20' fill='%23b36b28'%3E%3Cpath fill-rule='evenodd' d='M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06z' clip-rule='evenodd' /%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 18px center;
-        background-size: 22px;
-        padding-right: 50px !important;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
-    }
-
-    select:focus {
-        outline: none;
-        border-color: var(--brand-accent);
-        box-shadow: 0 0 0 4px rgba(179, 107, 40, 0.12);
-    }
-
-
-    /* --- CONTROLES SELECT ERGONÓMICOS Y CÓMODOS --- */
-    select {
-        width: 100%;
-        background-color: var(--bg-surface);
-        color: var(--text-white);
-        border: 1px solid var(--glass-border);
-        padding: 16px 20px;
-        border-radius: var(--radius-interactive);
-        font-size: 0.95rem;
-        font-family: inherit;
-        font-weight: 600;
-        box-sizing: border-box;
-        cursor: pointer;
-        transition: var(--transition-fluid);
-        appearance: none;
-        /* Vector de flecha estilizada en tono canela */
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 20 20' fill='%23b36b28'%3E%3Cpath fill-rule='evenodd' d='M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06z' clip-rule='evenodd' /%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 20px center;
-        background-size: 22px;
-        padding-right: 54px;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
-    }
-
-    select:focus {
-        outline: none;
-        border-color: var(--brand-accent);
-        box-shadow: 0 0 0 4px rgba(179, 107, 40, 0.12);
-        background-color: var(--bg-surface);
-    }
-    /* --- BOTONES CON CONTRASTE CONMUTA INTERACTIVA --- */
-    .btn-agregar-combo {
-        background: var(--text-white);
-        color: var(--bg-surface);
-        border: none;
-        padding: 18px 36px;
-        border-radius: var(--radius-interactive);
-        font-weight: 800;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        cursor: pointer;
-        transition: var(--transition-fluid);
-        float: right !important;
-        margin-top: 5px !important;
-        margin-bottom: 10px !important;
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
-    }
-
-    .btn-agregar-combo:hover {
-        background: var(--brand-accent);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(179, 107, 40, 0.25);
-    }
-
-    .btn-agregar-combo:active {
-        transform: translateY(-1px) scale(0.97);
-    }
-
-    .btn-agregar-individual {
-        background: rgba(9, 13, 22, 0.04);
-        color: var(--text-white);
-        border: 1px solid var(--glass-border);
-        padding: 18px;
-        border-radius: var(--radius-interactive);
-        font-weight: 700;
-        cursor: pointer;
-        width: 100%;
-        margin-top: 22px;
-        text-transform: uppercase;
-        font-size: 0.8rem;
-        letter-spacing: 1px;
-        transition: var(--transition-fluid);
-    }
-
-    .btn-agregar-individual:hover {
-        background: var(--brand-accent);
-        color: var(--bg-surface);
-        border-color: transparent;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(179, 107, 40, 0.25);
-    }
-
-    .btn-agregar-individual:active {
-        transform: translateY(-1px) scale(0.97);
-    }
-
-    /* --- PANEL DE ADQUISICIÓN LATERAL FIJO --- */
-    aside.panel-pedido {
-        width: 420px;
-        background-color: var(--bg-surface);
-        border-left: 1px solid var(--glass-border);
-        padding: 45px 32px;
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        z-index: 100;
-        box-shadow: -10px 0 40px rgba(9, 13, 22, 0.03);
-    }
-
-    .cabecera-pedido {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 2px solid var(--bg-cosmico);
-        padding-bottom: 26px;
-        margin-bottom: 32px;
-    }
-
-    .cabecera-pedido h2 {
-        margin: 0;
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--text-white);
-        font-family: 'Space Grotesk', sans-serif;
-        letter-spacing: -0.5px;
-    }
-
-    .contador-badge {
-        background-color: rgba(179, 107, 40, 0.08);
-        color: var(--brand-accent);
-        border: 1px solid rgba(179, 107, 40, 0.15);
-        border-radius: 50px;
-        padding: 4px 16px;
-        font-weight: 700;
-        font-size: 0.85rem;
-        font-family: 'Space Grotesk', sans-serif;
-    }
-
-    .label-cliente {
-        display: block;
-        color: var(--text-muted);
-        margin-bottom: 12px;
-        font-size: 0.72rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .input-nombre {
-        width: 100%;
-        padding: 18px 20px;
-        border-radius: var(--radius-interactive);
-        border: 1px solid var(--border-color, var(--glass-border));
-        background-color: var(--bg-cosmico);
-        color: var(--text-white);
-        box-sizing: border-box;
-        font-size: 1rem;
-        font-family: inherit;
-        font-weight: 600;
-        transition: var(--transition-fluid);
-    }
-
-    .input-nombre:focus {
-        outline: none;
-        border-color: var(--brand-accent);
-        background-color: var(--bg-surface);
-        box-shadow: 0 0 0 4px rgba(179, 107, 40, 0.1);
-    }
-
-    .Carrito-elementos {
-        flex: 1;
-        overflow-y: auto;
-        margin-top: 28px;
-        padding-right: 8px;
-    }
-
-    .Carrito-elementos::-webkit-scrollbar {
-        width: 4px;
-    }
-    .Carrito-elementos::-webkit-scrollbar-thumb {
-        background-color: rgba(9, 13, 22, 0.08);
-        border-radius: 10px;
-    }
-
-    /* --- TARJETAS INTERNAS DEL CARRITO --- */
-    .item-carrito-fila {
-        background: var(--bg-cosmico);
-        padding: 24px;
-        border-radius: var(--radius-interactive);
-        margin-bottom: 20px;
-        border: 1px solid var(--glass-border);
-        box-sizing: border-box;
-        transition: var(--transition-fluid);
-    }
-
-    .item-carrito-fila:hover {
-        border-color: rgba(179, 107, 40, 0.15);
-        background: rgba(179, 107, 40, 0.02);
-    }
-
-    .item-encabezado-flex {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 14px;
-    }
-
-    .item-titulo-carrito {
-        margin: 0;
-        font-weight: 700;
-        font-size: 1rem;
-        color: var(--text-white);
-        line-height: 1.4;
-    }
-
-    .item-salsa-carrito {
-        margin: 6px 0 0 0;
-        color: var(--brand-accent);
-        font-size: 0.8rem;
-        font-weight: 700;
-    }
-
-    .item-desc-carrito {
-        margin: 10px 0 0 0;
-        color: var(--text-muted);
-        font-size: 0.8rem;
-        line-height: 1.5;
-    }
-
-    .item-precio-carrito {
-        font-weight: 700;
-        color: var(--brand-accent);
-        font-size: 1.1rem;
-        margin: 12px 0 0 0;
-        font-family: 'Space Grotesk', sans-serif;
-    }
-
-    .input-nota-carrito {
-        width: 100%;
-        margin-top: 16px;
-        padding: 12px 16px;
-        border: 1px solid var(--glass-border);
-        background-color: var(--bg-surface);
-        border-radius: var(--radius-interactive);
-        font-size: 0.8rem;
-        box-sizing: border-box;
-        color: var(--text-white);
-        font-family: inherit;
-        transition: var(--transition-fluid);
-    }
-
-    .input-nota-carrito:focus {
-        outline: none;
-        border-color: var(--brand-accent);
-        box-shadow: 0 0 0 3px rgba(179, 107, 40, 0.06);
-    }
-    /* --- CONTROLES DE CANTIDAD CÓMODOS --- */
-    .controles-contenedor {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        margin-top: 18px;
-    }
-
-    .item-botones-qty {
-        display: flex;
-        align-items: center;
-        background-color: var(--bg-surface);
-        border-radius: var(--radius-interactive);
-        padding: 6px;
-        border: 1px solid var(--glass-border);
-        box-shadow: 0 1px 2px rgba(9, 13, 22, 0.02);
-    }
-
-    .item-botones-qty button {
-        background: var(--bg-cosmico);
-        color: var(--text-white);
-        border: 1px solid var(--glass-border);
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 700;
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: var(--transition-fluid);
-    }
-
-    .item-botones-qty button:hover {
-        background-color: var(--brand-accent);
-        color: #ffffff;
-        border-color: transparent;
-    }
-
-    .item-botones-qty button:active {
-        transform: scale(0.85);
-    }
-
-    .item-botones-qty span {
-        color: var(--text-white);
-        font-size: 1rem;
-        font-weight: 700;
-        padding: 0 16px;
-        min-width: 20px;
-        text-align: center;
-        font-family: 'Space Grotesk', sans-serif;
-    }
-
-    .btn-cancelar {
-        background: var(--error-dim);
-        border: 1px solid rgba(220, 38, 38, 0.15);
-        color: var(--error-vibrant);
-        font-size: 1.25rem;
-        font-weight: 700;
-        cursor: pointer;
-        padding: 6px 14px;
-        border-radius: var(--radius-interactive);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        transition: var(--transition-fluid);
-    }
-
-    .btn-cancelar:hover {
-        background: var(--error-vibrant);
-        color: #ffffff;
-        border-color: transparent;
-        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
-    }
-
-    /* --- PANEL DE TOTALES Y BOTÓN WHATSAPP ELEGANTE --- */
-    aside.panel-pedido .Total {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.5rem !important;
-        font-weight: 700 !important;
-        color: var(--text-white) !important;
-        margin-top: 35px !important;
-        border-top: 2px solid var(--bg-cosmico);
-        padding-top: 26px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    aside.panel-pedido #carrito-total {
-        color: var(--brand-accent);
-        font-weight: 700;
-        font-size: 1.85rem;
-    }
-
-    aside.panel-pedido button.Boton-enviar {
-        background: var(--text-white) !important;
-        color: var(--bg-surface) !important;
-        border: none !important;
-        padding: 20px 32px !important;
-        border-radius: var(--radius-interactive) !important;
-        font-size: 1.05rem !important;
-        font-weight: 800 !important;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        cursor: pointer !important;
-        width: 100% !important;
-        margin-top: 30px !important;
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12) !important;
-        transition: var(--transition-fluid) !important;
-        display: block !important;
-    }
-
-    aside.panel-pedido button.Boton-enviar:hover {
-        background: var(--brand-accent) !important;
-        color: #ffffff !important;
-        box-shadow: 0 10px 28px rgba(179, 107, 40, 0.35) !important;
-        transform: translateY(-3px);
-    }
-
-    aside.panel-pedido button.Boton-enviar:active {
-        transform: translateY(-1px) scale(0.99) !important;
-    }
-
-    /* --- ADAPTACIÓN RESPONSIVE AUTOMÁTICA PARA MÓVILES --- */
-    @media (max-width: 990px) {
-        body {
-            flex-direction: column !important;
+     /* --- ESTILOS BASE SPACE WINGS (Tema Claro Elegante Premium) --- */
+        body { 
+            background-color: #f8fafc; /* Fondo pizarra claro, ultra limpio y moderno */
+            color: #334155; 
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            margin: 0; 
+            display: flex; 
+            min-height: 100vh; 
         }
-
         #pantalla-tienda {
-            flex-direction: column !important;
+            display: flex;
+            width: 100%;
+        }
+        main { 
+            flex: 1; 
+            padding: 40px; 
+            box-sizing: border-box; 
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1.logo { 
+            color: #c27d38; /* Tono café canela cálido y distinguido */
+            font-size: 2.6rem; 
+            text-transform: uppercase; 
+            text-align: center; 
+            margin-bottom: 35px; 
+            font-weight: 900; 
+            letter-spacing: 2px;
+        }
+        h2.seccion-titulo { 
+            color: #c27d38; 
+            border-bottom: 2px solid #e2e8f0; 
+            padding-bottom: 10px; 
+            margin-top: 40px; 
+            text-transform: uppercase; 
+            font-size: 1.3rem; 
+            letter-spacing: 1px;
+            position: relative;
+        }
+        h2.seccion-titulo::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: #c27d38;
+        }
+        .grid-productos { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 24px; 
+            margin-top: 20px; 
+        }
+        
+        /* --- TARJETAS DE PRODUCTOS --- */
+        .tarjeta-producto { 
+            background-color: #ffffff; 
+            border: 1px solid rgba(226, 232, 240, 0.8); 
+            border-radius: 16px; /* Bordes más suaves y curvos */
+            padding: 24px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01); 
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .tarjeta-producto:hover {
+            transform: translateY(-5px); /* Efecto de elevación interactiva */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            border-color: rgba(194, 125, 56, 0.3);
+        }
+        .tag-categoria { 
+            background-color: #fdf4eb; /* Fondo suave canela pálido */
+            color: #c27d38; 
+            padding: 4px 10px; 
+            border-radius: 20px; /* Estilo píldora moderno */
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            margin-bottom: 12px; 
+            display: inline-block;
+            align-self: flex-start;
+        }
+        .tarjeta-producto strong {
+            font-size: 1.2rem;
+            color: #1e293b;
+            font-weight: 700;
+        }
+        .precio { 
+            font-size: 1.3rem; 
+            color: #c27d38; 
+            font-weight: 800; 
+            margin: 12px 0; 
         }
 
-        main {
-            padding: 45px 24px !important;
-            padding-bottom: 140px !important;
+        /* --- CONFIGURADOR DE COMBOS --- */
+        .tarjeta-combo-full {
+            background-color: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 24px;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            transition: box-shadow 0.25s ease;
         }
-
-        h1.logo {
-            font-size: 3rem;
-            margin-bottom: 40px;
+        .tarjeta-combo-full:hover {
+            box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.04);
         }
-
-        /* Consola Flotante Inferior en Celulares */
-        aside.panel-pedido {
-            width: 100% !important;
-            height: auto !important;
-            max-height: 80px;
-            position: fixed !important;
-            bottom: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            border-left: none !important;
-            border-top: 2px solid var(--brand-accent);
-            background-color: #ffffff !important;
-            padding: 20px 24px !important;
-            box-shadow: 0 -10px 40px rgba(9, 13, 22, 0.08) !important;
-            border-radius: var(--radius-card) var(--radius-card) 0 0 !important;
-            overflow: hidden !important;
-            transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
-            z-index: 9999 !important;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+        .header-combo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
         }
-
-        aside.panel-pedido.expandido {
-            max-height: 88vh !important;
-            overflow-y: auto !important;
+        .header-combo h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: #1e293b;
+            font-weight: 700;
         }
-
-        /* --- PARCHE DE ALINEACIÓN SIMÉTRICA CELULAR --- */
-        .cabecera-pedido {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-            gap: 12px !important;
-            cursor: pointer !important;
-            padding-bottom: 0 !important;
-            margin-bottom: 0 !important;
-            border-bottom: none !important;
-        }
-
-        aside.panel-pedido.expandido .cabecera-pedido {
-            border-bottom: 2px solid var(--bg-cosmico) !important;
-            padding-bottom: 22px !important;
-            margin-bottom: 28px !important;
-        }
-
-        .cabecera-pedido h2 {
-            display: flex !important;
-            align-items: center !important;
-            gap: 10px !important;
-            font-size: 1.2rem !important;
-            margin: 0 !important;
-            white-space: nowrap !important;
-        }
-
-        .contador-badge {
-            margin: 0 !important;
-            padding: 3px 12px !important;
-            font-size: 0.8rem !important;
-            display: inline-flex !important;
-        }
-
-        /* Botón dinámico empujado limpiamente a la derecha */
-        .cabecera-pedido::after {
-            content: '🔼 Ver pedido';
-            margin-left: auto !important;
-            flex-shrink: 0 !important;
-            color: #ffffff;
-            font-size: 0.75rem;
+        .header-combo .precio-combo {
+            color: #c27d38;
+            font-size: 1.4rem;
             font-weight: 800;
-            background: var(--text-white);
-            padding: 8px 16px;
-            border-radius: var(--radius-pill);
-            transition: var(--transition-fluid);
+        }
+        .config-box {
+            background-color: #f8fafc; 
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            
+            /* --- CONFIGURACIÓN VERTICAL CONGELADA --- */
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px; /* Espaciado uniforme entre cada renglón */
+        }      
+        .campo-grupo {
+            margin-bottom: 0;
+        }
+        .campo-grupo label {
+            display: block;
+            color: #64748b; 
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+        select { 
+            width: 100%; 
+            background-color: #ffffff; 
+            color: #334155; 
+            border: 1px solid #cbd5e1; 
+            padding: 10px; 
+            border-radius: 8px; 
+            font-size: 0.85rem;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        select:focus {
+            outline: none;
+            border-color: #c27d38;
+        }
+        
+        /* --- BOTONES MODERNOS --- */
+         .btn-agregar-combo {
+            background-color: #475569; /* Gris oscuro original */
+            color: #ffffff; 
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: background-color 0.2s, transform 0.1s;
+            
+            /* --- ALINEACIÓN SEGURA DENTRO DE LA TARJETA --- */
+            float: right !important; /* Mantiene la posición a la derecha */
+            margin-top: 5px !important;
+            margin-bottom: 15px !important; /* Espacio extra abajo para que respire la tarjeta */
+        }
+        .btn-agregar-combo:hover {
+            background-color: #a8682a;
+        }
+        .btn-agregar-combo:active {
+            transform: scale(0.98);
+        }
+        .btn-agregar-individual {
+            background-color: #475569;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .btn-agregar-individual:hover {
+            background-color: #334155;
+        }
+        .btn-agregar-individual:active {
+            transform: scale(0.98);
+        }
+
+        /* --- INTERFAZ LATERAL FIJA DEL PEDIDO --- */
+        aside.panel-pedido { 
+            width: 360px; 
+            background-color: #ffffff; 
+            border-left: 1px solid #e2e8f0; 
+            padding: 24px; 
+            position: sticky; 
+            top: 0; 
+            height: 100vh; 
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            box-shadow: -10px 0 15px -3px rgba(0, 0, 0, 0.02);
+        }
+        .cabecera-pedido { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 2px solid #f1f5f9; 
+            padding-bottom: 16px; 
+            margin-bottom: 20px;
+        }
+        .cabecera-pedido h2 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+        .contador-badge { 
+            background-color: #c27d38; 
+            color: #ffffff; 
+            border-radius: 50%; 
+            width: 26px; 
+            height: 26px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: bold; 
+            font-size: 0.85rem;
+        }
+        .label-cliente {
+            display: block; 
+            color: #64748b; 
+            margin-bottom: 6px; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.1);
+        }
+        .input-nombre { 
+            width: 100%; 
+            padding: 12px; 
+            border-radius: 8px; 
+            border: 1px solid #cbd5e1; 
+            background-color: #f8fafc; 
+            color: #334155; 
+            box-sizing: border-box; 
+            font-size: 0.9rem; 
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        .input-nombre:focus {
+            outline: none;
+            border-color: #c27d38;
+            background-color: #ffffff;
+        }
+        .Carrito-elementos { 
+            flex: 1; 
+            overflow-y: auto; 
+            margin-top: 16px; 
+        }
+        .item-carrito-fila { 
+            background-color: #f8fafc; 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin-bottom: 10px; 
+            border: 1px solid #e2e8f0; 
+        }
+        .item-encabezado-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .item-titulo-carrito {
+            margin: 0;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+        .item-salsa-carrito {
+            margin: 4px 0 0 0;
+            color: #c27d38;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+        .item-desc-carrito {
+            margin: 4px 0 0 0;
+            color: #64748b;
+            font-size: 0.75rem;
+            line-height: 1.3;
+        }
+        .item-precio-carrito {
+            font-weight: 700;
+            color: #c27d38;
+            font-size: 0.9rem;
+            margin: 4px 0 0 0;
+        }
+        /* --- CONTROLES DE CANTIDAD Y CANCELACIÓN EN EL CARRITO --- */
+        .controles-contenedor {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .item-botones-qty { 
+            display: flex; 
+            align-items: center; 
+            background-color: #f1f5f9; /* Gris sutil moderno */
+            border-radius: 8px; /* Redondeado consistente */
+            padding: 3px;
+            border: 1px solid #e2e8f0;
+        }
+        .item-botones-qty button { 
+            background: #ffffff;
+            color: #334155; 
+            border: 1px solid #e2e8f0; 
+            width: 24px; 
+            height: 24px; 
+            border-radius: 6px;
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: all 0.15s ease;
+        }
+        .item-botones-qty button:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e1;
+            color: #c27d38; /* Cambio al color de tu marca */
+        }
+        .item-botones-qty button:active {
+            transform: scale(0.92);
+        }
+        .item-botones-qty span {
+            color: #1e293b;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 0 10px;
+            min-width: 14px;
+            text-align: center;
+        }
+        .btn-cancelar {
+            background: #fef2f2; /* Fondo rojo ultra suave */
+            border: 1px solid #fee2e2;
+            color: #ef4444; 
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+        .btn-cancelar:hover {
+            background: #fee2e2;
+            color: #dc2626;
+            transform: translateY(-1px);
+        }
+        .btn-cancelar:active {
+            transform: translateY(0);
         }
 
-        aside.panel-pedido.expandido .cabecera-pedido::after {
-            content: '🔽 Ocultar';
-            background: var(--bg-cosmico);
-            color: var(--text-muted);
-            box-shadow: none;
-            border: 1px solid var(--glass-border);
+            /* --- DISEÑO RESPONSIVO: CARRITO FLOTANTE MINIMIZABLE EN CELULAR --- */
+        @media (max-width: 990px) { 
+            body { 
+                flex-direction: column !important; 
+            } 
+            #pantalla-tienda { 
+                flex-direction: column !important; 
+            }
+            main {
+                padding: 15px !important;
+                padding-top: 30px !important; /* Ajustado para balancear el espacio superior */
+                padding-bottom: 90px !important; /* Espacio inferior seguro para la barra flotante */
+            }
+            
+            /* El panel lateral se convierte en una barra colapsable adaptada a tu paleta clara */
+            aside.panel-pedido { 
+                width: 100% !important; 
+                height: auto !important;
+                max-height: 65px; /* Altura compacta por defecto */
+                position: fixed !important; 
+                bottom: 0 !important; 
+                left: 0 !important;
+                right: 0 !important;
+                border-left: none !important; 
+                border-top: 3px solid #c27d38; /* Color café canela de tu marca */
+                background-color: #ffffff !important; /* Mantiene la estética premium clara */
+                padding: 12px 20px !important;
+                box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08) !important; 
+                border-radius: 20px 20px 0 0 !important; 
+                overflow: hidden !important;
+                transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important; /* Animación más fluida */
+                z-index: 9999 !important;
+            } 
+            
+            /* Clase dinámica que activa el JavaScript al hacer clic */
+            aside.panel-pedido.expandido {
+                max-height: 80vh !important; 
+                overflow-y: auto !important;
+            }
+
+            /* Forzamos que la cabecera del pedido actúe como un gran botón táctil alineado */
+            .cabecera-pedido {
+                cursor: pointer !important;
+                padding-bottom: 5px !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                width: 100% !important;
+            }
+
+            .Carrito-elementos {
+                max-height: 350px !important; 
+                margin-top: 15px !important;
+            }
+            
+            /* Ocultamos los bloques internos si el carrito está cerrado */
+            aside.panel-pedido:not(.expandido) .label-cliente,
+            aside.panel-pedido:not(.expandido) .input-nombre,
+            aside.panel-pedido:not(.expandido) .Carrito-elementos,
+            aside.panel-pedido:not(.expandido) .Boton-enviar,
+            aside.panel-pedido:not(.expandido) .item-carrito-fila {
+                display: none !important;
+            }
+            
+            /* Corrección del Total: Se alinea limpio a la derecha de la cabecera cuando está cerrado */
+            aside.panel-pedido:not(.expandido) .precio-total,
+            aside.panel-pedido:not(.expandido) [id*="total"] {
+                font-size: 1.1rem !important;
+                font-weight: 800 !important;
+                color: #c27d38 !important;
+            }
+            
+            /* Indicadores visuales interactivos usando tu color de acento */
+            .cabecera-pedido::after {
+                content: '🔼 Ver pedido';
+                color: #c27d38;
+                font-size: 0.85rem;
+                font-weight: bold;
+                background-color: #fdf4eb;
+                padding: 6px 12px;
+                border-radius: 20px;
+                transition: all 0.2s;
+            }
+            aside.panel-pedido.expandido .cabecera-pedido::after {
+                content: '🔽 Ocultar';
+                background-color: #f1f5f9;
+                color: #64748b;
+            }
         }
 
-        .Carrito-elementos {
-            max-height: 360px !important;
-            margin-top: 28px !important;
+    
+            /* --- DISEÑO DE ALTA GAMA PARA EL BOTÓN IMPRIMIR --- */
+        aside.panel-pedido button:not(.item-botones-qty button):not(.btn-cancelar) {
+            background-color: #475569 !important; /* Gris oscuro elegante */
+            color: #ffffff !important;
+            border: none !important;
+            padding: 14px 20px !important;
+            border-radius: 10px !important;
+            font-size: 0.95rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer !important;
+            width: 100% !important;
+            margin-top: 20px !important;
+            box-shadow: 0 4px 6px -1px rgba(71, 85, 105, 0.2) !important;
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s !important;
+            display: block !important;
         }
 
-        aside.panel-pedido:not(.expandido) .label-cliente,
-        aside.panel-pedido:not(.expandido) .input-nombre,
-        aside.panel-pedido:not(.expandido) .Carrito-elementos,
-        aside.panel-pedido:not(.expandido) button.Boton-enviar,
-        aside.panel-pedido:not(.expandido) .item-carrito-fila,
-        aside.panel-pedido:not(.expandido) div:has(> .input-nombre) {
-            display: none !important;
+        aside.panel-pedido button:not(.item-botones-qty button):not(.btn-cancelar):hover {
+            background-color: #334155 !important; /* Más oscuro al pasar el mouse */
+            box-shadow: 0 10px 15px -3px rgba(71, 85, 105, 0.3) !important;
         }
 
-        aside.panel-pedido:not(.expandido) .Total {
-            display: none !important; /* Libera el espacio horizontal en reposo celular */
+        aside.panel-pedido button:not(.item-botones-qty button):not(.btn-cancelar):active {
+            transform: scale(0.98) !important; /* Efecto físico al presionarlo */
         }
-    }
 
-         /* 2. Reducción drástica de etiquetas (Cliente, Teléfono, etc.) */
-    label, 
-    .campo-grupo label {
-        font-size: 0.65rem !important;
-        margin-bottom: 1px !important;
-        margin-top: 2px !important;
-        font-weight: bold;
-    }
+        /* Estilo complementario para limpiar el texto del Total */
+        aside.panel-pedido div:has(> button), 
+        aside.panel-pedido p:has(button),
+        aside.panel-pedido .Total {
+            font-size: 1.1rem !important;
+            font-weight: 800 !important;
+            color: #1e293b !important;
+            margin-top: 15px !important;
+        }
 
-    /* 3. Inputs súper delgados y estilizados */
-    input[type="text"], 
-    input[type="tel"], 
-    .campo-grupo input {
-        padding: 4px 6px !important; 
-        font-size: 0.75rem !important;
-        height: 26px !important; /* Altura fija ultra delgada */
-        margin-bottom: 4px !important;
-        border-radius: 4px !important;
-    }
-
-    /* 4. Opcional: Si tus campos usan contenedores individuales, quita espacio entre ellos */
-    .campo-grupo {
-        margin-bottom: 3px !important;
-    }
+    
     </style>
+  
 </head>
 <body>
 
-  <!-- 1. CONTENEDOR DEL MENSAJE DE CERRADO (Oculto por defecto) -->
-  <div id="mensaje-cerrado" style="display: none; text-align: center; padding: 60px 20px; font-family: 'Plus Jakarta Sans', sans-serif; max-width: 500px; margin: 100px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 12px; background: #fff;">
-    <div style="font-size: 50px; margin-bottom: 20px;">🕒</div>
-    <h2 id="texto-mensaje" style="color: #333; font-size: 20px; line-height: 1.6; font-weight: 500;">Verificando horario...</h2>
-  </div>
+    <!-- CONTENEDOR PRINCIPAL DE LA TIENDA -->
+    <div id="pantalla-tienda">
+        <main>
+            <h1 class="logo">Space Wings</h1>
+            <h2 class="seccion-titulo">Nuestras Especialidades</h2>
+            <div id="contenedor-individuales" class="grid-productos"></div>
+            <h2 class="seccion-titulo">Combos Space Wings</h2>
+            <div id="contenedor-combos"></div>
+        </main>
 
-  <!-- 2. CONTENEDOR PRINCIPAL DE LA TIENDA (Oculto por defecto mientras valida) -->
-  <div id="pantalla-tienda" style="display: none;">
-    <main>
-      <h1 class="logo">Space Wings</h1>
-      <h2 class="seccion-titulo">Nuestras Especialidades</h2>
-      <div id="contenedor-individuales" class="grid-productos"></div>
-      
-      <h2 class="seccion-titulo">Combos Space Wings</h2>
-      <div id="contenedor-combos"></div>
-    </main>
-
-    <aside class="panel-pedido">
-      <div class="cabecera-pedido"><h2>🛒 Pedido</h2><div class="contador-badge" id="badge-contador">0</div></div>
-      <div style="margin-top: 5px;"><label class="label-cliente">Cliente *</label><input type="text" id="nombre-cliente" class="input-nombre" placeholder="Ingresa tu nombre"></div>
-      <div class="Carrito-elementos" id="carrito-lista"><p id="carrito-vacio-texto" style="color: #718096; text-align: center; margin-top: 15px; font-size: 0.75rem;">Carrito vacío.</p></div>
-      <div class="Total"><span>Total:</span><span id="carrito-total">$0.00</span></div>
-      <button class="Boton-enviar" id="btn-whatsapp">Enviar Pedido</button>
-    </aside>
-  </div>
-
-  <!-- SECCIÓN INTERACTIVA DE AGRADECIMIENTO -->
-  <div id="pantalla-agradecimiento" style="display: none; text-align: center; padding: 40px 20px; background-color: #161a1f; border-radius: 12px; max-width: 450px; margin: 40px auto; border: 1px solid #232931; box-sizing: border-box;">
-    <span style="font-size: 3.5rem;">🚀</span>
-    <h2 style="color: #ff9f00; text-transform: uppercase; margin-top: 10px; font-size: 1.4rem;">¡Pedido Confirmed!</h2>
-    <p style="font-size: 1rem; color: #ffffff; margin-bottom: 5px;">Muchas gracias por tu compra, <strong id="agradecimiento-cliente" style="color: #ff9f00;"></strong>.</p>
-    <p style="color: #a0aec0; font-size: 0.85rem; margin-top: 0;">Tu orden está siendo procesada en la estación de control.</p>
-    <div style="background-color: #0d0f12; padding: 12px; border-radius: 8px; margin: 15px 0; border: 1px solid #232931;">
-      <span style="color: #a0aec0; font-size: 0.75rem; font-weight: bold; text-transform: uppercase;">Total a pagar:</span>
-      <div id="agradecimiento-total" style="font-size: 1.6rem; color: #ff9f00; font-weight: bold; margin-top: 3px;">$0.00</div>
+        <aside class="panel-pedido">
+            <div class="cabecera-pedido"><h2>🛒 Pedido</h2><div class="contador-badge" id="badge-contador">0</div></div>
+            <div style="margin-top: 5px;"><label class="label-cliente">Cliente *</label><input type="text" id="nombre-cliente" class="input-nombre" placeholder="Ingresa tu nombre"></div>
+            <div class="Carrito-elementos" id="carrito-lista"><p id="carrito-vacio-texto" style="color: #718096; text-align: center; margin-top: 15px; font-size: 0.75rem;">Carrito vacío.</p></div>
+            <div class="Total"><span>Total:</span><span id="carrito-total">$0.00</span></div>
+            <button class="Boton-enviar" id="btn-whatsapp">Enviar Pedido</button>
+        </aside>
     </div>
-    <button onclick="volverAlMenu()" style="background-color: #ff9f00; color: #0d0f12; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; width: 100%;">Volver al Menú</button>
-  </div>
 
-
+    <!-- SECCIÓN INTERACTIVA DE AGRADECIMIENTO -->
+    <div id="pantalla-agradecimiento" style="display: none; text-align: center; padding: 40px 20px; background-color: #161a1f; border-radius: 12px; max-width: 450px; margin: 40px auto; border: 1px solid #232931; box-sizing: border-box;">
+        <span style="font-size: 3.5rem;">🚀</span>
+        <h2 style="color: #ff9f00; text-transform: uppercase; margin-top: 10px; font-size: 1.4rem;">¡Pedido Confirmado!</h2>
+        <p style="font-size: 1rem; color: #ffffff; margin-bottom: 5px;">Muchas gracias por tu compra, <strong id="agradecimiento-cliente" style="color: #ff9f00;"></strong>.</p>
+        <p style="color: #a0aec0; font-size: 0.85rem; margin-top: 0;">Tu orden está siendo procesada en la estación de control.</p>
+        <div style="background-color: #0d0f12; padding: 12px; border-radius: 8px; margin: 15px 0; border: 1px solid #232931;">
+            <span style="color: #a0aec0; font-size: 0.75rem; font-weight: bold; text-transform: uppercase;">Total a pagar:</span>
+            <div id="agradecimiento-total" style="font-size: 1.6rem; color: #ff9f00; font-weight: bold; margin-top: 3px;">$0.00</div>
+        </div>
+        <button onclick="volverAlMenu()" style="background-color: #ff9f00; color: #0d0f12; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; width: 100%;">Volver al Menú</button>
+    </div>
 
     <script>
         
 
+        //***** OBTENER LOS DATOS DEL ARCHIVO DE GOOGLE SHEETS
+        
+const servidorGoogle = "https://docs.google.com/spreadsheets/d/";
+const idDocumento = "18DrAD8PX7jpvMoW9N8sKTlqXY4SiprjdmDMBKnfi8gQ";
+const endpointApi = "/gviz/tq?tqx=out:csv&sheet=Hoja1";
 
-  // ***** OBTENER LOS DATOS DEL ARCHIVO DE GOOGLE SHEETS *****
-  const servidorGoogle = "https://docs.google.com/spreadsheets/d/";
-  const idDocumento = "18DrAD8PX7jpvMoW9N8sKTlqXY4SiprjdmDMBKnfi8gQ";
-  const endpointApi = "/gviz/tq?tqx=out:csv&sheet=Hoja1";
-  const endpointConfig = "/gviz/tq?tqx=out:json&sheet=Configuracion";
+const urlGoogleSheets = servidorGoogle + idDocumento + endpointApi;
 
-  const urlGoogleSheets = servidorGoogle + idDocumento + endpointApi;
+let baseDatosProductos = { individuales: [], combos: [] };
+let carrito = [];
 
-  let baseDatosProductos = { individuales: [], combos: [] };
-  let carrito = [];
- 
-       
-function parsearEstructuraMenu(texto) {
-  // Separación limpia de filas compatible con cualquier sistema
-  const lineas = texto.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
-  
-  // Limpiamos los arreglos globales de datos para que no se dupliquen
-  baseDatosProductos.individuales = [];
-  baseDatosProductos.combos = [];
+async function cargarMenuCompleto() {
+    try {
+        // Rompemos la caché de Google agregando la hora actual exacta
+        const urlFinal = urlGoogleSheets + "&t=" + new Date().getTime();
 
-  // Limpiamos la pantalla antes de dibujar los productos
-  const contenedorIndividuales = document.getElementById('contenedor-individuales');
-  const contenedorCombos = document.getElementById('contenedor-combos');
-  if (contenedorIndividuales) contenedorIndividuales.innerHTML = '';
-  if (contenedorCombos) contenedorCombos.innerHTML = '';
+        const respuesta = await fetch(urlFinal, { 
+            cache: "no-store",
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache'
+            }
+        });
 
-  const idxId = 0;   // Columna A (Id_platillo)
-  const idxCat = 1;  // Columna B (Categoria)
-  const idxNom = 2;  // Columna C (Producto)
-  const idxPre = 3;  // Columna D (Precio)
-  const idxDisp = 4; // Columna E (Disponible)
-
-  for (let i = 0; i < lineas.length; i++) {
-    const linea = lineas[i];
-    
-    // Si la línea es el encabezado del Excel, la saltamos automáticamente
-    if (linea.toLowerCase().includes('id_platillo') || linea.toLowerCase().includes('categoria')) {
-      continue;
+        const textoCSV = await respuesta.text();
+        baseDatosProductos = parsearEstructuraMenu(textoCSV);
+        
+        renderizarArticulosIndividuales(baseDatosProductos.individuales);
+        renderizarCombosDinamicos(baseDatosProductos.combos);
+        actualizarInterfazCarrito();
+        console.log("⚡ Menú en vivo actualizado con éxito.");
+    } catch (error) {
+        console.error("Fallo al inicializar base de datos:", error);
     }
-    
-    // Separar columnas por comas respetando las comillas de Google Sheets
-    const columnas = linea.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-    
-    if (columnas.length < 4) continue;
-
-    const id = limpiarTextoSheets(columnas[idxId]);
-    const categoria = limpiarTextoSheets(columnas[idxCat]).toLowerCase();
-    const nombre = limpiarTextoSheets(columnas[idxNom]);
-    const precioRaw = limpiarTextoSheets(columnas[idxPre]);
-    const disponible = columnas[idxDisp] ? limpiarTextoSheets(columnas[idxDisp]).toLowerCase() : 'si';
-
-    // Si no está disponible, no lo mostramos
-    if (disponible === 'no') continue;
-
-    // Extraer solo los números y el punto decimal del precio
-    const precio = parseFloat(precioRaw.replace(/[^0-9.]/g, ''));
-    if (isNaN(precio)) continue;
-
-    const producto = { id, nombre, precio, categoria };
-
-    // Clasificar e inyectar en la interfaz según tu código original
-    if (categoria.includes('combo')) {
-      baseDatosProductos.combos.push(producto);
-      inyectarTarjetaCombo(producto);
-    } else {
-      baseDatosProductos.individuales.push(producto);
-      inyectarTarjetaIndividual(producto);
-    }
-  }
 }
-
 
         function limpiarTextoSheets(celda) {
             if (!celda) return '';
             return celda.trim().replace(/^"|"$/g, '').trim();
 }
         
-        // === MOTOR DE PARSEO CORREGIDO CON INDEXACIÓN ESTRICTA ===
-        function parsearEstructuraMenu(texto) {
-            const lineas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-            const individuales = [];
-            const combosAgrupados = {};
-            let leyendoCombos = false;
+       function parsearEstructuraMenu(texto) {
+    const lineas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    const individuales = [];
+    const combosAgrupados = {};
+    let leyendoCombos = false;
 
-            // Índices basados rigurosamente en tu captura de imagen real de Google Sheets
-            const idxId = 0;   // Columna A (Id_platillo)
-            const idxCat = 1;  // Columna B (Categoria)
-            const idxNom = 2;  // Columna C (Producto)
-            const idxPre = 3;  // Columna D (Precio)
-            const idxDisp = 4; // Columna E (Disponible)
-            const idxComboPaso = 5; // Columna F (Categoria de paso de combo)
-            const idxComboProd = 6; // Columna G (Producto interno de combo)
+    const idxId = 0;   // Columna A (Id_platillo)
+    const idxCat = 1;  // Columna B (Categoria)
+    const idxNom = 2;  // Columna C (Producto)
+    const idxPre = 3;  // Columna D (Precio)
+    const idxDisp = 4; // Columna E (Disponible)
+    const idxMed = 5;  // Columna F (NUEVA COLUMNA: Medias)
+    const idxComboPaso = 6; // Columna G (Categoria de paso de combo)
+    const idxComboProd = 7; // Columna H (Producto interno de combo)
 
-            for (let i = 0; i < lineas.length; i++) {
-                const linea = lineas[i];
-                const columnas = linea.split(',').map(limpiarTextoSheets);
+    for (let i = 0; i < lineas.length; i++) {
+        const linea = lineas[i];
+        const columnas = linea.split(',').map(limpiarTextoSheets);
 
-                if (!columnas || columnas[idxId] === 'Id_platillo' || columnas[idxId] === 'CONF') {
-                    if (i > 1 && columnas[idxId] === 'Id_platillo') {
-                        leyendoCombos = true;
-                    }
-                    continue;
-                }
-
-                const disponible = columnas[idxDisp] ? columnas[idxDisp].toLowerCase() === 'si' : false;
-                if (!disponible) continue;
-
-                // CORRECCIÓN CRÍTICA: Se evalúa el índice [0] del arreglo para evitar congelar el script
-                if (columnas[idxId].startsWith('P') && !leyendoCombos) {
-                    const producto = {
-                        id: columnas[idxId],
-                        categoria: columnas[idxCat],
-                        nombre: columnas[idxNom],
-                        precio: parseFloat(columnas[idxPre]) || 0,
-                        salsas: []
-                    };
-                    
-                    // Extraer salsas horizontales de la primera tabla
-                    for (let s = 5; s < columnas.length; s++) {
-                        if (columnas[s]) {
-                            producto.salsas.push(columnas[s]);
-                        }
-                    }
-                    individuales.push(producto);
-                } 
-                
-                // CORRECCIÓN CRÍTICA: Se evalúa el índice [0] para agrupar los combos multi-opción
-                if (columnas[idxId].startsWith('C')) {
-                    const comboId = columnas[idxId];
-                    const nombreCombo = columnas[idxNom]; 
-                    const precioCombo = parseFloat(columnas[idxPre]) || 0; 
-                    
-                    const componenteCategoria = columnas[idxComboPaso]; 
-                    const componenteProducto = columnas[idxComboProd];  
-                    
-                    const salsasComponente = [];
-                    // Las salsas de los combos inician en la columna H (índice 7) en adelante
-                    for (let s = 7; s < columnas.length; s++) {
-                        if (columnas[s]) salsasComponente.push(columnas[s]);
-                    }
-
-                    if (!combosAgrupados[comboId]) {
-                        combosAgrupados[comboId] = { id: comboId, nombre: nombreCombo, precio: precioCombo, secciones: {} };
-                    }
-                    if (!combosAgrupados[comboId].secciones[componenteCategoria]) {
-                        combosAgrupados[comboId].secciones[componenteCategoria] = [];
-                    }
-                    combosAgrupados[comboId].secciones[componenteCategoria].push({ nombre: componenteProducto, salsas: salsasComponente });
-                }
+        if (!columnas || columnas[idxId] === 'Id_platillo' || columnas[idxId] === 'CONF') {
+            if (i > 1 && columnas[idxId] === 'Id_platillo') {
+                leyendoCombos = true;
             }
-            return { individuales, combos: Object.values(combosAgrupados) };
+            continue;
         }
+
+        const disponible = columnas[idxDisp] ? columnas[idxDisp].toLowerCase() === 'si' : false;
+        if (!disponible) continue;
+
+        // Limpieza profunda de la columna F para evitar errores de formato de Sheets
+        const valorMediasRaw = columnas[idxMed] ? columnas[idxMed].trim().toUpperCase() : '';
+        const permiteMedias = valorMediasRaw === 'SI';
+
+        if (columnas[idxId].startsWith('P') && !leyendoCombos) {
+            const producto = {
+                id: columnas[idxId],
+                categoria: columnas[idxCat],
+                nombre: columnas[idxNom],
+                precio: parseFloat(columnas[idxPre]) || 0,
+                medias: permiteMedias, // Guarda true o false estrictos
+                salsas: []
+            };
+            
+            for (let s = 6; s < columnas.length; s++) {
+                if (columnas[s]) producto.salsas.push(columnas[s]);
+            }
+            individuales.push(producto);
+        } 
+        
+        if (columnas[idxId].startsWith('C')) {
+            const comboId = columnas[idxId];
+            const nombreCombo = columnas[idxNom]; 
+            const precioCombo = parseFloat(columnas[idxPre]) || 0; 
+            
+            const componenteCategoria = columnas[idxComboPaso]; 
+            const componenteProducto = columnas[idxComboProd];  
+            
+            const salsasComponente = [];
+            for (let s = 8; s < columnas.length; s++) {
+                if (columnas[s]) salsasComponente.push(columnas[s]);
+            }
+
+            if (!combosAgrupados[comboId]) {
+                combosAgrupados[comboId] = { 
+                    id: comboId, 
+                    nombre: nombreCombo, 
+                    precio: precioCombo, 
+                    medias: permiteMedias, // Asigna la regla al combo completo
+                    secciones: {} 
+                };
+            }
+            if (!combosAgrupados[comboId].secciones[componenteCategoria]) {
+                combosAgrupados[comboId].secciones[componenteCategoria] = [];
+            }
+            combosAgrupados[comboId].secciones[componenteCategoria].push({ nombre: componenteProducto, salsas: salsasComponente });
+        }
+    }
+    return { individuales, combos: Object.values(combosAgrupados) };
+}
 
         function renderizarArticulosIndividuales(productos) {
             const contenedor = document.getElementById('contenedor-individuales');
@@ -1175,22 +827,21 @@ function parsearEstructuraMenu(texto) {
         return;
     }
 
-    // ❌ SE ELIMINÓ: La validación 'itemExistente' que sumaba la cantidad.
-    //  AHORA: Inserta siempre una línea nueva e independiente.
     carrito.push({ 
         uid: Date.now() + Math.random(), 
         id: producto.id, 
         nombre: producto.nombre, 
         precio: producto.precio, 
         salsa: salsaSeleccionada, 
-        cantidad: 1, 
+        categoria: producto.categoria,
+        medias: producto.medias, // Traspasa el valor true/false del parseo
+        cantidad: 1,            // Inicia obligatoriamente en 1
         nota: "" 
     });
 
     if (selectSalsa) selectSalsa.value = '';
     actualizarInterfazCarrito();
 }
-
 function agregarComboEstructuraNueva(comboId) {
     const combo = baseDatosProductos.combos.find(c => c.id === comboId);
     if (!combo) return;
@@ -1222,29 +873,97 @@ function agregarComboEstructuraNueva(comboId) {
 
     const descripcionCombo = `[${configuracionFinal.join(' + ')}]`;
 
-    // ❌ SE ELIMINÓ: La validación 'itemExistente' que agrupaba los combos idénticos.
-    //  AHORA: Cada combo configurado va en su propio renglón.
     carrito.push({ 
         uid: Date.now() + Math.random(), 
         id: combo.id, 
         nombre: combo.nombre, 
         descripcion: descripcionCombo, 
         precio: combo.precio, 
-        cantidad: 1, 
+        medias: combo.medias, // Guardamos la autorización de tu Google Sheet (true o false)
+        cantidad: 1,          // <-- SIEMPRE INICIA EN 1 EXACTO
         nota: "" 
     });
 
     actualizarInterfazCarrito();
 }
-
-       function cambiarCantidad(uid, cambio) {
+function cambiarCantidad(uid, cambio) {
     const item = carrito.find(i => i.uid === uid);
     if (!item) return;
 
-    // Si cambio es mayor que 0 (botón +), suma 0.5. Si es menor (botón -), resta 0.5.
-    const ajusteDecimal = cambio > 0 ? 0.5 : -0.5;
-    item.cantidad += ajusteDecimal;
+    // RESPALDO AUTOMÁTICO: Si item.medias es undefined, verificamos si es un combo por su ID
+    let permiteMedias = item.medias === true;
+    if (item.medias === undefined || item.medias === null) {
+        permiteMedias = item.id && item.id.toUpperCase().startsWith('C');
+    }
 
+    // Mensaje de diagnóstico para verificar la lectura en vivo de la hoja de cálculo
+    console.log(`Articulo: ${item.nombre} | ID: ${item.id} | Permite Medias en Sheet?: ${permiteMedias}`);
+
+    if (!permiteMedias) {
+        // --- COMPORTAMIENTO EXCLUSIVO PARA COCA-COLA / REFRESCOS / ENTEROS ---
+        if (cambio < 0 && item.cantidad <= 1) {
+            console.log(`-> Eliminando entero: ${item.nombre}`);
+            eliminarDelCarrito(uid);
+            return;
+        }
+        
+        // Si por residuos de ejecuciones previas quedó en decimal, lo regularizamos a enteros
+        if (item.cantidad % 1 !== 0) {
+            item.cantidad = cambio > 0 ? Math.ceil(item.cantidad) : Math.floor(item.cantidad);
+        } else {
+            item.cantidad += (cambio > 0 ? 1 : -1);
+        }
+    } else {
+        // --- COMPORTAMIENTO PARA COMBOS PERMITIDOS EN MEDIAS ÓRDENES ---
+        const paso = 0.5;
+        const ajuste = cambio > 0 ? paso : -paso;
+        item.cantidad += ajuste;
+    }
+
+    if (item.cantidad <= 0) {
+        eliminarDelCarrito(uid);
+    } else {
+        actualizarInterfazCarrito();
+    }
+}
+      function cambiarCantidad(uid, cambio) {
+    const item = carrito.find(i => i.uid === uid);
+    if (!item) return;
+
+    // Leemos la regla de tu Google Sheet
+    const permiteMedias = item.medias === true;
+
+    if (!permiteMedias) {
+        // --- REFRESCOS Y ARTÍCULOS ENTEROS STRICTOR (COCA-COLA) ---
+        if (cambio < 0 && item.cantidad <= 1) {
+            eliminarDelCarrito(uid);
+            return;
+        }
+        item.cantidad += (cambio > 0 ? 1 : -1);
+
+    } else {
+        // --- COMBOS CON PASO INTELIGENTE (1 -> 0.5 Y 1 -> 2 -> 3) ---
+        if (cambio > 0) {
+            // Si el usuario presiona MÁS (+):
+            if (item.cantidad === 0.5) {
+                item.cantidad = 1; // Si estaba en media orden (0.5), sube a 1 entera
+            } else {
+                item.cantidad += 1; // Si ya estaba en 1 o más, sube de 1 en 1 entero (2, 3, 4...)
+            }
+        } else {
+            // Si el usuario presiona MENOS (-):
+            if (item.cantidad === 1) {
+                item.cantidad = 0.5; // Si estaba en 1 entero, baja exclusivamente a media orden (0.5)
+            } else if (item.cantidad === 0.5) {
+                eliminarDelCarrito(uid); // Si ya estaba en 0.5 y resta, se elimina del pedido
+                return;
+            } else {
+                item.cantidad -= 1; // Si estaba en un número grande (ej. 3 o 2), baja de 1 en 1 entero
+            }
+        }
+    }
+
+    // Doble candado para limpiar cualquier residuo o cero
     if (item.cantidad <= 0) {
         eliminarDelCarrito(uid);
     } else {
