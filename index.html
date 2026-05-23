@@ -920,12 +920,18 @@
 
         const diasCerrados = diasCerradoRaw.split(',').map(d => parseInt(d.trim())).filter(n => !isNaN(n));
 
-        // Obtener fecha y hora en zona horaria local de México
+        // Obtener fecha y hora en la zona horaria local de México de forma totalmente compatible
         const ahora = new Date();
+        
+        // Convertimos la hora actual a un formato numérico seguro de 24h
         const horaActual = parseInt(ahora.toLocaleString("es-MX", { hour: "2-digit", hour12: false, timeZone: "America/Mexico_City" }));
-        const diaSemanaActual = ahora.toLocaleDateString("en-US", { weekday: "numeric", timeZone: "America/Mexico_City" });
-        const diaActualNum = parseInt(diaSemanaActual) === 7 ? 0 : parseInt(diaSemanaActual);
+        
+        // Obtener el día de la semana de forma nativa y robusta (0 = Domingo, 1 = Lunes, ..., 6 = Sábado)
+        // Usamos una fecha formateada para asegurar la zona horaria exacta sin importar el dispositivo del cliente
+        const fechaFormateada = ahora.toLocaleString("en-US", { timeZone: "America/Mexico_City" });
+        const diaActualNum = new Date(fechaFormateada).getDay();
 
+        // Evaluar condiciones de cierre
         const estaCerradoPorDia = diasCerrados.includes(diaActualNum);
         const estaCerradoPorHora = (horaActual < horaApertura || horaActual >= horaCierre);
 
@@ -934,7 +940,7 @@
           if (textoMensaje) textoMensaje.innerHTML = mensajeCerrado;
           if (tienda) tienda.style.display = 'none';
           if (contenedorMensaje) contenedorMensaje.style.display = 'block';
-          return; // Frena de forma segura la ejecución del código
+          return; // Frena de forma segura la ejecución del código para no mostrar productos
         }
       }
     }
