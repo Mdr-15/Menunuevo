@@ -1175,7 +1175,7 @@ function despacharPedidoAWhatsApp() {
 
     // 1. ABRIR EL CHAT DE WHATSAPP OFICIAL CON EL PEDIDO LISTO
    const urlApi = "https://wa.me/523411398581?text=" + encodeURIComponent(msg);
-    window.open(urlApi, '_blank');
+   mostrarAvisoAntesDeEnviar(urlApi); 
 
     // 2. INYECTAR DATOS EN LA INTERFAZ DE TU PÁGINA WEB
     document.getElementById('agradecimiento-cliente').innerText = cliente;
@@ -1241,6 +1241,57 @@ function forzarAperturaCarritoMovil() {
     }
 }
 
+
+        // Variable global para almacenar temporalmente el enlace original de WhatsApp
+let urlEnvioPedidoTemporal = "";
+
+// 1. Esta función detiene el envío inmediato y despliega el aviso en pantalla
+function mostrarAvisoAntesDeEnviar(urlFinalWhatsapp) {
+    // Guardamos la URL generada por tu carrito
+    urlEnvioPedidoTemporal = urlFinalWhatsapp;
+    
+    // Apuntamos al contenedor del aviso y lo hacemos visible usando Flexbox para centrarlo
+    const modalAviso = document.getElementById('aviso-pedido-modal');
+    if (modalAviso) {
+        modalAviso.style.display = 'flex';
+    }
+}
+
+// 2. Esta función se ejecuta cuando el cliente da clic en "Entendido, ir a WhatsApp"
+function procederAEnviarWhatsapp() {
+    if (urlEnvioPedidoTemporal) {
+        // Abrimos la ventana oficial de WhatsApp
+        window.open(urlEnvioPedidoTemporal, '_blank');
+        
+        // Ocultamos el aviso nuevamente para que la página quede limpia
+        const modalAviso = document.getElementById('aviso-pedido-modal');
+        if (modalAviso) {
+            modalAviso.style.display = 'none';
+        }
+    }
+}
+
+
     </script>
+
+    <!-- 🟢 PEGA AQUÍ EL BLOQUE COMPLETO DEL AVISO -->
+<div id="aviso-pedido-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(11, 14, 20, 0.9); z-index: 100000; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; font-family: sans-serif;">
+    <div style="background: linear-gradient(145deg, #141923, #1b2230); border: 2px solid #ff9f00; border-radius: 24px; padding: 40px 30px; max-width: 450px; width: 100%; box-shadow: 0 0 30px rgba(255, 159, 0, 0.3); text-align: center; box-sizing: border-box; position: relative;">
+        <div style="font-size: 60px; margin-bottom: 20px;">🪐</div>
+        <h3 style="color: #ffffff; font-size: 22px; font-weight: 700; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 0.5px;">
+            ¡Preparando Motores! 🚀
+        </h3>
+        <div style="width: 50px; height: 3px; background: linear-gradient(90deg, #ff9f00, #ff4757); margin: 15px auto; border-radius: 2px;"></div>
+        <p style="color: #a0a5b5; font-size: 15px; margin: 0 0 25px 0; line-height: 1.6; text-align: left;">
+            A continuación se abrirá tu aplicación de WhatsApp con todo tu pedido redactado de forma automática. <br><br>
+            <strong>Solo debes presionar el botón de "Enviar"</strong> dentro de WhatsApp para que llegue directo a nuestra cocina. ¡Es muy fácil!
+        </p>
+        <button onclick="procederAEnviarWhatsapp()" style="width: 100%; background-color: #ff9f00; color: #0b0e14; border: none; padding: 14px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px;">
+            Entendido, ir a WhatsApp 📱
+        </button>
+    </div>
+</div>
+
+    
 </body>
 </html>
