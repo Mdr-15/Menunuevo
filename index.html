@@ -594,50 +594,68 @@ async function cargarMenuCompleto() {
         const respuestaHorario = await fetch(urlFinalHorario, { cache: "no-store" });
         const textoHorarioCSV = await respuestaHorario.text();
         
-        // Separamos las líneas del archivo CSV
         const lineasHorario = textoHorarioCSV.split('\n').map(l => l.trim()).filter(l => l.length > 0);
         
         if (lineasHorario.length > 1) {
-            // 🟢 CORREGIDO: Leemos la fila 1 (donde están tus horas y el mensaje)
             const columnasHorario = lineasHorario[1].split(',').map(limpiarTextoSheets);
             
-            const horaApertura = columnasHorario[0];   // Columna A (Ej: "08:00")
-            const horaCierre = columnasHorario[1];     // Columna B (Ej: "09:00")
-            const mensajeCerrado = columnasHorario[2]; // Columna C ("Por el momento estamos cerrados")
+            const horaApertura = columnasHorario[0];  // Columna A (Ej: "08:00")
+            const horaCierre = columnasHorario[1];    // Columna B (Ej: "09:00")
+            const diasCerradoRaw = columnasHorario[2];// Columna C (Ej: "Lunes,Martes")
+            const mensajeCerrado = columnasHorario[3];// Columna D ("Por el momento...")
+            
+            // 📅 OBTENER EL DÍA DE LA SEMANA ACTUAL EN TEXTO (Ej: "Lunes", "Sábado")
+            const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+            const diaActualTexto = diasSemana[new Date().getDay()]; 
+            
+            // Verificar si el día de hoy está en la lista de descanso de la hoja
+            let esDiaDeDescanso = false;
+            if (diasCerradoRaw) {
+                // Separamos por comas y limpiamos espacios para comparar correctamente
+                const listaDiasDescanso = diasCerradoRaw.split(',').map(d => d.trim().toLowerCase());
+                if (listaDiasDescanso.includes(diaActualTexto.toLowerCase())) {
+                    esDiaDeDescanso = true;
+                }
+            }
             
             // Obtener la hora actual de tu dispositivo en formato HH:MM
             const ahora = new Date().toTimeString().substring(0, 5); 
             
-            // Evaluar si el restaurante está abierto o cerrado (soporta cierres de madrugada)
-            let estaAbierto = false;
+            // Evaluar si el restaurante está abierto según las horas configuradas
+            let estaEnHorario = false;
             if (horaApertura <= horaCierre) {
-                estaAbierto = (ahora >= horaApertura && ahora <= horaCierre);
+                estaEnHorario = (ahora >= horaApertura && ahora <= horaCierre);
             } else {
-                estaAbierto = (ahora >= horaApertura || ahora <= horaCierre);
+                estaEnHorario = (ahora >= horaApertura || ahora <= horaCierre);
             }
             
-            // Apuntamos a los contenedores HTML
+            // El negocio está abierto SÓLO si está en horario activo Y NO es día de descanso
+            const estaAbierto = estaEnHorario && !esDiaDeDescanso;
+            
             const tiendaHtml = document.getElementById('pantalla-tienda');
             const cerradoHtml = document.getElementById('mensaje-cerrado');
             const textoAlerta = document.getElementById('texto-alerta');
             
             if (!estaAbierto) {
-                // 🛑 SI ESTÁ CERRADO: Oculta la tienda por completo y activa el cartel
                 if (tiendaHtml) tiendaHtml.style.display = 'none';
                 if (cerradoHtml) {
-                    cerradoHtml.style.display = 'flex'; // Activamos el diseño flex centrado
-                    if (textoAlerta) textoAlerta.innerText = mensajeCerrado || "Por el momento estamos cerrados";
+                    cerradoHtml.style.display = 'flex';
+                    // Si es día de descanso colocamos un texto especial, si no, el mensaje de la hoja
+                    if (esDiaDeDescanso) {
+                        textoAlerta.innerText = `Hoy ${diaActualTexto} nos encontramos cerrados por día de descanso.`;
+                    } else {
+                        textoAlerta.innerText = mensajeCerrado || "Por el momento estamos cerrados";
+                    }
                 }
-                console.log("⏰ Negocio cerrado. Se muestra el mensaje de la hoja.");
-                return; // Detiene el código aquí para no perder recursos cargando los platillos
+                console.log("⏰ Negocio cerrado (por horario o día de descanso).");
+                return; 
             } else {
-                // 🍏 SI ESTÁ ABIERTO: Restauramos el diseño original limpio de CSS y ocultamos cartel
                 if (tiendaHtml) tiendaHtml.style.display = ''; 
                 if (cerradoHtml) cerradoHtml.style.display = 'none';
             }
         }
 
-        // 🍔 2. CARGA ORIGINAL DE TUS PRODUCTOS (Tu código original sigue aquí abajo intacto)
+        // 🍔 2. CARGA ORIGINAL DE TUS PRODUCTOS
         const urlFinal = urlGoogleSheets + "&t=" + new Date().getTime();
         const respuesta = await fetch(urlFinal, { 
             cache: "no-store",
