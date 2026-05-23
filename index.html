@@ -953,26 +953,24 @@
     console.error("Aviso: No se pudo validar el horario de Sheets, abriendo menú por seguridad:", error);
   }
 
-  // === PASO 2: MODO ABIERTO (Carga tradicional de platillos) ===
+    // === PASO 2: MODO ABIERTO (Carga tradicional de platillos) ===
   if (tienda) tienda.style.display = 'flex';
   if (contenedorMensaje) contenedorMensaje.style.display = 'none';
 
   try {
-    const urlFinal = urlGoogleSheets + "&t=" + new Date().getTime();
-    const respuesta = await fetch(urlFinal, {
-      cache: "no-store",
-      headers: {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache'
-      }
-    });
-
+    // Agregamos un número aleatorio al final (&v=...) para obligar a Google a dar los datos más nuevos de tus platos
+    const urlFinal = urlGoogleSheets + "&v=" + new Date().getTime();
+    const respuesta = await fetch(urlFinal, { cache: "no-store" });
     const datosCsv = await respuesta.text();
+    
+    // Ejecutamos tu renderizador pasándole los datos limpios
     parsearEstructuraMenu(datosCsv);
+    
   } catch (error) {
     console.error("Error crítico al procesar la lista de productos:", error);
   }
 }
+
 
 
 
