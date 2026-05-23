@@ -893,69 +893,77 @@
   let baseDatosProductos = { individuales: [], combos: [] };
   let carrito = [];
  
-        
-  async function cargarMenuCompleto() {
-    const tienda = document.getElementById('pantalla-tienda');
-    const contenedorMensaje = document.getElementById('mensaje-cerrado');
-    const textoMensaje = document.getElementById('texto-mensaje');
+        async function cargarMenuCompleto() {
+  const tienda = document.getElementById('pantalla-tienda');
+  const contenedorMensaje = document.getElementById('mensaje-cerrado');
+  const textoMensaje = document.getElementById('texto-mensaje');
 
-    try {
-      // === PASO 1: VERIFICAR HORARIO DESDE SHEET ===
-      const urlConfigFinal = servidorGoogle + idDocumento + endpointConfig + "&t=" + new Date().getTime();
-      const respuestaConfig = await fetch(urlConfigFinal, { cache: "no-store" });
-      const textoConfig = await respuestaConfig.text();
-      
-      // Limpiar y parsear JSON de Google Sheets
+  try {
+    // === PASO 1: INTENTAR VERIFICAR EL HORARIO ===
+    const urlConfigFinal = servidorGoogle + idDocumento + endpointConfig + "&t=" + new Date().getTime();
+    const respuestaConfig = await fetch(urlConfigFinal, { cache: "no-store" });
+    const textoConfig = await respuestaConfig.text();
+    
+    // Validar rigurosamente que Google Sheets responda con el formato JSON esperado
+    if (textoConfig && textoConfig.includes("google.visualization.Query.setResponse")) {
       const datosJson = JSON.parse(textoConfig.substr(47).slice(0, -2));
-      const filaConfig = datosJson.table.rows[0].c;
+      
+      if (datosJson.table && datosJson.table.rows && datosJson.table.rows.length > 0) {
+        const filaConfig = datosJson.table.rows[0].c;
 
-      const horaApertura = parseInt(filaConfig[0].v);
-      const horaCierre = parseInt(filaConfig[1].v);
-      const diasCerradoRaw = filaConfig[2] ? filaConfig[2].v.toString() : "";
-      const mensajeCerrado = filaConfig[3].v;
+        // Extraer celdas de configuración de la Fila 2
+        const horaApertura = filaConfig[0] ? parseInt(filaConfig[0].v) : 12;
+        const horaCierre = filaConfig[1] ? parseInt(filaConfig[1].v) : 22;
+        const diasCerradoRaw = filaConfig[2] ? filaConfig[2].v.toString() : "";
+        const mensajeCerrado = filaConfig[3] ? filaConfig[3].v : "Lo sentimos, está cerrado.";
 
-      const diasCerrados = diasCerradoRaw.split(',').map(d => parseInt(d.trim())).filter(n => !isNaN(n));
+        const diasCerrados = diasCerradoRaw.split(',').map(d => parseInt(d.trim())).filter(n => !isNaN(n));
 
-      // Obtener hora y día local de México
-      const ahora = new Date();
-      const horaActual = parseInt(ahora.toLocaleString("es-MX", { hour: "2-digit", hour12: false, timeZone: "America/Mexico_City" }));
-      const diaSemanaActual = ahora.toLocaleDateString("en-US", { weekday: "numeric", timeZone: "America/Mexico_City" });
-      const diaActualNum = parseInt(diaSemanaActual) === 7 ? 0 : parseInt(diaSemanaActual);
+        // Obtener tiempo actual en zona horaria local
+        const ahora = new Date();
+        const horaActual = parseInt(ahora.toLocaleString("es-MX", { hour: "2-digit", hour12: false, timeZone: "America/Mexico_City" }));
+        const diaSemanaActual = ahora.toLocaleDateString("en-US", { weekday: "numeric", timeZone: "America/Mexico_City" });
+        const diaActualNum = parseInt(diaSemanaActual) === 7 ? 0 : parseInt(diaSemanaActual);
 
-      const estaCerradoPorDia = diasCerrados.includes(diaActualNum);
-      const estaCerradoPorHora = (horaActual < horaApertura || horaActual >= horaCierre);
+        const estaCerradoPorDia = diasCerrados.includes(diaActualNum);
+        const estaCerradoPorHora = (horaActual < horaApertura || horaActual >= horaCierre);
 
-      if (estaCerradoPorDia || estaCerradoPorHora) {
-        textoMensaje.innerHTML = mensajeCerrado;
-        if (tienda) tienda.style.display = 'none';
-        if (contenedorMensaje) contenedorMensaje.style.display = 'block';
-        return; // Frena la carga por completo
-      }
-
-      // === PASO 2: SI ESTÁ ABIERTO, EXTRAER PRODUCTOS ===
-      if (tienda) tienda.style.display = 'flex';
-      if (contenedorMensaje) contenedorMensaje.style.display = 'none';
-
-      const urlFinal = urlGoogleSheets + "&t=" + new Date().getTime();
-      const respuesta = await fetch(urlFinal, {
-        cache: "no-store",
-        headers: {
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache'
+        if (estaCerradoPorDia || estaCerradoPorHora) {
+          // Bloquear pantalla y desplegar mensaje de cerrado
+          if (textoMensaje) textoMensaje.innerHTML = mensajeCerrado;
+          if (tienda) tienda.style.display = 'none';
+          if (contenedorMensaje) contenedorMensaje.style.display = 'block';
+          return; // Detiene el flujo de forma segura
         }
-      });
-
-      const datosCsv = await respuesta.text();
-      parsearEstructuraMenu(datosCsv);
-
-    } catch (error) {
-      console.error("Error en el sistema central:", error);
-      // Fallback de seguridad por si falla la conexión
-      if (tienda) tienda.style.display = 'flex';
-      if (contenedorMensaje) contenedorMensaje.style.display = 'none';
+      }
     }
+  } catch (error) {
+    console.error("Aviso: No se pudo validar el horario, aplicando modo seguro de apertura:", error);
   }
 
+  // === PASO 2: MODO SEGURO / ABIERTO (Carga normal de platillos) ===
+  // Si el negocio está abierto o si la API de configuración falla, se fuerza la visualización del menú
+  if (tienda) tienda.style.display = 'flex';
+  if (contenedorMensaje) contenedorMensaje.style.display = 'none';
+
+  try {
+    const urlFinal = urlGoogleSheets + "&t=" + new Date().getTime();
+    const respuesta = await fetch(urlFinal, {
+      cache: "no-store",
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      }
+    });
+
+    const datosCsv = await respuesta.text();
+    parsearEstructuraMenu(datosCsv);
+  } catch (error) {
+    console.error("Error crítico al descargar la lista de productos:", error);
+  }
+}
+
+  
 
 
 
