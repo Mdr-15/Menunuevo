@@ -838,7 +838,30 @@
 
 
 <body>
+<body>
 
+  <!-- 1. CONTENEDOR DEL MENSAJE DE CERRADO (Oculto por defecto) -->
+  <div id="mensaje-cerrado" style="display: none; text-align: center; padding: 60px 20px; font-family: 'Poppins', sans-serif; max-width: 500px; margin: 100px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 12px; background: #fff;">
+    <div style="font-size: 50px; margin-bottom: 20px;">🕒</div>
+    <h2 id="texto-mensaje" style="color: #333; font-size: 20px; line-height: 1.6; font-weight: 500;">Verificando horario...</h2>
+  </div>
+
+  <!-- 2. CONTENEDOR DE TU MENÚ ACTUAL (Oculto por defecto mientras valida) -->
+  <div id="contenido-pagina" style="display: none;">
+    
+    <!-- === AQUÍ DEJA TODO TU CÓDIGO HTML ACTUAL === -->
+    <!-- Mantén intactos tus contenedores de platos, el buscador, etc. -->
+    
+  </div>
+
+
+
+
+
+
+
+
+    
     <!-- CONTENEDOR PRINCIPAL DE LA TIENDA -->
     <div id="pantalla-tienda">
         <main>
@@ -876,9 +899,13 @@
 
         //***** OBTENER LOS DATOS DEL ARCHIVO DE GOOGLE SHEETS
         
+// ***** OBTENER LOS DATOS DEL ARCHIVO DE GOOGLE SHEETS *****
 const servidorGoogle = "https://docs.google.com/spreadsheets/d/";
 const idDocumento = "18DrAD8PX7jpvMoW9N8sKTlqXY4SiprjdmDMBKnfi8gQ";
 const endpointApi = "/gviz/tq?tqx=out:csv&sheet=Hoja1";
+
+// Nueva constante para la pestaña de configuración horaria
+const endpointConfig = "/gviz/tq?tqx=out:json&sheet=Configuracion";
 
 const urlGoogleSheets = servidorGoogle + idDocumento + endpointApi;
 
@@ -886,29 +913,62 @@ let baseDatosProductos = { individuales: [], combos: [] };
 let carrito = [];
 
 async function cargarMenuCompleto() {
-    try {
-        // Rompemos la caché de Google agregando la hora actual exacta
-        const urlFinal = urlGoogleSheets + "&t=" + new Date().getTime();
+  const contenedorMenu = document.getElementById('contenido-pagina');
+  const contenedorMensaje = document.getElementById('mensaje-cerrado');
+  const textoMensaje = document.getElementById('texto-mensaje');
 
-        const respuesta = await fetch(urlFinal, { 
-            cache: "no-store",
-            headers: {
-                'Cache-Control': 'no-cache',
-                'Pragma': 'no-cache'
-            }
-        });
+  try {
+    // === PASO 1: VERIFICAR SI EL NEGOCIO ESTÁ ABIERTO ===
+    const urlConfigFinal = servidorGoogle + idDocumento + endpointConfig + "&t=" + new Date().getTime();
+    const respuestaConfig = await fetch(urlConfigFinal, { cache: "no-store" });
+    const textoConfig = await respuestaConfig.text();
+    
+    // Parsear la respuesta de la hoja de Configuración
+    const datosJson = JSON.parse(textoConfig.substr(47).slice(0, -2));
+    const filaConfig = datosJson.table.rows[0].c;
 
-        const textoCSV = await respuesta.text();
-        baseDatosProductos = parsearEstructuraMenu(textoCSV);
-        
-        renderizarArticulosIndividuales(baseDatosProductos.individuales);
-        renderizarCombosDinamicos(baseDatosProductos.combos);
-        actualizarInterfazCarrito();
-        console.log("⚡ Menú en vivo actualizado con éxito.");
-    } catch (error) {
-        console.error("Fallo al inicializar base de datos:", error);
+    const horaApertura = parseInt(filaConfig[0].v);
+    const horaCierre = parseInt(filaConfig[1].v);
+    const diasCerradoRaw = filaConfig[2] ? filaConfig[2].v.toString() : "";
+    const mensajeCerrado = filaConfig[3].v;
+
+    const diasCerrados = diasCerradoRaw.split(',').map(d => parseInt(d.trim())).filter(n => !isNaN(n));
+
+    // Validar hora local (Ejemplo ajustado a la hora de México)
+    const ahora = new Date();
+    const horaActual = parseInt(ahora.toLocaleString("es-MX", { hour: "2-digit", hour12: false, timeZone: "America/Mexico_City" }));
+    const diaSemanaActual = ahora.toLocaleDateString("en-US", { weekday: "numeric", timeZone: "America/Mexico_City" });
+    const diaActualNum = parseInt(diaSemanaActual) === 7 ? 0 : parseInt(diaSemanaActual);
+
+    const estaCerradoPorDia = diasCerrados.includes(diaActualNum);
+    const estaCerradoPorHora = (horaActual < horaApertura || horaActual >= horaCierre);
+
+    if (estaCerradoPorDia || estaCerradoPorHora) {
+      // Si está cerrado, muestra el mensaje e interrumpe la carga de productos
+      textoMensaje.innerHTML = mensajeCerrado;
+      if (contenedorMenu) contenedorMenu.style.display = 'none';
+      if (contenedorMensaje) contenedorMensaje.style.display = 'block';
+      return; // Detiene el código aquí
     }
-}
+
+    // === PASO 2: SI ESTÁ ABIERTO, SE CARGAN LOS PRODUCTOS DE FORMA NORMAL ===
+    if (contenedorMenu) contenedorMenu.style.display = 'block';
+    if (contenedorMensaje) contenedorMensaje.style.display = 'none';
+
+    // Rompemos la caché de Google agregando la hora actual exacta
+    const urlFinal = urlGoogleSheets + "&t=" + new Date().getTime();
+
+    const respuesta = await fetch(urlFinal, {
+      cache: "no-store",
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      }
+    });
+
+    // ... AQUÍ DEBAJO CONTINÚA TU CÓDIGO ORIGINAL ...
+    // (El proceso donde lees el CSV, separas combos e individuales, etc.)
+
 
         function limpiarTextoSheets(celda) {
             if (!celda) return '';
