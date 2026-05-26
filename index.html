@@ -1150,14 +1150,19 @@ function despacharPedidoAWhatsApp() {
     if (carrito.length === 0) { alert("Tu carrito está vacío."); return; }
 
     // =========================================================================
-    // 1. RECOPILAR Y ENVIAR LOS DATOS A GOOGLE SHEETS
+    // 1. RECOPILAR Y ENVIAR LOS DATOS A GOOGLE SHEETS (CON SUBTOTALES Y DETALLES)
     // =========================================================================
+    // Construye un desglose idéntico al de WhatsApp para la celda de la hoja
     const detalleParaSheets = carrito.map(item => {
-        let detalleItem = `${item.cantidad}x ${item.nombre}`;
-        if (item.salsa) detalleItem += ` (Salsa: ${item.salsa})`;
-        if (item.nota) detalleItem += ` [Nota: ${item.nota}]`;
-        return detalleItem;
-    }).join(", ");
+        const sub = item.precio * item.cantidad;
+        let renglon = `${item.cantidad}x ${item.nombre} ($${sub.toFixed(2)})`;
+        
+        // Agrega extras si existen en el carrito
+        if (item.salsa) renglon += ` [Salsa: ${item.salsa}]`;
+        if (item.nota) renglon += ` [Nota: ${item.nota}]`;
+        
+        return renglon;
+    }).join("\n"); // El "\n" hace que cada producto salte de línea dentro de la misma celda
 
     let totalPedido = 0;
     carrito.forEach(item => {
@@ -1170,7 +1175,7 @@ function despacharPedidoAWhatsApp() {
     const datosOrden = {
         nombre: nombreParaSheets,
         telefono: "No provisto en formulario", 
-        productos: detalleParaSheets,
+        productos: detalleParaSheets, // Envía el nuevo texto detallado
         total: totalPedido
     };
 
@@ -1205,7 +1210,7 @@ function despacharPedidoAWhatsApp() {
     msg += `-------------------------------------------\n`;
     msg += `💰 *TOTAL A PAGAR:* $${totalPedido.toFixed(2)}`;
 
-   const urlApi = "https://wa.me/523411398581?text=" + encodeURIComponent(msg);
+    const urlApi = "https://wa.me/523411398581?text=" + encodeURIComponent(msg);
     mostrarAvisoAntesDeEnviar(urlApi); 
 
     document.getElementById('agradecimiento-cliente').innerText = nombreParaSheets;
