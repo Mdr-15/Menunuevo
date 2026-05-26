@@ -1144,6 +1144,56 @@ function actualizarInterfazCarrito() {
 }
         // === FUNCIÓN CORREGIDA: ENVÍA POR WHATSAPP Y LUEGO MUESTRA EL AGRADECIMIENTO ===
 function despacharPedidoAWhatsApp() {
+    
+const cliente = document.getElementById('nombre-cliente').value.trim();
+    if (!cliente) { alert("Por favor escribe tu nombre."); return; }
+    if (carrito.length === 0) { alert("Tu carrito está vacío."); return; }
+
+    // =========================================================================
+    // 1. RECOPILAR Y ENVIAR LOS DATOS A GOOGLE SHEETS
+    // =========================================================================
+    // Generamos un texto compacto con el detalle de los productos para la celda de Sheets
+    const detalleParaSheets = carrito.map(item => {
+        let detalleItem = `${item.cantidad}x ${item.nombre}`;
+        if (item.salsa) detalleItem += ` (Salsa: ${item.salsa})`;
+        if (item.nota) detalleItem += ` [Nota: ${item.nota}]`;
+        return detalleItem;
+    }).join(", ");
+
+    // Calculamos el total de forma idéntica a tu flujo actual
+    let totalPedido = 0;
+    carrito.forEach(item => {
+        totalPedido += item.precio * item.cantidad;
+    });
+
+    // Tu URL guardada de Google Apps Script
+    const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbysfSi_8YL3Yh4-XeyOos6RrL-BA_qOrs4W5XjZ6BiZFbqj3ukiESJiEi3NpSig2RpV/exec"; 
+
+    // Objeto con las propiedades exactas que configuramos en el paso 2 de Apps Script
+    const datosOrden = {
+        nombre: cliente,
+        telefono: "No provisto en formulario", // Puedes cambiarlo por el id de tu input de teléfono si agregas uno
+        productos: detalleParaSheets,
+        total: totalPedido
+    };
+
+    // Envío asíncrono en segundo plano (no interrumpe el flujo a WhatsApp)
+    fetch(URL_GOOGLE_SHEETS, {
+        method: "POST",
+        mode: "no-cors", 
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(datosOrden)
+    })
+    .then(() => console.log("Datos respaldados exitosamente en Google Sheets."))
+    .catch(error => console.error("Error al respaldar en Google Sheets:", error));
+
+
+
+
+
+    
     const cliente = document.getElementById('nombre-cliente').value.trim();
     if (!cliente) { alert("Por favor escribe tu nombre."); return; }
     if (carrito.length === 0) { alert("Tu carrito está vacío."); return; }
