@@ -1144,8 +1144,7 @@ function actualizarInterfazCarrito() {
 }
         // === FUNCIÓN CORREGIDA: ENVÍA POR WHATSAPP Y LUEGO MUESTRA EL AGRADECIMIENTO ===
 function despacharPedidoAWhatsApp() {
-    
-const cliente = document.getElementById('nombre-cliente').value.trim();
+    const cliente = document.getElementById('nombre-cliente').value.trim();
     if (!cliente) { alert("Por favor escribe tu nombre."); return; }
     if (carrito.length === 0) { alert("Tu carrito está vacío."); return; }
 
@@ -1167,7 +1166,7 @@ const cliente = document.getElementById('nombre-cliente').value.trim();
     });
 
     // Tu URL guardada de Google Apps Script
-    const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbysfSi_8YL3Yh4-XeyOos6RrL-BA_qOrs4W5XjZ6BiZFbqj3ukiESJiEi3NpSig2RpV/exec"; 
+    const URL_GOOGLE_SHEETS = "TU_URL_DE_APPS_SCRIPT_AQUÍ"; 
 
     // Objeto con las propiedades exactas que configuramos en el paso 2 de Apps Script
     const datosOrden = {
@@ -1189,23 +1188,16 @@ const cliente = document.getElementById('nombre-cliente').value.trim();
     .then(() => console.log("Datos respaldados exitosamente en Google Sheets."))
     .catch(error => console.error("Error al respaldar en Google Sheets:", error));
 
-  
 
     // =========================================================================
-    // COLOCA AQUÍ TU TELÉFONO REAL DE ATENCIÓN (CON CLAVE DE PAÍS, SIN ESPACIOS NI SIGNOS +)
-    // Ej: "521XXXXXXXXXX" (Si es México, pon 521 seguido de tus 10 dígitos)
+    // 2. TU FLUJO ORIGINAL HACIA WHATSAPP Y CAMBIO DE PANTALLAS
     // =========================================================================
-    //const miTelefonoSpaceWings = "521234567890"; 
-
-    // Estructurar el texto que llegará a tu celular
     let msg = `🚀 *NUEVO PEDIDO - SPACE WINGS* 🚀\n\n`;
     msg += `👤 *Cliente:* ${cliente}\n`;
     msg += `-------------------------------------------\n`;
 
-    let totalPedido = 0;
     carrito.forEach(item => {
         const sub = item.precio * item.cantidad;
-        totalPedido += sub;
         msg += `📦 *${item.cantidad}x* ${item.nombre}\n`;
         if (item.salsa) msg += `   └ Salsa: ${item.salsa}\n`;
         if (item.descripcion) msg += `   └ ${item.descripcion}\n`;
@@ -1216,15 +1208,15 @@ const cliente = document.getElementById('nombre-cliente').value.trim();
     msg += `-------------------------------------------\n`;
     msg += `💰 *TOTAL A PAGAR:* $${totalPedido.toFixed(2)}`;
 
-    // 1. ABRIR EL CHAT DE WHATSAPP OFICIAL CON EL PEDIDO LISTO
-   const urlApi = "https://wa.me/523411398581?text=" + encodeURIComponent(msg);
-   mostrarAvisoAntesDeEnviar(urlApi); 
+    // Abrir el chat de WhatsApp oficial
+    const urlApi = "https://wa.me/523411398581?text=" + encodeURIComponent(msg);
+    mostrarAvisoAntesDeEnviar(urlApi); 
 
-    // 2. INYECTAR DATOS EN LA INTERFAZ DE TU PÁGINA WEB
+    // Inyectar datos en la interfaz
     document.getElementById('agradecimiento-cliente').innerText = cliente;
     document.getElementById('agradecimiento-total').innerText = `$${totalPedido.toFixed(2)}`;
 
-    // 3. CAMBIAR DE PANTALLA EN TU SITIO WEB TRAS EL ENVÍO
+    // Cambiar de pantalla en tu sitio web
     document.getElementById('pantalla-tienda').style.display = 'none';
     document.getElementById('pantalla-agradecimiento').style.display = 'block';
 
