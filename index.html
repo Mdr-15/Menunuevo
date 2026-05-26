@@ -1144,25 +1144,30 @@ function actualizarInterfazCarrito() {
 }
         // === FUNCIÓN CORREGIDA: ENVÍA POR WHATSAPP Y LUEGO MUESTRA EL AGRADECIMIENTO ===
 function despacharPedidoAWhatsApp() {
-    // Usamos el 'cliente' que ya tienes declarado en tu código original
     const nombreParaSheets = document.getElementById('nombre-cliente').value.trim();
     if (!nombreParaSheets) { alert("Por favor escribe tu nombre."); return; }
     if (carrito.length === 0) { alert("Tu carrito está vacío."); return; }
 
     // =========================================================================
-    // 1. RECOPILAR Y ENVIAR LOS DATOS A GOOGLE SHEETS (CON SUBTOTALES Y DETALLES)
+    // 1. RECOPILAR Y ENVIAR LOS DATOS A GOOGLE SHEETS (REVISANDO COMBOS Y ARTÍCULOS)
     // =========================================================================
-    // Construye un desglose idéntico al de WhatsApp para la celda de la hoja
     const detalleParaSheets = carrito.map(item => {
         const sub = item.precio * item.cantidad;
         let renglon = `${item.cantidad}x ${item.nombre} ($${sub.toFixed(2)})`;
         
-        // Agrega extras si existen en el carrito
-        if (item.salsa) renglon += ` [Salsa: ${item.salsa}]`;
-        if (item.nota) renglon += ` [Nota: ${item.nota}]`;
+        // SI ES UN COMBO: Agrega los artículos elegidos que vienen en la propiedad 'articulos' o 'descripcion'
+        if (item.articulos) {
+            renglon += `\n   └ Incluye: ${item.articulos}`;
+        } else if (item.descripcion && (item.nombre.toLowerCase().includes('combo') || item.nombre.toLowerCase().includes('paquete'))) {
+            renglon += `\n   └ Incluye: ${item.descripcion}`;
+        }
+        
+        // Agrega extras comunes en caso de aplicar
+        if (item.salsa) renglon += `\n   └ Salsa: ${item.salsa}`;
+        if (item.nota) renglon += `\n   └ Nota: ${item.nota}`;
         
         return renglon;
-    }).join("\n"); // El "\n" hace que cada producto salte de línea dentro de la misma celda
+    }).join("\n\n"); // Separa cada producto por un doble salto de línea para máxima claridad
 
     let totalPedido = 0;
     carrito.forEach(item => {
@@ -1175,7 +1180,7 @@ function despacharPedidoAWhatsApp() {
     const datosOrden = {
         nombre: nombreParaSheets,
         telefono: "No provisto en formulario", 
-        productos: detalleParaSheets, // Envía el nuevo texto detallado
+        productos: detalleParaSheets, 
         total: totalPedido
     };
 
@@ -1210,7 +1215,7 @@ function despacharPedidoAWhatsApp() {
     msg += `-------------------------------------------\n`;
     msg += `💰 *TOTAL A PAGAR:* $${totalPedido.toFixed(2)}`;
 
-    const urlApi = "https://wa.me/523411398581?text=" + encodeURIComponent(msg);
+   const urlApi = "https://wa.me/523411398581?text=" + encodeURIComponent(msg);
     mostrarAvisoAntesDeEnviar(urlApi); 
 
     document.getElementById('agradecimiento-cliente').innerText = nombreParaSheets;
